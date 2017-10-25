@@ -14,6 +14,15 @@
 		C8745BE91F9E881D009607C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8745BE71F9E881D009607C1 /* LaunchScreen.storyboard */; };
 		C8745BF41F9E881D009607C1 /* Mortagage_UtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745BF31F9E881D009607C1 /* Mortagage_UtilitiesTests.swift */; };
 		C8745BFF1F9E881D009607C1 /* Mortagage_UtilitiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745BFE1F9E881D009607C1 /* Mortagage_UtilitiesUITests.swift */; };
+		C8745C0D1F9E8C08009607C1 /* FilesUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C0C1F9E8C08009607C1 /* FilesUtil.swift */; };
+		C8745C0F1F9EFE26009607C1 /* Mix.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C0E1F9EFE26009607C1 /* Mix.swift */; };
+		C8745C121F9EFFBC009607C1 /* Mix_Mortgage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C101F9EFFA2009607C1 /* Mix_Mortgage.swift */; };
+		C8745C191F9F010D009607C1 /* SimulaHipotecaFut.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C141F9F010D009607C1 /* SimulaHipotecaFut.swift */; };
+		C8745C1A1F9F010D009607C1 /* DatesTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C151F9F010D009607C1 /* DatesTools.swift */; };
+		C8745C1B1F9F010D009607C1 /* CashFlowSim.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C161F9F010D009607C1 /* CashFlowSim.swift */; };
+		C8745C1C1F9F010D009607C1 /* FileTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C171F9F010D009607C1 /* FileTools.swift */; };
+		C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C181F9F010D009607C1 /* calculusHipoteca.swift */; };
+		C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +56,15 @@
 		C8745BFA1F9E881D009607C1 /* Mortagage_UtilitiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Mortagage_UtilitiesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8745BFE1F9E881D009607C1 /* Mortagage_UtilitiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mortagage_UtilitiesUITests.swift; sourceTree = "<group>"; };
 		C8745C001F9E881D009607C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8745C0C1F9E8C08009607C1 /* FilesUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesUtil.swift; sourceTree = "<group>"; };
+		C8745C0E1F9EFE26009607C1 /* Mix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mix.swift; sourceTree = "<group>"; };
+		C8745C101F9EFFA2009607C1 /* Mix_Mortgage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mix_Mortgage.swift; sourceTree = "<group>"; };
+		C8745C141F9F010D009607C1 /* SimulaHipotecaFut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimulaHipotecaFut.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/SimulaHipotecaFut.swift"; sourceTree = "<group>"; };
+		C8745C151F9F010D009607C1 /* DatesTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatesTools.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/DatesTools.swift"; sourceTree = "<group>"; };
+		C8745C161F9F010D009607C1 /* CashFlowSim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CashFlowSim.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/CashFlowSim.swift"; sourceTree = "<group>"; };
+		C8745C171F9F010D009607C1 /* FileTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileTools.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/FileTools.swift"; sourceTree = "<group>"; };
+		C8745C181F9F010D009607C1 /* calculusHipoteca.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = calculusHipoteca.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/calculusHipoteca.swift"; sourceTree = "<group>"; };
+		C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functionals_Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +115,13 @@
 		C8745BDD1F9E881D009607C1 /* Mortagage_Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C8745C201F9F248D009607C1 /* Funct */,
+				C8745C131F9F00E4009607C1 /* util */,
 				C8745BDE1F9E881D009607C1 /* AppDelegate.swift */,
 				C8745BE01F9E881D009607C1 /* ViewController.swift */,
+				C8745C0C1F9E8C08009607C1 /* FilesUtil.swift */,
+				C8745C0E1F9EFE26009607C1 /* Mix.swift */,
+				C8745C101F9EFFA2009607C1 /* Mix_Mortgage.swift */,
 				C8745BE21F9E881D009607C1 /* Main.storyboard */,
 				C8745BE51F9E881D009607C1 /* Assets.xcassets */,
 				C8745BE71F9E881D009607C1 /* LaunchScreen.storyboard */,
@@ -123,6 +146,26 @@
 				C8745C001F9E881D009607C1 /* Info.plist */,
 			);
 			path = Mortagage_UtilitiesUITests;
+			sourceTree = "<group>";
+		};
+		C8745C131F9F00E4009607C1 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				C8745C181F9F010D009607C1 /* calculusHipoteca.swift */,
+				C8745C161F9F010D009607C1 /* CashFlowSim.swift */,
+				C8745C151F9F010D009607C1 /* DatesTools.swift */,
+				C8745C171F9F010D009607C1 /* FileTools.swift */,
+				C8745C141F9F010D009607C1 /* SimulaHipotecaFut.swift */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		C8745C201F9F248D009607C1 /* Funct */ = {
+			isa = PBXGroup;
+			children = (
+				C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */,
+			);
+			path = Funct;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +302,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8745C1C1F9F010D009607C1 /* FileTools.swift in Sources */,
+				C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */,
+				C8745C1A1F9F010D009607C1 /* DatesTools.swift in Sources */,
+				C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */,
 				C8745BE11F9E881D009607C1 /* ViewController.swift in Sources */,
+				C8745C191F9F010D009607C1 /* SimulaHipotecaFut.swift in Sources */,
+				C8745C0D1F9E8C08009607C1 /* FilesUtil.swift in Sources */,
+				C8745C1B1F9F010D009607C1 /* CashFlowSim.swift in Sources */,
+				C8745C0F1F9EFE26009607C1 /* Mix.swift in Sources */,
 				C8745BDF1F9E881D009607C1 /* AppDelegate.swift in Sources */,
+				C8745C121F9EFFBC009607C1 /* Mix_Mortgage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
