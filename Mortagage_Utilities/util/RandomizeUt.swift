@@ -61,16 +61,19 @@ protocol doubleGenerator {
     
 }
 
-struct interval {
+struct   interval  {
     
     var lowBound : Double
+    
+    
     var upBound : Double
+    
     
     
     
 }
 
-extension interval : Hashable {
+extension interval : Hashable  {
     
     
     var hashValue : Int {
@@ -81,7 +84,7 @@ extension interval : Hashable {
     }
     
     
-    static func == (lhs:interval , rhs: interval  )-> Bool  {
+    static func == (lhs: interval  , rhs: interval    )-> Bool  {
         
         return lhs.lowBound == rhs.lowBound && rhs.upBound == lhs.upBound
         
@@ -90,6 +93,8 @@ extension interval : Hashable {
     
     
 }
+
+
 
 
 let arrayOfEmpties : (Int) -> Array<Double> = { n in return    Array<Double>(repeating: 0, count: n)       }
@@ -222,11 +227,11 @@ extension invertible {
     
     func inversefun(_ finv : Double) -> Double {
         
-        print("Buscando.....")
+      
         
         func inverter ( val: Double, ff: funcDouToDOu, steps:Double, min: Double )-> Double {
             
-            print( "valor Y buscado :" + String(val) + " ... F de " + String(min) + " es igual a " + String(ff(min)) )
+           
             
             
             if ( ff(min) >= val) {return min   } else { return inverter(val: val , ff: ff , steps: steps , min: min  + steps )            }
@@ -281,7 +286,7 @@ struct waysOfIO {
         
         
         
-        let w = waysOfIO(elements: 10, vAlea: va, indexStarter: 21.00)
+        let w = waysOfIO(elements: 100, vAlea: va, indexStarter: 21.00)
         
         return w
         

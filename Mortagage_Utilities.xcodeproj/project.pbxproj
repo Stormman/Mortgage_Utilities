@@ -26,6 +26,8 @@
 		C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */; };
 		C8FA30631FA9BCE600984466 /* RandomizeUt_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */; };
 		C8FA30651FA9C07E00984466 /* Functional_Utilities_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */; };
+		C8FA30671FA9CB0900984466 /* randomizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30661FA9CB0900984466 /* randomizeTests.swift */; };
+		C8FA30691FA9DA4000984466 /* functionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30681FA9DA4000984466 /* functionalTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt.swift; sourceTree = "<group>"; };
 		C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt_2.swift; sourceTree = "<group>"; };
 		C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functional_Utilities_2.swift; sourceTree = "<group>"; };
+		C8FA30661FA9CB0900984466 /* randomizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = randomizeTests.swift; sourceTree = "<group>"; };
+		C8FA30681FA9DA4000984466 /* functionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functionalTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,8 @@
 			children = (
 				C8745BF31F9E881D009607C1 /* Mortagage_UtilitiesTests.swift */,
 				C8745BF51F9E881D009607C1 /* Info.plist */,
+				C8FA30661FA9CB0900984466 /* randomizeTests.swift */,
+				C8FA30681FA9DA4000984466 /* functionalTests.swift */,
 			);
 			path = Mortagage_UtilitiesTests;
 			sourceTree = "<group>";
@@ -333,6 +339,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8745BF41F9E881D009607C1 /* Mortagage_UtilitiesTests.swift in Sources */,
+				C8FA30691FA9DA4000984466 /* functionalTests.swift in Sources */,
+				C8FA30671FA9CB0900984466 /* randomizeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

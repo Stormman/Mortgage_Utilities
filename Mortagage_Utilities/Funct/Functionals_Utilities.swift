@@ -114,4 +114,26 @@ func delayed<A> (_ x:A) -> Future<A> {
     }
 }
 
-
+func memoize <T:Hashable,U> (_ fn: @escaping (T) -> U) -> (T) -> U {
+    
+    var cache = [T:U]()
+    
+    return { (val:T) -> U in
+        
+        if cache.index(forKey: val) == nil { cache[val] = fn(val)}
+        return cache[val]!
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}

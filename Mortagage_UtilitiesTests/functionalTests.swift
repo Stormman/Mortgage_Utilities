@@ -1,15 +1,16 @@
 //
-//  Mortagage_UtilitiesTests.swift
+//  functionalTests.swift
 //  Mortagage_UtilitiesTests
 //
-//  Created by Antonio Muñoz on 23/10/17.
+//  Created by Antonio Muñoz on 1/11/17.
 //  Copyright © 2017 Antonio Muñoz. All rights reserved.
 //
 
 import XCTest
+
 @testable import Mortagage_Utilities
 
-class Mortagage_UtilitiesTests: XCTestCase {
+class functionalTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -26,19 +27,26 @@ class Mortagage_UtilitiesTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    func testMemoize() {
+        
+        let funt = memoize{ x in return x*2               }
+        
+        let fv = funt(2)
+        
+        let bbp = funt(2)
+        
+        
+        XCTAssert(fv == bbp && fv == 2)
+        
+        
+    }
+    
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
