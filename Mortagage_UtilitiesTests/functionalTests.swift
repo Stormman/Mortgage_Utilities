@@ -41,7 +41,25 @@ class functionalTests: XCTestCase {
         
     }
     
-    
+    func testBetweee () {
+        
+        let funiiceroDiex = betWeen(8, 10)
+        
+        let kkkd = funiiceroDiex(9)
+        
+        let fera = funiiceroDiex(20)
+        
+        
+        XCTAssert(kkkd == true)
+        XCTAssert(fera == false)
+        
+        let fg = 90
+        
+        
+        
+        
+        
+    }
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

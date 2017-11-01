@@ -22,19 +22,32 @@ func metrizarArray<A>  (_ metr: A   ) -> [Double] where A : metrizable {
     
 }
 
-/*
-func localizableDoubleInMetric<A>( _ val: Double , _ inMetr : A ) -> interval where A : metrizable {
+
+func localizableDoubleInMetric<A>( _ val: Double , _ inMetr : A ) -> interval? where A : metrizable {
+    
+   let intervalosTot = obtenerIntervalosDeLaMetrica(inMetr)
+    
+    guard let invT = intervalosTot else {return  nil }
+    
+    let arr = arrayOfOrdeneredZEroIndex((invT.count))
+    
+    let zipped =  zip(arr,invT)
+    
+    //let filt = zipped.filter { (val >= $1.lowBound) && (val <= $1.upBound )  }
+    
+    let filt = zipped.filter { betWeen($1.lowBound, $1.upBound)(val)  }
+    
+    guard ( (filt.count != 0) ) else {return nil}
+    
+    return filt.first!.1
     
     
-    
-    
- 
     
     
     
     
 }
-*/
+
 func obtenerIntervalosDeLaMetrica<A> ( _ metr: A) -> [interval]?  where A : metrizable{
   
     
@@ -79,33 +92,81 @@ func obtenerIntervalosDeLaMetrica<A> ( _ metr: A) -> [interval]?  where A : metr
     
 }
 
-
-/*
-
-struct intervalosMetricos: metrizable {
+func doubleInIntervalswhereIs(_ val: Double, _ intervals: [interval]) -> (inter:interval, pos:Int)? {
     
-    var stepMinim: Double
+    let arr = arrayOfOrdeneredZEroIndex((intervals.count))
     
-    var bounds: (Double, Double)
+    let zipped =  zip(arr,intervals )
+    
+    //let filt = zipped.filter { (val >= $1.lowBound) && (val <= $1.upBound )  }
+    
+    let filt = zipped.filter { betWeen($1.lowBound, $1.upBound)(val)  }
+    
+    guard ( (filt.count != 0) ) else {return nil}
+    
+    return (inter : filt.last!.1 , pos: filt.last!.0)
+    
+    
+    
+}
+
+
+
+struct intervalosMetricos <A: metrizable> {
+    
+    init?(metri: A) {
+        
+        let obt = obtenerIntervalosDeLaMetrica(metri)
+        
+        guard let obtain = obt else {return nil}
+        
+        
+        dicMetr = [:]
+        
+        let coun = obtain.count - 1
+        
+        (0...coun).forEach{ dicMetr[obtain[$0]] = 0     }
+        
+        
+        
+        
+    }
     
     var dicMetr : [interval : Double]
     
     
-    func valueForKey(_ ke : Double )-> Double  {
+    func valueForKey(_ ke : Double )-> Double?  {
+        
+       let donde = doubleInIntervalswhereIs(ke, Array(dicMetr.keys))
+        
+        guard let wh = donde else {return nil}
+        
+        return dicMetr[wh.inter]
         
         
         
     }
     
-    func keyForValue( _ val : Double) -> interval {
+    /*func keyForValue( _ val : Double) -> interval {
         
         
         
         
-    }
+    }*/
     
     
     mutating func appendValue( _ valueX: Double , _ ofFx:Double ) {
+        
+        let keyss = Array(dicMetr.keys)
+        
+        let inter = doubleInIntervalswhereIs(valueX, keyss)
+        
+        guard let iv = inter?.inter else {return}
+        
+        
+        dicMetr[iv] = ofFx
+        
+        
         
         
         
@@ -115,7 +176,7 @@ struct intervalosMetricos: metrizable {
 }
 
 
-*/
+
 
 
 

@@ -51,7 +51,30 @@ func reduce <A,B> (_ initial: B , _ reducer: @escaping (B,A) -> B)->  (([A])-> B
 func take<A> (_ n : Int ) -> ([A]) -> [A] {return { xs in xs.reduce([]) { acc, x in acc.count < n ? acc + [x] : acc   }}}
 func flatmap <A,B> (_ f:@escaping (A) -> B) -> ([A]) -> [B] { return { xs in return xs.flatMap{ f($0)} }}
 
+//-----------------compares
 
+func betWeen(_ lowV : Double, _ upVal : Double) ->(Double) -> Bool {
+    
+    
+    return { val  in
+        
+        if( (val >= lowV ) && (val <= upVal)) {return true}
+        
+        return false
+        
+        
+    }
+    
+    
+    
+}
+
+
+
+
+
+
+//future_____________
 
 final class Future<A> {
     

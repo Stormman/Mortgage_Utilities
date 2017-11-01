@@ -18,13 +18,18 @@ class randomizeTests: XCTestCase {
         
     }
     
+    let mn : n
     
     
     
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+         mn = n(stepMinim: 9, bounds: (-100, 100))
+            
+            
+        
     }
     
     override func tearDown() {
@@ -95,6 +100,47 @@ class randomizeTests: XCTestCase {
         
         
     }
+    
+    func testLocalizableDoubleInmetric () {
+        
+        
+        let mn = n(stepMinim: 3, bounds: (-100, 100))
+        
+            let inv = localizableDoubleInMetric(12, mn)
+        
+        let fg = 9000
+        
+        
+        
+    }
+    
+    func testDoubleinintervalWhereIs () {
+        
+        let mn = n(stepMinim: 3, bounds: (-100, 100))
+        
+        
+        let metric = obtenerIntervalosDeLaMetrica(mn)
+        
+        
+        let donde = doubleInIntervalswhereIs(8, metric!)
+        
+        XCTAssert(donde!.pos == 36 && donde!.inter.lowBound == 8 && donde!.inter.upBound == 11)
+        
+        let oo = 90000
+        
+    }
+    
+    func testIntervalosmetricosStruct () {
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
