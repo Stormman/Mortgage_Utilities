@@ -24,6 +24,8 @@
 		C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C181F9F010D009607C1 /* calculusHipoteca.swift */; };
 		C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */; };
 		C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */; };
+		C8FA30631FA9BCE600984466 /* RandomizeUt_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */; };
+		C8FA30651FA9C07E00984466 /* Functional_Utilities_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		C8745C181F9F010D009607C1 /* calculusHipoteca.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = calculusHipoteca.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/calculusHipoteca.swift"; sourceTree = "<group>"; };
 		C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functionals_Utilities.swift; sourceTree = "<group>"; };
 		C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt.swift; sourceTree = "<group>"; };
+		C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt_2.swift; sourceTree = "<group>"; };
+		C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functional_Utilities_2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,8 +126,6 @@
 				C8745BDE1F9E881D009607C1 /* AppDelegate.swift */,
 				C8745BE01F9E881D009607C1 /* ViewController.swift */,
 				C8745C0C1F9E8C08009607C1 /* FilesUtil.swift */,
-				C8745C0E1F9EFE26009607C1 /* Mix.swift */,
-				C8745C101F9EFFA2009607C1 /* Mix_Mortgage.swift */,
 				C8745BE21F9E881D009607C1 /* Main.storyboard */,
 				C8745BE51F9E881D009607C1 /* Assets.xcassets */,
 				C8745BE71F9E881D009607C1 /* LaunchScreen.storyboard */,
@@ -159,6 +161,7 @@
 				C8745C171F9F010D009607C1 /* FileTools.swift */,
 				C8745C141F9F010D009607C1 /* SimulaHipotecaFut.swift */,
 				C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */,
+				C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -166,7 +169,10 @@
 		C8745C201F9F248D009607C1 /* Funct */ = {
 			isa = PBXGroup;
 			children = (
+				C8745C0E1F9EFE26009607C1 /* Mix.swift */,
+				C8745C101F9EFFA2009607C1 /* Mix_Mortgage.swift */,
 				C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */,
+				C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */,
 			);
 			path = Funct;
 			sourceTree = "<group>";
@@ -311,6 +317,8 @@
 				C8745C1A1F9F010D009607C1 /* DatesTools.swift in Sources */,
 				C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */,
 				C8745BE11F9E881D009607C1 /* ViewController.swift in Sources */,
+				C8FA30651FA9C07E00984466 /* Functional_Utilities_2.swift in Sources */,
+				C8FA30631FA9BCE600984466 /* RandomizeUt_2.swift in Sources */,
 				C8745C191F9F010D009607C1 /* SimulaHipotecaFut.swift in Sources */,
 				C8745C0D1F9E8C08009607C1 /* FilesUtil.swift in Sources */,
 				C8745C1B1F9F010D009607C1 /* CashFlowSim.swift in Sources */,
