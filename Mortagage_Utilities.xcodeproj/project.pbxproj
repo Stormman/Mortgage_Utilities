@@ -23,6 +23,7 @@
 		C8745C1C1F9F010D009607C1 /* FileTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C171F9F010D009607C1 /* FileTools.swift */; };
 		C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C181F9F010D009607C1 /* calculusHipoteca.swift */; };
 		C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */; };
+		C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		C8745C171F9F010D009607C1 /* FileTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileTools.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/FileTools.swift"; sourceTree = "<group>"; };
 		C8745C181F9F010D009607C1 /* calculusHipoteca.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = calculusHipoteca.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/calculusHipoteca.swift"; sourceTree = "<group>"; };
 		C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functionals_Utilities.swift; sourceTree = "<group>"; };
+		C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				C8745C151F9F010D009607C1 /* DatesTools.swift */,
 				C8745C171F9F010D009607C1 /* FileTools.swift */,
 				C8745C141F9F010D009607C1 /* SimulaHipotecaFut.swift */,
+				C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			files = (
 				C8745C1C1F9F010D009607C1 /* FileTools.swift in Sources */,
 				C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */,
+				C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */,
 				C8745C1A1F9F010D009607C1 /* DatesTools.swift in Sources */,
 				C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */,
 				C8745BE11F9E881D009607C1 /* ViewController.swift in Sources */,
