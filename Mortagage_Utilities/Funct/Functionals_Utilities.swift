@@ -58,7 +58,7 @@ func betWeen(_ lowV : Double, _ upVal : Double) ->(Double) -> Bool {
     
     return { val  in
         
-        if( (val >= lowV ) && (val <= upVal)) {return true}
+        if( (val >= lowV ) && (val < upVal)) {return true}
         
         return false
         

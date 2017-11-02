@@ -104,6 +104,7 @@ let arrayOfOrdeneredZEroIndex : (Int) -> Array<Int> = { n in return Array(0...(n
 
 typealias funcIntToDoub = (Int) -> Double
 typealias funcDouToDOu  = (Double) -> Double
+typealias funcDouToDouOp = (Double) -> Double?
 
 let funcToExaple : funcDouToDOu = { dou in  if (dou < 5 ) {  return 0.05 } ;if ((dou >=  5) && (dou <= 10) ) {  return 0.09 };if (dou >= 10 ) {  return 0.03 }  ; return  0  }
 

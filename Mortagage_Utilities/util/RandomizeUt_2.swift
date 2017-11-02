@@ -181,14 +181,34 @@ struct intervalosMetricos <A: metrizable> {
 
 
 
-/*
+
 
 func obtainFDBOfMemoize< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMetrizable{
     
     
-    var cache : [interval : Double] = [:]
+    var cache : intervalosMetricos = intervalosMetricos(metri: valea)!
     
-    return { x in
+    return { gener  in
+        
+        
+        guard let cac = cache.valueForKey(gener) else {
+            
+            
+            let pasosNece: Int? = stepsNeceseToArrive(valea, gener)
+            if (pasosNece == nil) {return 0}
+            if(pasosNece == 0) { return valea.generat(valea.bounds.0)    }
+            assert(pasosNece != 0, "zero")
+            let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <> map{ (Double($0) * valea.stepMinim) + valea.bounds.0 }
+            let mapped2 = mapped <> map{ valea.generat($0)}
+            let acum = mapped2 <> reduce(0,+)
+            
+            cache.appendValue(gener, acum)
+            
+            return acum
+            }
+        
+        
+        return cac
         
         
         
@@ -206,4 +226,4 @@ func obtainFDBOfMemoize< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMet
     
     
 }
-*/
+

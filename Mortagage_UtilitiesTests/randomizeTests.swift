@@ -18,7 +18,7 @@ class randomizeTests: XCTestCase {
         
     }
     
-    let mn : n
+   
     
     
     
@@ -26,7 +26,7 @@ class randomizeTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-         mn = n(stepMinim: 9, bounds: (-100, 100))
+        
             
             
         
@@ -132,7 +132,18 @@ class randomizeTests: XCTestCase {
     
     func testIntervalosmetricosStruct () {
         
+        let mn = n(stepMinim: 3, bounds: (-100, 100))
+        var  iv = intervalosMetricos(metri: mn)
         
+        
+        iv?.appendValue(8, 20)
+        
+        print (iv?.dicMetr)
+        
+        
+        
+        
+        let fppp = 9000000
         
         
         
