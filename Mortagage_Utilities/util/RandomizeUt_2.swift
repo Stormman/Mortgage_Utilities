@@ -121,18 +121,18 @@ struct intervalosMetricos <A: metrizable> {
         guard let obtain = obt else {return nil}
         
         
-        dicMetr = [:]
+        dicMetr = [interval:Double?]()
         
         let coun = obtain.count - 1
         
-        (0...coun).forEach{ dicMetr[obtain[$0]] = 0     }
+        (0...coun).forEach{ dicMetr[obtain[$0]] = Optional<Double>.none    }
         
         
-        
+       
         
     }
     
-    var dicMetr : [interval : Double]
+    var dicMetr : [interval : Double?]
     
     
     func valueForKey(_ ke : Double )-> Double?  {
@@ -141,8 +141,9 @@ struct intervalosMetricos <A: metrizable> {
         
         guard let wh = donde else {return nil}
         
-        return dicMetr[wh.inter]
+        guard let po = dicMetr[wh.inter] else {  return nil     }
         
+        return po
         
         
     }
@@ -173,7 +174,14 @@ struct intervalosMetricos <A: metrizable> {
     }
     
     
+    
+    
+    
+    
+    
+    
 }
+
 
 
 
@@ -192,6 +200,7 @@ func obtainFDBOfMemoize< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMet
         
         
         guard let cac = cache.valueForKey(gener) else {
+            
             
             
             let pasosNece: Int? = stepsNeceseToArrive(valea, gener)

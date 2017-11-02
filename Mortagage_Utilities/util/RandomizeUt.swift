@@ -113,9 +113,6 @@ typealias   doubleGenerMetrizable = doubleGenerator & metrizable
 
 struct varAleatoria : doubleGenerMetrizable {
     
-    
-    
-    
     init( descrip: String, step: Double, boundss : (Double,Double), generato :@escaping funcDouToDOu    ) {
         
         descriptXAxis = descrip
@@ -140,8 +137,6 @@ struct varAleatoria : doubleGenerMetrizable {
     
     let bounds : (Double,Double )
     
-    
-    
     let generat: (Double) -> Double
     
     var  fDb : ((Double) -> Double)?
@@ -151,7 +146,43 @@ struct varAleatoria : doubleGenerMetrizable {
     
 }
 
-
+func checkVarAlea(varAle : varAleatoria)-> Double?   {
+    
+    
+    let generator = varAle.generat
+    let trans : (interval) -> Double  = {inter in inter.lowBound     }
+    let interSum : (interval , Double, Double) -> Double = {inter , steps , fx in
+        
+        let stepsTotales = Int( (inter.upBound - inter.lowBound) / steps)
+        
+        
+        let sumaInter = arrayOfOrdeneredZEroIndex(stepsTotales) <> map{r in fx} <> reduce(0,+)
+        return sumaInter
+        
+        
+    }
+    
+    guard  let st = intervalosMetricos(metri: varAle) else {return nil  }
+    
+    
+    let stint : [interval] = Array(st.dicMetr.keys)
+    
+    let stepsTot = Int((stint.first!.upBound -  stint.first!.lowBound)/varAle.stepMinim)
+    
+    
+    
+    let ff = stint <> map(trans) <> map(generator)
+    
+    
+    
+    let prtt = ff <> map {$0 * Double(stepsTot) } <> reduce (0,+)
+    
+    
+    
+    return prtt
+    
+    
+}
 
 
 func obtainFDBOf< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMetrizable  {
@@ -282,7 +313,7 @@ struct waysOfIO {
         
         let funcToExaple_ : funcDouToDOu = { dou in  if (dou < -2 ) {  return 0.01 } ;if ((dou >=  -2) && (dou <= 2) ) {  return 0.04 };if (dou >= 2 ) {  return 0.1 }  ; return  0  }
         
-        let va = varAleatoria(descrip: "rentabilidad", step: 0.10, boundss: (-4,4), generato: funcToExaple_)
+        let va = varAleatoria(descrip: "rentabilidad", step: 0.25, boundss: (-3,3), generato: funcToExaple_)
         
         
         
@@ -295,6 +326,10 @@ struct waysOfIO {
     
     func generateTheWayValues () -> [Double] {
         
+        
+        let relatWithIndex : (Double) -> (Double) -> Double = { mult in return { idx  in idx * ((mult / 100) + 1)      }}
+        
+        
         var arr : [Double] = []
         
         let fR = simpleGenerations()
@@ -302,15 +337,27 @@ struct waysOfIO {
         let invert =  invv(generat: vAlea.fDb!, stepMinim: vAlea.stepMinim, bounds: vAlea.bounds).inversefun
         
         
-        
-        
-        
-        
-        
         let m = arrayOfEmpties(elements) <> map{(Double(fR(1000))/1000) + $0} <> map{  invert($0)    }
         
+        //let res = m <> reduce(self.indexStarter) {  relatWithIndex($0)($1)   }
         
-        return m
+        let retTo: [Double] = m.reduce(into: []) { arrAcum , elem in
+            
+            let last = arrAcum.last ?? indexStarter
+            
+            print("last " + String(last) + "  elem " + String(elem) )
+            
+            let to = relatWithIndex(elem  )(last  )
+            
+            print("formula  " + String(to))
+            
+            arrAcum.append(to)
+            
+        }
+        
+        
+        return retTo
+        
         
         
     }
@@ -318,20 +365,7 @@ struct waysOfIO {
 }
 
 
-//let v = varAleatoria(descrip: "pepe", step: 0.5, boundss: (0,7), generato: funcToExaple)
 
-//let v2 = waysOfIO.proof()
-
-
-//let gppp = v2.generateTheWayValues()
-
-
-
-
-
-
-
-//let valuesRandomize = v2.generateTheWayValues()
 
 
 

@@ -152,6 +152,65 @@ class randomizeTests: XCTestCase {
         
     }
     
+    func testObtainfDBmemoize() {
+        
+        
+         let v = varAleatoria(descrip: "pepe", step: 0.5, boundss: (0,7), generato: funcToExaple)
+        
+        
+        let fdb = obtainFDBOfMemoize(v)
+        
+        
+        fdb(1)
+        
+        fdb(1)
+        
+        
+        
+        let fdb2 = obtainFDBOf(v)
+        
+        (1...20).forEach{ print(fdb2(Double($0)))     }
+        
+        
+        
+        
+    }
+    
+    func testCheckVarAleat () {
+        
+       let v = varAleatoria(descrip: "pepe", step: 0.5, boundss: (0,8), generato: funcToExaple)
+        
+        let sum = checkVarAlea(varAle: v)
+        
+        
+        let wio = waysOfIO.proof()
+        
+        let sum2 = checkVarAlea(varAle: wio.vAlea)
+        
+        
+        let fg = 900000
+        
+    }
+    
+    
+    
+    func testWaysIO () {
+        let wa = waysOfIO.proof()
+        
+        let genr = wa.generateTheWayValues()
+        
+        
+        let fop = 9000
+        
+        
+       
+        
+        
+        
+        
+        
+        
+    }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
