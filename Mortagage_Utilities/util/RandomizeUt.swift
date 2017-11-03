@@ -340,31 +340,31 @@ struct waysOfIO {
         let m = arrayOfEmpties(elements) <> map{(Double(fR(1000))/1000) + $0} <> map{  invert($0)    }
         
         //let res = m <> reduce(self.indexStarter) {  relatWithIndex($0)($1)   }
-        
+       /*
         let retTo: [Double] = m.reduce(into: []) { arrAcum , elem in
             
             let last = arrAcum.last ?? indexStarter
-            
-            print("last " + String(last) + "  elem " + String(elem) )
-            
             let to = relatWithIndex(elem  )(last  )
-            
-            print("formula  " + String(to))
-            
-            arrAcum.append(to)
-            
+            arrAcum.append(to) }
+            return retTo
         }
+    */
         
         
-        return retTo
+       // let retTo = m.reduceConcatInArray( indexStarter)  { elem , last in   last * ((elem / 100) + 1)   }
+    
+        let retTo = m.reduceConcatInArray(indexStarter,  porcentAddable )
         
         
-        
-    }
+    return retTo
+    
+    
+    
+    
     
 }
 
-
+}
 
 
 

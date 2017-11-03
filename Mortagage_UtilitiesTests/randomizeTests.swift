@@ -195,6 +195,8 @@ class randomizeTests: XCTestCase {
     
     
     func testWaysIO () {
+        
+        
         let wa = waysOfIO.proof()
         
         let genr = wa.generateTheWayValues()

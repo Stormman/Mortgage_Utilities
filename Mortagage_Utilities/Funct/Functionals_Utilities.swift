@@ -16,7 +16,7 @@ import Foundation
 //  Copyright © 2017 Antonio Muñoz. All rights reserved.
 //
 
-import Foundation
+
 
 precedencegroup gr {
     associativity : left
@@ -28,6 +28,8 @@ precedencegroup gr {
 infix operator <> : gr
 infix operator <!> : gr
 infix operator <*> : gr
+infix operator <=> : gr //map
+
 
 
 
@@ -38,7 +40,8 @@ func <> < A , B > (x:A, f:  (A) ->B ) -> B {return f(x)}
 func <> <A,B,C> ( f:@escaping (A) -> B ,g:@escaping  (B) -> C  ) -> ((A) ->C) {return { a in return g( f( a ) )}}
 
 
-
+func <=> <A,B> ( x: [A] , f: @escaping (A) -> B ) -> [B] { return x.map(f)         }
+func <=> <A,B> ( f: @escaping (A) -> B,x: [A]  ) -> [B] { return x.map(f)         }
 
 
 
@@ -151,12 +154,35 @@ func memoize <T:Hashable,U> (_ fn: @escaping (T) -> U) -> (T) -> U {
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
 }
+
+extension Array where Iterator.Element == Double {
+
+    func reduceConcatInArray(_ indexStart: Double, _ inFunctraverse :@escaping  ((Double , Double)) -> Double  )-> Array<Double> {
+
+
+        let toR : Array<Double> = self.reduce(into: []) { arrAcum , elem in
+        
+        let last = arrAcum.last ?? indexStart
+        let to = inFunctraverse( (elem , last) )
+        arrAcum.append(to)
+        
+        
+        }
+        return toR
+    
+
+    
+    
+        }
+}
+
+
+func twoDouToDouCurri( _ f: @escaping (Double , Double) -> Double  ) -> (Double) -> (Double) -> Double {
+    return {n in  return { x in   f(n,x)        }
+    }}
+
+
+
+
+
