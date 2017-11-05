@@ -14,7 +14,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         
+        let re = Result.succes(89)
         
+        let nuevo = re.map{$0 + 8  }
+        
+        
+        
+        let op  = 90000
         
         // Do any additional setup after loading the view, typically from a nib.
     }

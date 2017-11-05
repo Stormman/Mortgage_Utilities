@@ -128,7 +128,7 @@ struct varAleatoria : doubleGenerMetrizable {
         
     }
     
-    mutating func pinit() {fDb = obtainFDBOf(self) }
+    mutating func pinit() {fDb = obtainFDBOfMemoize(self) }
     
     
     let descriptXAxis : String// ejemplo, cuanto sube en un dia,
