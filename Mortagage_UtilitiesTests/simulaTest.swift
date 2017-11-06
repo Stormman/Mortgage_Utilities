@@ -44,6 +44,12 @@ class simulaTest: XCTestCase {
         
         let sim = fGe2 <> simulatIn <> 5
         
+        print (sim)
+        
+        
+        
+        let ar = (arrayDeNumeros <> take(20) ) <=> (fGe2 <> simulatIn)
+        
         
         
         
@@ -53,6 +59,25 @@ class simulaTest: XCTestCase {
         
     }
     
+    func testIterator() {
+        
+      let se = SeqSimul(20)
+        
+        
+        let set = {(s : Double ) in String(s)   }
+        
+        let eee = se.map(set)
+        
+        let ooo = se <=> set
+        
+        
+        let rrr = 900000
+        
+        
+        
+        
+        
+    }
     
     
     func testPerformanceExample() {

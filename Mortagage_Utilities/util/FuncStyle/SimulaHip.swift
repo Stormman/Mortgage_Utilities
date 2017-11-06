@@ -74,11 +74,11 @@ let sampleFuncArray = generateSamplesOfFuncIntToDou(20)
 
 let simula3 = sampleFuncArray <> map( generaDoubleEnElPeriodo(10)  )
 
-let fGen :generatorsOfSimul = generatorsOfSimul(functionsOf: generateSamplesOfFuncIntToDou(20), estadisitcos: [mean,desvTip])
+//let fGen :generatorsOfSimul = generatorsOfSimul(functionsOf: generateSamplesOfFuncIntToDou(20), estadisitcos: [mean,desvTip])
 
-let simu1 = fGen.simulateIn(2)
+//let simu1 = fGen.simulateIn(2)
 
-let simul3 = fGen.simulateIn(20)
+//let simul3 = fGen.simulateIn(20)
 
 
 
@@ -87,6 +87,8 @@ struct generatorsOfSimul {
     let functionsOf : [funcIntToDouble]
     
     let estadisitcos :[estadisticoFunction]
+    
+    //let indexes : [ String : Double]
     
     //let dictIndexes : [ String : [Double]   ]
     
@@ -100,7 +102,7 @@ struct generatorsOfSimul {
         
     }
     
-    func getEstadisticosInNSimulatiosTotal( _ nSimulations: Int) -> [Double] {
+    func SimulatiosTotal() -> [Double] {
         
         
         let simulatTotal : [[Double]]
