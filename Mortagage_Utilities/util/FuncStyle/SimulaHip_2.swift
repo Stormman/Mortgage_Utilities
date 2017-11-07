@@ -188,6 +188,29 @@ struct fff  : funcNextt{
         
 }
 
+struct ggg : funcNextt {
+    
+    typealias A = iDollar
+    typealias B = dou
+    
+    func funcNext(_ a: iDollar   ) -> dou    {
+        
+        return dou(a.eurodoll + Double(a.nIterac))
+    }
+    
+    
+    
+    
+}
+struct iDollar {
+    
+    let eurodoll : Double
+    let nIterac : Int
+    
+    
+}
+
+
 struct iEuri {
     
     let euribor : Double
@@ -210,22 +233,6 @@ let gpo = fff.funcNext
 //-----------
 
 
-protocol controllerSim {
-    
-    associatedtype B: funcNextt
-    associatedtype E
-    associatedtype RESULTS
-    associatedtype INDEXES
-    
-    func nexttt(x : [B] ) -> E
-    
-    func descriptorMake(x:[E]  ) -> RESULTS
-    
-    
-    
-    
-    
-}
 
 //ejemplo de resultados e indexes
 
@@ -239,8 +246,10 @@ struct inde {let euribor : Double; let bono : Double; let eurodollar :Double    
 func toApplyToFuncNexts( x: res) -> (inde) -> iEuri {
     
     return {indexess in iEuri( euribor : indexess.euribor, nIterac: x.iterac )  }
+}
+func toApplyToFuncNexts( x: res) -> (inde) -> iDollar {
     
-    
+    return {indexess in iDollar(eurodoll : indexess.eurodollar , nIterac: x.iterac) }
 }
 
 //.........
@@ -248,9 +257,36 @@ func toApplyToFuncNexts( x: res) -> (inde) -> iEuri {
 let resEx = res(cash: 1000, garantias: 1000, perdidasAcumuladas: 10, iterac: 3)
 let indeEx = inde(euribor: 1.45, bono: 100.23, eurodollar: 1.2345)
 
-let jjjnnd = toApplyToFuncNexts <> resEx <> indeEx
 
-let oook = fff() <> gpo <> jjjnnd
+
+let oook = fff() <> gpo
+let kkkko = ggg() <> ggg.funcNext
+
+
+let jjjnnd = oook <> (toApplyToFuncNexts <> resEx <> indeEx)
+let otrojj = kkkko <> (toApplyToFuncNexts <> resEx <> indeEx)
+
+
+//--------------------------------------------------
+
+
+protocol controllerSim {
+    
+    associatedtype B: funcNextt
+    associatedtype E
+    associatedtype RESULTS
+    associatedtype INDEXES
+    
+    func nexttt(x : [B] ) -> RESULTS
+    
+   // func descriptorMake(x:[E]  ) -> RESULTS
+    
+    
+    
+    
+    
+}
+
 
 
 
