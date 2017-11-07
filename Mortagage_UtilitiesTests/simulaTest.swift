@@ -66,6 +66,8 @@ class simulaTest: XCTestCase {
         
         let set = {(s : Double ) in String(s)   }
         
+        let sot = {(s : Any  ) in String(s as! Double )   }
+        
         let eee = se.map(set)
         
         let ooo = se <=> set
@@ -74,8 +76,20 @@ class simulaTest: XCTestCase {
         let rrr = 900000
         
         
+        let l = miPNext(20,{(s : Int  ) in Double(s) / 100   })
         
         
+        let ppp = l <=> set
+        
+        
+        //let kkgv = l.forEach{$0}
+        let st = (1...200).forEach{String($0)}
+        
+       
+        
+        let pp = arr <=> sot
+        
+        let kkkk = 9900009099
         
     }
     

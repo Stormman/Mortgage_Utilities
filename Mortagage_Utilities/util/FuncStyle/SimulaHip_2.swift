@@ -46,7 +46,9 @@ struct WaysOfIndexes {
     
 }
 
-struct SeqSimul : Sequence {
+//seqSImul ///////////////////////////////////////////////////////////////
+
+class  SeqSimul : Sequence {
     
     //func intToDouD ( dict :[String:Double], )
     let stopsAt : Int
@@ -76,7 +78,184 @@ struct SeqSimul : Sequence {
     
     
 }
-
 func <=> <B> ( x: SeqSimul , f: @escaping (Double ) -> B ) -> [B] { return x.map(f)        }
 func <=> <B> ( f: @escaping (Double ) -> B,x: SeqSimul  ) -> [B] { return x.map(f)         }
+
+
+
+// protocol SIMNExt //////////////////////////////////////////////////////////
+
+protocol simNext :Sequence {
+    
+    var stopsAt : Int {get set }
+    
+    init( _ length : Int , _ clos : @escaping funcIntToDoub)
+    
+    func makeIterator() -> AnyIterator<Double>
+    
+    
+    var  retDoubleInIteration : funcIntToDoub {get set }
+    
+    
+}
+
+extension simNext {
+    
+ 
+    func makeIterator() -> AnyIterator<Double>{
+        
+        var interaCount = 0
+        
+        return AnyIterator {
+            
+            guard interaCount < self.stopsAt else {return nil}
+            
+            interaCount += 1
+            
+            
+            
+            
+            return self.retDoubleInIteration(interaCount)
+            
+            
+            
+        }
+        
+        
+    }
+        
+        
+        
+    }
+    
+
+struct miPNext : simNext {
+    
+    init(_ length: Int, _ clos: @escaping (Int) -> Double) {
+        
+        stopsAt = length
+        retDoubleInIteration = clos
+        
+        
+    }
+    
+   
+  
+    
+    var retDoubleInIteration: funcIntToDoub
+    
+    var   stopsAt: Int
+    
+    
+    
+    
+    
+    
+}
+    
+func <=> <B> ( x: miPNext , f: @escaping (Double ) -> B ) -> [B] { return x.map(f)        }
+func <=> <B> ( f: @escaping (Double ) -> B,x: miPNext  ) -> [B] { return x.map(f)         }
+    
+
+// //////////////////////////////////////////////////////////////////////
+
+protocol funcNextt {
+    
+    associatedtype A
+    associatedtype B
+    
+    func funcNext( _ a: A) -> B
+    
+    
+    
+    
+}
+
+struct fff  : funcNextt{
+
+     typealias  A = iEuri
+    typealias B  = dou
+    
+    func funcNext( _ a: iEuri) -> dou {
+        
+        
+        return dou( (a.euribor / 100) + Double(a.nIterac))
+        
+        
+    }
+    
+    
+        
+}
+
+struct iEuri {
+    
+    let euribor : Double
+    let nIterac : Int
+    
+    
+}
+struct  dou {
+    
+    init(_ d : Double) { resulDoub = d}
+    
+    let resulDoub : Double
+    
+    
+    
+}
+
+let gpo = fff.funcNext
+
+//-----------
+
+
+protocol controllerSim {
+    
+    associatedtype B: funcNextt
+    associatedtype E
+    associatedtype RESULTS
+    associatedtype INDEXES
+    
+    func nexttt(x : [B] ) -> E
+    
+    func descriptorMake(x:[E]  ) -> RESULTS
+    
+    
+    
+    
+    
+}
+
+//ejemplo de resultados e indexes
+
+struct res {let cash : Double ; let garantias :Double ; let perdidasAcumuladas : Double ; let iterac : Int}
+struct inde {let euribor : Double; let bono : Double; let eurodollar :Double    }
+
+
+
+//func toApplyToFunctions<RESUL ,INDEXes,B> ( x: RESUL  ) -> (INDEXes)->  B {}
+
+func toApplyToFuncNexts( x: res) -> (inde) -> iEuri {
+    
+    return {indexess in iEuri( euribor : indexess.euribor, nIterac: x.iterac )  }
+    
+    
+}
+
+//.........
+
+let resEx = res(cash: 1000, garantias: 1000, perdidasAcumuladas: 10, iterac: 3)
+let indeEx = inde(euribor: 1.45, bono: 100.23, eurodollar: 1.2345)
+
+let jjjnnd = toApplyToFuncNexts <> resEx <> indeEx
+
+let oook = fff() <> gpo <> jjjnnd
+
+
+
+
+
+
+
 
