@@ -171,6 +171,18 @@ protocol funcNextt {
     
 }
 
+protocol toApplyFunNextsss {
+    
+    associatedtype RES
+    associatedtype IND
+    associatedtype TOAPPTONEXTS
+    
+    func toApplyToFuncNexts( _ x: RES) -> (IND) -> TOAPPTONEXTS
+    
+    
+}
+
+
 struct fff  : funcNextt{
 
      typealias  A = iEuri
@@ -243,6 +255,13 @@ struct inde {let euribor : Double; let bono : Double; let eurodollar :Double    
 
 //func toApplyToFunctions<RESUL ,INDEXes,B> ( x: RESUL  ) -> (INDEXes)->  B {}
 
+
+
+
+
+
+
+
 func toApplyToFuncNexts( x: res) -> (inde) -> iEuri {
     
     return {indexess in iEuri( euribor : indexess.euribor, nIterac: x.iterac )  }
@@ -257,7 +276,7 @@ func toApplyToFuncNexts( x: res) -> (inde) -> iDollar {
 let resEx = res(cash: 1000, garantias: 1000, perdidasAcumuladas: 10, iterac: 3)
 let indeEx = inde(euribor: 1.45, bono: 100.23, eurodollar: 1.2345)
 
-
+/*
 
 let oook = fff() <> gpo
 let kkkko = ggg() <> ggg.funcNext
@@ -265,7 +284,7 @@ let kkkko = ggg() <> ggg.funcNext
 
 let jjjnnd = oook <> (toApplyToFuncNexts <> resEx <> indeEx)
 let otrojj = kkkko <> (toApplyToFuncNexts <> resEx <> indeEx)
-
+*/
 
 //--------------------------------------------------
 
@@ -273,7 +292,7 @@ let otrojj = kkkko <> (toApplyToFuncNexts <> resEx <> indeEx)
 protocol controllerSim {
     
     associatedtype B: funcNextt
-    associatedtype E
+    
     associatedtype RESULTS
     associatedtype INDEXES
     
@@ -287,7 +306,20 @@ protocol controllerSim {
     
 }
 
-
+struct controll<BB: funcNextt > : controllerSim{
+    
+    typealias B = BB
+    typealias RESULTS = res
+    typealias INDEXES = inde
+    
+    func nexttt(x: [BB]) -> res {
+        
+       // x.map{_ in toApplyToFuncNexts <> res <> inde       }
+        
+    }
+    
+    
+}
 
 
 
