@@ -87,9 +87,35 @@ class simulaTest: XCTestCase {
         
        
         
-        let pp = arr <=> sot
+        //let pp = arr <=> sot
         
         let kkkk = 9900009099
+        
+    }
+    
+    
+    func testGenericIterator() {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    func testSimuGeneric () {
+        
+      
+    
+        
+       
+        
+        
+        
+        let pppfo = 90000
         
     }
     
