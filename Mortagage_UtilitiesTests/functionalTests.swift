@@ -132,7 +132,21 @@ class functionalTests: XCTestCase {
         let ooo = 9000000
         
     }
-    
+    func testSequencetransformarray () {
+        
+        struct pepe {let nombre : String; let age:Int }
+        
+        let pepedelqiuinto = pepe(nombre: "pepe", age: 80)
+        
+        let miraqueHago = {( p : pepe ) -> pepe in pepe(nombre: p.nombre + " ...", age: p.age + 20)}
+        
+        let arr = sequenceTransformArrayElementsByElements <> pepedelqiuinto <> 100 <> miraqueHago
+        
+        let goo = 900000
+        
+        
+        
+    }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.

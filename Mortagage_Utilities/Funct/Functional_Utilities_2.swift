@@ -57,6 +57,29 @@ func prop<Root,Value>(_ keyPath: WritableKeyPath<Root,Value>)
         
 }
 
+//concat array the element by the other sequentally, Int n elementos
+
+// let reArr = ind.reduce([OneSim ]) { (res: [A],indes : inde ) -> [A ] in
+
+//res + [(res.last?.NextALL(indes))!]
+
+
+func sequenceTransformArrayElementsByElements < A > (_ firstEle: A) ->(Int) ->  (@escaping (A)-> A) -> [A] {
+    
+    return { n in { f in
+        
+        Array<Int>(repeating: 0, count: n).reduce([firstEle]){  (res:[A], index : Int) -> [A] in
+            
+              res + [(f(res.last!))]}
+        }}
+    }
+    
+    
+    
+
+
+
+
 
 // result da error muy raro posblemten un bug
 

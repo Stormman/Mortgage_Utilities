@@ -428,7 +428,7 @@ protocol ONESIMCONtrollerHIPO__ : ONESIMCONtroller_ where RESU == res, INDE == i
 
 
 
-struct ONESIMCOntr : ONESIMCONtroller_ {
+struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     
     
     
@@ -436,10 +436,10 @@ struct ONESIMCOntr : ONESIMCONtroller_ {
     var result : res
     var indexx : inde
     
-    let arrFunc : [AnyfunNEXXTHIpo<douComp>]
+    let arrFunc : [AnyfunNEXXTHIpo<B>]
     
     //
-    let converResulIndividToAgregate : ([douComp]) -> (res) -> res//hay que sumar uno a la iteracion
+    let converResulIndividToAgregate : ([B ]) -> (res) -> res//hay que sumar uno a la iteracion
     
     
     func nexttt() -> res {
