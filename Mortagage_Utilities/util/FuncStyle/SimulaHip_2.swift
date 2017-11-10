@@ -8,43 +8,7 @@
 
 import Foundation
 
-typealias waysOfInd = [String : [[Double]]]
 
-struct WaysOfIndexes {
-    
-    let ways : waysOfInd
-    
-    let nDays : Int
-    
-    let nSimul : Int
-    
-    func proof() -> WaysOfIndexes {
-        
-        let waExamp : waysOfInd = [ "Euribor" :
-            [ [12,13,14,15,16,17,20,24,25,29,30,31],
-              [13,15,18,20,22,23,22,21,22,19,16,14],
-              [14,17,20,23,24,25,21,23,24,29,30,33]
-            
-            ]     ]
-        
-        
-        return WaysOfIndexes(ways: waExamp, nDays: 3, nSimul: 12)
-        
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-}
 
 //seqSImul ///////////////////////////////////////////////////////////////
 
