@@ -244,7 +244,7 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
     
 }
 
-func totalSimul<A:ONESIMCONtrollerHIPO__,B:IndexerGenerator>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ indexess_: WaysOfIndexes ,_ ways: B) -> [A.RESU]  where B.A == B {
+func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexerGenerator>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ indexess_: WaysOfIndexes ,_ ways: B) -> [A.RESU]  where B.A == B {
     
     //contr.enumerated().
     
