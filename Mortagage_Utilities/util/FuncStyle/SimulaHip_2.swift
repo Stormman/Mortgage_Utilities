@@ -223,53 +223,54 @@ func <=> <B> ( f: @escaping (Double ) -> B,x: miPNext  ) -> [B] { return x.map(f
     
 
 // totalSIMulation ////////
-typealias  waysOfIndexes = [String : [Double]]
+//typealias  waysOfIndexes = [String : [Double]]
 
 
-
+ typealias  wayToInd = (WaysOfIndexes)->  (Int ) -> (Int)-> inde // Nsimumlac -> nDia ...
 
 struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
     
-    let indexes : waysOfIndexes
+    let indexes : WaysOfIndexes
     
     let contr : A
     
     let wayToINdexes : wayToInd
     
-    typealias  wayToInd = (waysOfIndexes)->  (Int ) -> inde
+   
    // let mapped = contr
    
     
-    func totalSimul( _ nSims: Int ,_ OneSim : A, _ indexess_: waysOfIndexes ,_ ways: @escaping wayToInd) -> [A.RESU] {
+   
+    
+}
+
+func totalSimul<A:ONESIMCONtrollerHIPO__>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ indexess_: WaysOfIndexes ,_ ways: @escaping wayToInd) -> [A.RESU] {
+    
+    //contr.enumerated().
+    
+    //func simul (n:Int ,)
+    
+    let ind =  Array(1...nDays) <=> {    ways <> indexess_ <> NSims <> $0 }
+    
+    // let re = ind.reduce(OneSim ) { (res, ind) -> A in
+    
+    //    res.NextALL(ind)
+    
+    
+    // }
+    
+    let reArr = ind.reduce([OneSim ]) { (res: [A],indes : inde ) -> [A ] in
         
-        //contr.enumerated().
-        
-        //func simul (n:Int ,)
-        
-       let ind =  Array(1...nSims) <=> {    ways <> indexess_ <> $0 }
-        
-       // let re = ind.reduce(OneSim ) { (res, ind) -> A in
-        
-        //    res.NextALL(ind)
+        res + [(res.last?.NextALL(indes))!]
         
         
-       // }
-        
-        let reArr = ind.reduce([OneSim ]) { (res: [A],indes : inde ) -> [A ] in
-            
-            res + [(res.last?.NextALL(indes))!]
-            
-            
-            
-        }
-        
-        
-        let resultados = reArr <=> {$0.result }
-        
-        return resultados
         
     }
     
+    
+    let resultados = reArr <=> {$0.result }
+    
+    return resultados
     
 }
 

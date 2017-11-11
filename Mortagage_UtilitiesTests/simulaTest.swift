@@ -64,6 +64,9 @@ class simulaTest: XCTestCase {
       let se = SeqSimul(20)
         
         
+        
+        
+        
         let set = {(s : Double ) in String(s)   }
         
         let sot = {(s : Any  ) in String(s as! Double )   }
