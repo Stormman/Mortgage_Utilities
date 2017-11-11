@@ -9,7 +9,7 @@
 import Foundation
 
 typealias waysOfInd = [String : [[Double]]]
-typealias wayConcrete = [String:Double?]
+typealias wayConcrete = Dictionary<String, Optional<Double>>
 
 struct WaysOfIndexes {
     
@@ -74,7 +74,7 @@ protocol IndexerGenerator {
   
     associatedtype A
     
-    func generateIndexes( _ i : A) -> (Int) ->(Int) ->  wayConcrete
+    static func generateIndexes( _ i : A) -> (Int) ->(Int) ->  wayConcrete
     
     
     
@@ -82,7 +82,7 @@ protocol IndexerGenerator {
 
 extension WaysOfIndexes : IndexerGenerator {
     
-    func generateIndexes( _ i : WaysOfIndexes) -> (Int) ->(Int) ->  wayConcrete {
+    static func generateIndexes( _ i : WaysOfIndexes) -> (Int) ->(Int) ->  wayConcrete {
         
        
         
@@ -103,18 +103,13 @@ extension WaysOfIndexes : IndexerGenerator {
             
             }    }
         
-        
-        
-    }
-    
-    
-    
-    
-    
-    
+        }
 }
 
-
+func GEnerateIndexes__ <B:IndexerGenerator>  ( _ l: B) -> (Int) -> (Int) -> wayConcrete where B.A == B {
+    
+    return B.generateIndexes(l)
+}
 
 
 

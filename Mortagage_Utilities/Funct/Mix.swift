@@ -32,7 +32,7 @@ func  CreaDictionaryCOnEStosArrays<A,B> (fir : [A], sec: [B]) -> Dictionary<A,B>
     
 }
 
-let creaDictConesteArrayStringYesteDOuble : ([String]) -> ([Double?]) -> [String:Double] = { strArr in {
+let creaDictConesteArrayStringYesteDOuble : ([String]) -> ([Double?]) -> [String:Double?] = { strArr in {
     douArray in CreaDictionaryCOnEStosArrays(fir: strArr, sec: douArray)
     }
     
