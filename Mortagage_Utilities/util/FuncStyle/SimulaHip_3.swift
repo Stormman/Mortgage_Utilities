@@ -148,10 +148,7 @@ extension WaysOfIndexes : IndexerGenerator {
         }
 }
 
-func GEnerateIndexes__ <B:IndexerGenerator>  ( _ l: B) -> (Int) -> (Int) -> wayConcrete where B.A == B {
-    
-    return B.generateIndexes(l)
-}
+
 
 extension WaysOfIndexes : IndexesGeneratorEnumsStr {
     
@@ -186,13 +183,19 @@ extension WaysOfIndexes : IndexesGeneratorEnumsStr {
     
 }
 
-func GEnerateIndexes__ <B:IndexesGeneratorEnumsStr>  ( _ l: B) -> (Int) -> (Int) -> wayenumerStr where B.A == B {
+
+
+
+ func GEnerateIndexes__ <B:IndexesGeneratorEnumsStr>  ( _ l: B) -> (Int) -> (Int) -> wayenumerStr where B.A == B {
+    
+    return B.generateIndexes(l)
+}
+ func GEnerateIndexes__ <B:IndexerGenerator>  ( _ l: B) -> (Int) -> (Int) -> wayConcrete where B.A == B {
     
     return B.generateIndexes(l)
 }
 
-        
-        
+
         
         
     
