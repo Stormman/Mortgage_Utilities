@@ -32,7 +32,7 @@ enum indexesHipoSample : String {
     
     
 }
-extension resultsHipoSample : strEnumer{};extension indexesHipoSample:strEnumer{}
+//extension resultsHipoSample : strEnumer{};extension indexesHipoSample:strEnumer{}
 
 
 
@@ -197,46 +197,44 @@ extension WaysOfIndexes : IndexesGeneratorEnumsStr {
 
 
         
-        
-    
-    
-    
-    
+//++++++++++++++++++++++++++++++++++
 
 
-//+++++++++
+// +++++++++++++++++++Statdistical Generatorç
 
 
-func elementIndexOf(_ ways : WaysOfIndexes)-> (String) ->  ( Int) -> (Int) -> Double? {// -> nSim -> day -> Double
-    
-    return {  name in { nSim  in  {nDay in
+protocol StadisticalGenerator {  associatedtype A     ;     static func stadistic(_ d : [Double]) -> A   }
+
+struct simpleStd  {
+    let media : Double
+    let varianza : Double
+    var desvTipica : Double {return sqrt(varianza)}
         
-        guard let po = ways.ways[name]?[nSim][nDay] else {return nil}
+       func  ident() -> simpleStd { return simpleStd(media:0,varianza:0)   }
         
-        return po
-        }
-        
-    }
-        
-}
     
 }
 
-func elementIndexOf(_ ways : waySamplesInClosedRangesUpAndDowns)-> (String) ->  ( Int) -> (Int) -> Double? {// -> nSim -> day -> Double
+struct  simpleS : StadisticalGenerator {
     
-    return {  name in { nSim  in  {nDay in
+    static func stadistic(_ d : [Double]) -> simpleStd {
+        
+        let media = (d.reduce(0,+) ) / Double(d.count)
+        let varianz = ((d <=> { pow($0-media,2)}).reduce(0, +) ) / Double(d.count)
         
         
-        guard let valorInd = ways.namesAndInitial[name]?.0 else {return nil}
-        guard let po = newValueOf(ways, name, actualValue: valorInd, inElem: nDay ) else {return nil}
+        return simpleStd(media: media, varianza: varianz)
         
-        return po
-        }
         
-        }
         
     }
     
+    
 }
 
 
+
+
+
+
+//+++++++++++

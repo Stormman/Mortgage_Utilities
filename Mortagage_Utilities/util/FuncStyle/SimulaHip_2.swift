@@ -244,30 +244,17 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
     
 }
 
-func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnumsStr>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
+func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnumsStr>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
     
-    //contr.enumerated().
-    
-    //func simul (n:Int ,)
-    
-    let gen = GEnerateIndexes__ <> ways
-    
+    let indicesEnSimulacionYDiaTal = GEnerateIndexes__ <> ways
     
     //Each one ------------
     
-    let ind =  Array(1...nDays) <=> {  gen <> NSims <> $0    }
+    let indicesCadaDiaEnSimulDada =  Array(1...nDays) <=> {  indicesEnSimulacionYDiaTal <> NSims <> $0    }
     
-    
-    
-    
-    let reArr = ind.reduce([OneSim ]) { (res: [A],indes : wayenumerStr) -> [A ] in
+    let reArr = indicesCadaDiaEnSimulDada.reduce([OneSim ]) { (res: [A],indes : wayenumerStr) -> [A ] in
         
-        res + [(res.last?.NextALL(indes))!]
-        
-    
-        
-    }
-    
+        res + [(res.last?.NextALL(indes))!]}
     
     let resultados = reArr <=> {$0.result }
     
@@ -278,6 +265,16 @@ func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnum
     
 }
 
+func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnumsStr>(OneSim : A, _ ways: B, days : Int, Simulaciones: Int ) -> [[A.RESU]] where B.A == B  {
+    
+    
+    let resultadosEnCadaSimulacion = Array(1...Simulaciones) <=> {SimulateinN_($0, days , OneSim, ways)}
+    
+    return resultadosEnCadaSimulacion
+    
+    
+    
+}
 
 
 
