@@ -244,7 +244,7 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
     
 }
 
-func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnumsStr>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
+func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
     
     let indicesEnSimulacionYDiaTal = GEnerateIndexes__ <> ways
     
@@ -252,7 +252,7 @@ func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnumsStr>( _ NSims
     
     let indicesCadaDiaEnSimulDada =  Array(1...nDays) <=> {  indicesEnSimulacionYDiaTal <> NSims <> $0    }
     
-    let reArr = indicesCadaDiaEnSimulDada.reduce([OneSim ]) { (res: [A],indes : wayenumerStr) -> [A ] in
+    let reArr = indicesCadaDiaEnSimulDada.reduce([OneSim ]) { (res: [A],indes : indHpotecSample) -> [A ] in
         
         res + [(res.last?.NextALL(indes))!]}
     
@@ -265,7 +265,7 @@ func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnumsStr>( _ NSims
     
 }
 
-func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnumsStr>(OneSim : A, _ ways: B, days : Int, Simulaciones: Int ) -> [[A.RESU]] where B.A == B  {
+func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >(OneSim : A, _ ways: B, days : Int, Simulaciones: Int ) -> [[A.RESU]] where B.A == B  {
     
     
     let resultadosEnCadaSimulacion = Array(1...Simulaciones) <=> {SimulateinN_($0, days , OneSim, ways)}
@@ -323,8 +323,8 @@ protocol funcNextt {
 // / //////////////// funnext NEVOOOO
 protocol funcNEXTT_ {
     
-    associatedtype RES
-    associatedtype IND
+    associatedtype RES : DictionableResultable
+    associatedtype IND : DictionableResultable
     associatedtype B
     
     func applyNEXT_( _ res: RES ) -> (IND) -> B
@@ -332,8 +332,8 @@ protocol funcNEXTT_ {
 
 protocol ONESIMCONtroller_ {
     
-    associatedtype RESU
-    associatedtype INDE
+    associatedtype RESU : DictionableResultable
+    associatedtype INDE : DictionableResultable
     
     var  result : RESU {get set}
     var  indexx : INDE {get set }
@@ -350,27 +350,27 @@ protocol ONESIMCONtroller_ {
     
 }
 
-protocol  funcNEXTTHIpo_ : funcNEXTT_ where RES == resultsHipoSample , IND == wayenumerStr{
-    func applyNEXT_( _ res: resultsHipoSample ) -> (wayenumerStr) -> B
+protocol  funcNEXTTHIpo_ : funcNEXTT_ where RES == rHipotSample , IND == indHpotecSample{
+    func applyNEXT_( _ res: rHipotSample ) -> (indHpotecSample) -> B
 }
 //erasure for funnexxxtHTTP
 
 struct AnyfunNEXXTHIpo<BB> : funcNEXTT_ {
    
-    typealias RES = resultsHipoSample
+    typealias RES = rHipotSample
     
-    typealias IND = wayenumerStr
+    typealias IND = indHpotecSample
     
     typealias B = BB
     
-    private let _applyNEXT_: (resultsHipoSample) -> (wayenumerStr) -> BB
+    private let _applyNEXT_: (rHipotSample) -> (indHpotecSample) -> BB
     
-    init<U : funcNEXTT_>(_ funce : U  ) where U.RES == resultsHipoSample, U.IND == wayenumerStr, U.B == BB {
+    init<U : funcNEXTT_>(_ funce : U  ) where U.RES == rHipotSample, U.IND == indHpotecSample, U.B == BB {
         
         _applyNEXT_ = funce.applyNEXT_
     }
     
-    func applyNEXT_(_ res: resultsHipoSample) -> (wayenumerStr) -> BB {
+    func applyNEXT_(_ res: rHipotSample) -> (indHpotecSample) -> BB {
         return _applyNEXT_(res)
     }
 }
@@ -378,13 +378,13 @@ struct AnyfunNEXXTHIpo<BB> : funcNEXTT_ {
 
 
 
-protocol ONESIMCONtrollerHIPO__ : ONESIMCONtroller_ where RESU == resultsHipoSample, INDE == wayenumerStr {
+protocol ONESIMCONtrollerHIPO__ : ONESIMCONtroller_ where RESU == rHipotSample, INDE == indHpotecSample {
     
-    var  result : resultsHipoSample {get set}
-    var  indexx : wayenumerStr {get set}
-    func nexttt() -> resultsHipoSample //nuevo resultado
+    var  result : rHipotSample {get set}
+    var  indexx : indHpotecSample {get set}
+    func nexttt() -> rHipotSample //nuevo resultado
     
-     func NextALL(_ indices: wayenumerStr ) -> Self
+     func NextALL(_ indices: indHpotecSample ) -> Self
     
     func NextALL() -> Self
     
@@ -399,16 +399,16 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     
     
     
-    var result : resultsHipoSample
-    var indexx : wayenumerStr
+    var result : rHipotSample
+    var indexx : indHpotecSample
     
     let arrFunc : [AnyfunNEXXTHIpo<B>]
     
     //
-    let converResulIndividToAgregate : ([B ]) -> (resultsHipoSample) -> resultsHipoSample//hay que sumar uno a la iteracion
+    let converResulIndividToAgregate : ([B ]) -> (rHipotSample) -> rHipotSample//hay que sumar uno a la iteracion
     
     
-    func nexttt() -> resultsHipoSample {
+    func nexttt() -> rHipotSample {
         
         // extraemos las salidas de todas las cunNExts
         
@@ -426,7 +426,7 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
         
     }
     
-    func NextALL(_ Proximosindices: wayenumerStr) -> ONESIMCOntr {//preparado para la proxima iteracion
+    func NextALL(_ Proximosindices: indHpotecSample) -> ONESIMCOntr {//preparado para la proxima iteracion
         
         let toRet = ONESIMCOntr(result: self.nexttt(), indexx:Proximosindices,arrFunc: self.arrFunc,converResulIndividToAgregate: self.converResulIndividToAgregate )
         

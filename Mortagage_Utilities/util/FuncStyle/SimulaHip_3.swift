@@ -138,6 +138,21 @@ protocol IndexesGeneratorEnumsStr {
     
 }
 
+protocol IndexesGenerDictionableResultable {
+    
+    associatedtype A
+    associatedtype B : DictionableResultable
+    
+    static func generateIndexes( _ i : A) -> (Int) ->(Int) -> B
+}
+protocol IndexGenDictionableHipo : IndexesGenerDictionableResultable {
+    
+    static func generateIndexes( _ i : A) -> (Int) ->(Int) -> indHpotecSample
+    
+}
+
+
+
 //**++++++++++++++++++++++++++++++++++++++++
 
 extension WaysOfIndexes : IndexerGenerator {
@@ -204,7 +219,41 @@ extension WaysOfIndexes : IndexesGeneratorEnumsStr {
     
 }
 
-
+extension WaysOfIndexes : IndexGenDictionableHipo  {
+    
+    
+    
+    static func generateIndexes( _ i : WaysOfIndexes) -> (Int) ->(Int) ->  indHpotecSample {
+        
+        return { nSim in return { nDays in
+            
+            
+            let allIndes = Array(i.ways.keys)
+            
+            let coge = (CogeDelDictDeLosIndexEsto <> i.ways <> nSim <> nDays)
+            
+            let valuesTo = allIndes <=> coge
+            
+            //let une = zip(allIndes,valuesTo)
+            
+            
+            let aLLIndesEnum = ( allIndes <=> { indexesHipoSample(rawValue: $0)     }).flatMap{$0}
+            
+            let dicTo = CreaDictionaryCOnEStosArrays( fir: aLLIndesEnum , sec: valuesTo)
+            
+            return indHpotecSample(bookTrade: dicTo)
+            
+            
+            }    }
+        
+        
+        
+    }
+    
+    
+    
+    
+}
 
 
  func GEnerateIndexes__ <B:IndexesGeneratorEnumsStr>  ( _ l: B) -> (Int) -> (Int) -> wayenumerStr where B.A == B {
@@ -216,7 +265,10 @@ extension WaysOfIndexes : IndexesGeneratorEnumsStr {
     return B.generateIndexes(l)
 }
 
-
+func GEnerateIndexes__ <B:IndexGenDictionableHipo >  ( _ l: B) -> (Int) -> (Int) -> indHpotecSample where B.A == B {
+    
+    return B.generateIndexes(l)
+}
         
 //++++++++++++++++++++++++++++++++++
 
