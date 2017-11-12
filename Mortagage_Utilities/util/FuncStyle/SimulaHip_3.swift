@@ -15,6 +15,28 @@ typealias wayenumerStr = Dictionary< indexesHipoSample, Optional<Double>>
 typealias resultsEnumStr = Dictionary< resultsHipoSample, Optional<Double>>
 
 
+protocol DictionableResultable{
+    
+    associatedtype A : RawRepresentable, Hashable where A.RawValue == String
+    
+    var bookTrade : Dictionary< A, Optional<Double>> {get}
+    
+    
+}
+struct rHipotSample : DictionableResultable {
+    
+    
+    var bookTrade : Dictionary< resultsHipoSample, Optional<Double>>
+    
+}
+struct indHpotecSample : DictionableResultable {
+    
+    var bookTrade : Dictionary< indexesHipoSample, Optional<Double>>
+    
+    
+}
+
+
 enum resultsHipoSample: String   {
     
     case beneficios = "Beneficios"
@@ -32,9 +54,8 @@ enum indexesHipoSample : String {
     
     
 }
-//extension resultsHipoSample : strEnumer{};extension indexesHipoSample:strEnumer{}
 
-
+// WAYS OF INDEXES +++++++++++++++++++++++++++++++++++++++++
 
 struct WaysOfIndexes {
     
@@ -93,7 +114,7 @@ func newValueOf(_ samplesUpDowns: waySamplesInClosedRangesUpAndDowns, _ name:Str
 }
 
 
-//+++++++++++++++ protocol Indexes Generator
+//+++++++++++++++ protocol Indexes Generator+++++++++++++++++++++++++++++++++++++
 
 protocol IndexesGen {
     
@@ -117,7 +138,7 @@ protocol IndexesGeneratorEnumsStr {
     
 }
 
-
+//**++++++++++++++++++++++++++++++++++++++++
 
 extension WaysOfIndexes : IndexerGenerator {
     
