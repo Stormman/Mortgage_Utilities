@@ -38,3 +38,5 @@ let creaDictConesteArrayStringYesteDOuble : ([String]) -> ([Double?]) -> [String
     
     
 }
+
+

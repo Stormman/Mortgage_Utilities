@@ -234,7 +234,7 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
     
     let contr : A
     
-    let wayToINdexes : wayToInd
+    //let wayToINdexes : wayToInd
     
    
    // let mapped = contr
@@ -244,13 +244,16 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
     
 }
 
-func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexerGenerator>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ indexess_: WaysOfIndexes ,_ ways: B) -> [A.RESU]  where B.A == B {
+func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexerGenerator>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
     
     //contr.enumerated().
     
     //func simul (n:Int ,)
     
     let gen = GEnerateIndexes__ <> ways
+    
+    
+    //Each one ------------
     
     let ind =  Array(1...nDays) <=> {  gen <> NSims <> $0    }
     
@@ -265,6 +268,9 @@ func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexerGenerator>( _
     
     
     let resultados = reArr <=> {$0.result }
+    
+    // each one-------------
+    
     
     return resultados
     

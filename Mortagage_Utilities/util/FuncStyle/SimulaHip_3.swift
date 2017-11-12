@@ -7,9 +7,34 @@
 //
 
 import Foundation
+protocol strEnumer{}
 
 typealias waysOfInd = [String : [[Double]]]
 typealias wayConcrete = Dictionary<String, Optional<Double>>
+typealias wayenumerStr = Dictionary< indexesHipoSample, Optional<Double>>
+
+
+
+enum resultsHipoSample: String   {
+    
+    case beneficios = "Beneficios"
+    case cash = "Cash"
+    case garantisa = "Garantias"
+    case perdidasAcumuladas = "PerdidasAcumuladas"
+    
+    
+}
+enum indexesHipoSample : String {
+    
+    case euribor1año = "Euribor 1 año"
+    case bono10Esp = "Bono 10 años Español"
+    case eurodollar = "EuroDollar"
+    
+    
+}
+extension resultsHipoSample : strEnumer{};extension indexesHipoSample:strEnumer{}
+
+
 
 struct WaysOfIndexes {
     
@@ -70,17 +95,34 @@ func newValueOf(_ samplesUpDowns: waySamplesInClosedRangesUpAndDowns, _ name:Str
 
 //+++++++++++++++ protocol Indexes Generator
 
-protocol IndexerGenerator {
-  
+protocol IndexesGen {
+    
     associatedtype A
+    associatedtype B
     
+    static func generateIndexes( _ i : A) -> (Int) ->(Int) ->  B
+}
+
+
+
+protocol IndexerGenerator {
+     associatedtype A
     static func generateIndexes( _ i : A) -> (Int) ->(Int) ->  wayConcrete
-    
+}
+
+protocol IndexesGeneratorEnumsStr {
+    associatedtype A
+    static func generateIndexes( _ i : A) -> (Int) ->(Int) -> wayenumerStr
     
     
 }
 
+
+
 extension WaysOfIndexes : IndexerGenerator {
+    
+    
+   typealias A =  WaysOfIndexes
     
     static func generateIndexes( _ i : WaysOfIndexes) -> (Int) ->(Int) ->  wayConcrete {
         
@@ -111,6 +153,52 @@ func GEnerateIndexes__ <B:IndexerGenerator>  ( _ l: B) -> (Int) -> (Int) -> wayC
     return B.generateIndexes(l)
 }
 
+extension WaysOfIndexes : IndexesGeneratorEnumsStr {
+    
+    
+    
+    static func generateIndexes( _ i : WaysOfIndexes) -> (Int) ->(Int) ->  wayenumerStr {
+        
+        return { nSim in return { nDays in
+            
+            
+            let allIndes = Array(i.ways.keys)
+            
+            let coge = (CogeDelDictDeLosIndexEsto <> i.ways <> nSim <> nDays)
+            
+            let valuesTo = allIndes <=> coge
+            
+            //let une = zip(allIndes,valuesTo)
+            
+            
+            let aLLIndesEnum = ( allIndes <=> { indexesHipoSample(rawValue: $0)     }).flatMap{$0}
+            
+            let dicTo = CreaDictionaryCOnEStosArrays( fir: aLLIndesEnum , sec: valuesTo)
+            
+            return dicTo
+            
+            
+            }    }
+        
+        
+    }
+    
+    
+}
+
+func GEnerateIndexes__ <B:IndexesGeneratorEnumsStr>  ( _ l: B) -> (Int) -> (Int) -> wayenumerStr where B.A == B {
+    
+    return B.generateIndexes(l)
+}
+
+        
+        
+        
+        
+    
+    
+    
+    
 
 
 //+++++++++
