@@ -12,7 +12,7 @@ protocol strEnumer{}
 typealias waysOfInd = [String : [[Double]]]
 typealias wayConcrete = Dictionary<String, Optional<Double>>
 typealias wayenumerStr = Dictionary< indexesHipoSample, Optional<Double>>
-
+typealias resultsEnumStr = Dictionary< resultsHipoSample, Optional<Double>>
 
 
 enum resultsHipoSample: String   {

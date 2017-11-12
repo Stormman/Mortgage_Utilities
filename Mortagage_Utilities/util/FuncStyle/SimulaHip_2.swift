@@ -244,7 +244,7 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
     
 }
 
-func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexerGenerator>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
+func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexesGeneratorEnumsStr>( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
     
     //contr.enumerated().
     
@@ -258,11 +258,13 @@ func totalSimulinNSImulConcrete <A:ONESIMCONtrollerHIPO__,B:IndexerGenerator>( _
     let ind =  Array(1...nDays) <=> {  gen <> NSims <> $0    }
     
     
-    let reArr = ind.reduce([OneSim ]) { (res: [A],indes : wayConcrete) -> [A ] in
+    
+    
+    let reArr = ind.reduce([OneSim ]) { (res: [A],indes : wayenumerStr) -> [A ] in
         
         res + [(res.last?.NextALL(indes))!]
         
-        
+    
         
     }
     
@@ -351,27 +353,27 @@ protocol ONESIMCONtroller_ {
     
 }
 
-protocol  funcNEXTTHIpo_ : funcNEXTT_ where RES == res , IND == wayConcrete{
-    func applyNEXT_( _ res: res ) -> (wayConcrete) -> B
+protocol  funcNEXTTHIpo_ : funcNEXTT_ where RES == resultsHipoSample , IND == wayenumerStr{
+    func applyNEXT_( _ res: resultsHipoSample ) -> (wayenumerStr) -> B
 }
 //erasure for funnexxxtHTTP
 
 struct AnyfunNEXXTHIpo<BB> : funcNEXTT_ {
    
-    typealias RES = res
+    typealias RES = resultsHipoSample
     
-    typealias IND = wayConcrete
+    typealias IND = wayenumerStr
     
     typealias B = BB
     
-    private let _applyNEXT_: (res) -> (wayConcrete) -> BB
+    private let _applyNEXT_: (resultsHipoSample) -> (wayenumerStr) -> BB
     
-    init<U : funcNEXTT_>(_ funce : U  ) where U.RES == res, U.IND == wayConcrete, U.B == BB {
+    init<U : funcNEXTT_>(_ funce : U  ) where U.RES == resultsHipoSample, U.IND == wayenumerStr, U.B == BB {
         
         _applyNEXT_ = funce.applyNEXT_
     }
     
-    func applyNEXT_(_ res: res) -> (wayConcrete) -> BB {
+    func applyNEXT_(_ res: resultsHipoSample) -> (wayenumerStr) -> BB {
         return _applyNEXT_(res)
     }
 }
@@ -379,13 +381,13 @@ struct AnyfunNEXXTHIpo<BB> : funcNEXTT_ {
 
 
 
-protocol ONESIMCONtrollerHIPO__ : ONESIMCONtroller_ where RESU == res, INDE == wayConcrete {
+protocol ONESIMCONtrollerHIPO__ : ONESIMCONtroller_ where RESU == resultsHipoSample, INDE == wayenumerStr {
     
-    var  result : res {get set}
-    var  indexx : wayConcrete {get set}
-    func nexttt() -> res //nuevo resultado
+    var  result : resultsHipoSample {get set}
+    var  indexx : wayenumerStr {get set}
+    func nexttt() -> resultsHipoSample //nuevo resultado
     
-     func NextALL(_ indices: wayConcrete ) -> Self
+     func NextALL(_ indices: wayenumerStr ) -> Self
     
     func NextALL() -> Self
     
@@ -400,16 +402,16 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     
     
     
-    var result : res
-    var indexx : wayConcrete
+    var result : resultsHipoSample
+    var indexx : wayenumerStr
     
     let arrFunc : [AnyfunNEXXTHIpo<B>]
     
     //
-    let converResulIndividToAgregate : ([B ]) -> (res) -> res//hay que sumar uno a la iteracion
+    let converResulIndividToAgregate : ([B ]) -> (resultsHipoSample) -> resultsHipoSample//hay que sumar uno a la iteracion
     
     
-    func nexttt() -> res {
+    func nexttt() -> resultsHipoSample {
         
         // extraemos las salidas de todas las cunNExts
         
@@ -427,7 +429,7 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
         
     }
     
-    func NextALL(_ Proximosindices: wayConcrete) -> ONESIMCOntr {//preparado para la proxima iteracion
+    func NextALL(_ Proximosindices: wayenumerStr) -> ONESIMCOntr {//preparado para la proxima iteracion
         
         let toRet = ONESIMCOntr(result: self.nexttt(), indexx:Proximosindices,arrFunc: self.arrFunc,converResulIndividToAgregate: self.converResulIndividToAgregate )
         
