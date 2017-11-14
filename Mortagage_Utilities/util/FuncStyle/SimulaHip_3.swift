@@ -23,6 +23,73 @@ protocol DictionableResultable{
     
     
 }
+protocol DictionableToStadisticar {
+    
+    associatedtype A : RawRepresentable, Hashable where A.RawValue == String
+    
+    var bookTrade : Dictionary< A, Array<Optional<Double>>> {get set }
+    
+   // init(_ bk: Dictionary< A, Array<Optional<Double>>>)
+
+    
+    
+}
+
+struct DictioToStd< C :Hashable & RawRepresentable>  where C.RawValue == String {
+   
+    init(_ bookTrade_ :Dictionary< C, Array<Optional<Double>>>) {
+        
+        bookTrade = bookTrade_
+        
+    }
+    
+    func identity() -> DictioToStd {
+        
+        let t = self.bookTrade.mapValues{_ in Array<Optional<Double>>()}
+        //let dic = Dictionary(t , uniquingKeysWith: {(f,s) in f })
+        //return DictioToStd(dic)
+        
+        return DictioToStd(t)
+    }
+    
+    var bookTrade : Dictionary< C, Array<Optional<Double>>>
+    
+    
+}
+
+
+
+
+func +++ < A:DictionableResultable , B:DictionableResultable > ( first:  A,second: B ) -> DictioToStd<A.A>   where A.A == B.A {
+    
+    typealias dcitRes = Dictionary<A.A,Array<Optional<Double>>>
+    
+    let t = [first.bookTrade, second.bookTrade]
+    
+    let todaslospares = (t <=> {$0.map{($0,$1)}}) .flatMap{$0}
+    
+    let po = todaslospares <=> {($0,[$1])}
+        
+    let dictT = Dictionary(po, uniquingKeysWith: {(f,s) in f + s         })
+    
+    return DictioToStd( dictT)
+    
+    
+}
+func +++ <A> ( first: DictioToStd<A>, second : DictioToStd<A>  )-> DictioToStd<A>  {
+    
+    let di = first.bookTrade.merging(second.bookTrade, uniquingKeysWith: {$0 + $1})
+    
+    return DictioToStd<A>(di)
+    
+    
+}
+
+
+
+
+
+
 struct rHipotSample : DictionableResultable {
     
     
@@ -43,6 +110,7 @@ enum resultsHipoSample: String   {
     case cash = "Cash"
     case garantisa = "Garantias"
     case perdidasAcumuladas = "PerdidasAcumuladas"
+    case dia = "dia"
     
     
 }
@@ -82,6 +150,8 @@ struct WaysOfIndexes {
         
         return WaysOfIndexes(ways: waExamp, nDays: 3, nSimul: 12)
         }
+
+
 }
 
 enum wayCfd {case up;case down}
@@ -274,6 +344,16 @@ func GEnerateIndexes__ <B:IndexGenDictionableHipo >  ( _ l: B) -> (Int) -> (Int)
 
 
 // +++++++++++++++++++Statdistical Generatorç
+protocol DictionableEstadisticable{
+    
+    associatedtype A : RawRepresentable, Hashable where A.RawValue == String
+    
+    associatedtype B : StadisticalGenerator
+    
+    var bookTrade : Dictionary< A, Optional<B>> {get}
+    
+    
+}
 
 
 protocol StadisticalGenerator {  associatedtype A     ;     static func stadistic(_ d : [Double]) -> A   }
@@ -290,6 +370,8 @@ struct simpleStd  {
 
 struct  simpleS : StadisticalGenerator {
     
+   
+    
     static func stadistic(_ d : [Double]) -> simpleStd {
         
         let media = (d.reduce(0,+) ) / Double(d.count)
@@ -297,13 +379,30 @@ struct  simpleS : StadisticalGenerator {
         
         
         return simpleStd(media: media, varianza: varianz)
-        
-        
-        
+        }
+}
+
+func aplyEstadOneDict <A : DictionableResultable , B: StadisticalGenerator> ( _ resultadosAgreg : [A] ) -> (B) -> Dictionary<A.A, B.A>?    {
+    
+    return { stadis in
+    
+    let convert = resultadosAgreg <=> {$0.bookTrade.mapValues{ [$0]    }    }
+   
+    let conveObj = convert <=> {DictioToStd<A.A>($0)}
+    
+    guard let firsObj = conveObj.first else { return nil}
+    
+    let sumatorioDeTodosLosEnumerables = conveObj.reduce(firsObj.identity()) { (res:DictioToStd<A.A>, el: DictioToStd<A.A> ) -> DictioToStd<A.A> in  res +++ el }
+    
+        let toRet = sumatorioDeTodosLosEnumerables.bookTrade.mapValues{B.stadistic($0 as! [Double])       }
+        //posible errorToSee nohay q convertir as!  DOuble
+        return toRet
     }
     
-    
 }
+    
+    
+    
 
 
 

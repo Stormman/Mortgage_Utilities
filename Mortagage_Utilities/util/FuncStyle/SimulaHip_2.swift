@@ -173,47 +173,6 @@ extension simALLGener  {
     }
     
 }
-/*
-struct simSequeGeneric <B : ONESIMCONtrollerHIPO__> : simALLGener {
-    
-     typealias A = B
-    
-    var stopsAt: Int
-    var element_: B //initial element
-    
-    
-    init(_ length: Int, _ clos: @escaping (B) -> B, _firstElement: B ) {
-        
-        self.stopsAt = length
-        self.retDoubleInIteration = clos
-        self.element_ = _firstElement
-    }
-    
-    var retDoubleInIteration: (B) -> B {
-        
-        
-        
-    }
-    
-    
- 
-   
-    
-    
-    
-    
-    
-    
-}
-
-*/
-
-
-
-
-
-
-
 
 //++++++++++++++++++++++++++++++++
 
@@ -225,6 +184,7 @@ func <=> <B> ( f: @escaping (Double ) -> B,x: miPNext  ) -> [B] { return x.map(f
 // totalSIMulation ////////
 //typealias  waysOfIndexes = [String : [Double]]
 
+/// TOTAL SIMULATIONS *****************************************************************************
 
  typealias  wayToInd = (WaysOfIndexes)->  (Int ) -> (Int)-> inde // Nsimumlac -> nDia ...
 
@@ -233,15 +193,7 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
     let indexes : WaysOfIndexes
     
     let contr : A
-    
-    //let wayToINdexes : wayToInd
-    
    
-   // let mapped = contr
-   
-    
-   
-    
 }
 
 func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
@@ -276,13 +228,22 @@ func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >(OneSim : A,
     
 }
 
+func totalStadistically <A :DictionableResultable, B: StadisticalGenerator > (resultadosSim : [[A]] ) -> (B) -> [Dictionary<A.A, B.A>] {
+    
+    return { estd in
+    
+        let toR = resultadosSim <=>  {aplyEstadOneDict <> $0 <> estd }
+    
+        return toR as! [Dictionary<A.A, B.A>]
+    // errorToSee
+    }
+}
 
 
 
 
 
-
-
+// TOTAL SIMULATIONS ^^^^^^^ *****************************************************************************
 // //////////////////////////////////////////////////////////////////////
 
 struct res {let cash : Double ; let garantias :Double ; let perdidasAcumuladas : Double ; let iterac : Int}

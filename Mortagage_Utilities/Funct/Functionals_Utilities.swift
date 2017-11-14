@@ -29,6 +29,7 @@ infix operator <> : gr
 infix operator <!> : gr
 infix operator <*> : gr
 infix operator <=> : gr //map
+infix operator +++ : gr
 
 //infix operator <-> : gr  //monad
 //infix operator <*> : gr // aplicative
