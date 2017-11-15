@@ -109,18 +109,37 @@ class simulaTest: XCTestCase {
         
     }
     
-    func testSimuGeneric () {
+    func testFuncNexthipo () {
         
-      
+        
+        
+        
+        
+        let f1 = AnyfunNEXXTHIpo<rHipotSample>(pruebasFX())
+        
+        
+        let f = [rs.cash:90.9, rs.dia : 2]
+        let fg = [rs.cash:90.9, rs.dia : 2]
+        let ff = rHipotSample(bookTrade: f)
+        let ffg = rHipotSample(bookTrade: fg)
+        
+        let suma = ff +++ ffg
+        
+        let fgpp = 9000000
+        
+        
+        
+    }
+        
     
         
        
         
         
         
-        let pppfo = 90000
+    
         
-    }
+    
     
     
     func testPerformanceExample() {

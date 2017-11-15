@@ -314,6 +314,38 @@ protocol ONESIMCONtroller_ {
 protocol  funcNEXTTHIpo_ : funcNEXTT_ where RES == rHipotSample , IND == indHpotecSample{
     func applyNEXT_( _ res: rHipotSample ) -> (indHpotecSample) -> B
 }
+
+protocol  funcNX  : funcNEXTTHIpo_ where B == rHipotSample{}
+
+typealias rs = resultsHipoSample
+typealias ie = indexesHipoSample
+
+
+struct pruebasFX : funcNX {
+   
+    
+    func applyNEXT_( _ res: rHipotSample ) -> (indHpotecSample) -> rHipotSample {
+        
+        return  {indes in
+            
+            let diaa = (res.bookTrade[rs.dia] )
+            
+            let intDi =  (diaa as? Int)
+            
+            let cashe = ( res.bookTrade[rs.cash]!)!
+            
+            let euri = (indes.bookTrade[ie.euribor1año]!)!
+            
+            let cap = rHipotSample(bookTrade: [rs.beneficios : Double(intDi! * 2), rs.cash : Double (-(intDi! * 2))])
+            
+            return cap
+            }
+        }
+    
+}
+
+
+
 //erasure for funnexxxtHTTP
 
 struct AnyfunNEXXTHIpo<BB> : funcNEXTT_ {
@@ -360,7 +392,7 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     
     
     
-    var result : rHipotSample
+    var result : rHipotSample // resultado antes de hacer la simulacion
     var indexx : indHpotecSample
     
     let arrFunc : [AnyfunNEXXTHIpo<B>]
@@ -413,8 +445,43 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     
 }
 
+let converResulIndividToAgregatePruebas : ([rHipotSample ]) -> (rHipotSample) -> rHipotSample =  { arHip in  {resulAnterior in
+    
+    
+    
+    let ned = DictioToStd<resultsHipoSample>()
+    
+    /*let reArr = indicesCadaDiaEnSimulDada.reduce([OneSim ]) { (res: [A],indes : indHpotecSample) -> [A ] in
+        
+        res + [(res.last?.NextALL(indes))!]}
+    
+    let resultados = reArr <=> {$0.result
+    
+    }*/
+    
+    let res = arHip.reduce(ned) { (res: DictioToStd<resultsHipoSample>, ele: rHipotSample) in
+        
+        ele +++ res
+        }
+    
+    let sumaDelStdDict = res.bookTrade.mapValues(){ $0.flatMap{$0}.reduce(0,+)    }
+
+    return rHipotSample(bookTrade:sumaDelStdDict)
+    
+    
+    }
+    
+    
+    
+}
 
 
+let chari : (Int) -> (Int) -> String = { n in { ln  in String(ln + n)         }
+    
+    
+    
+    
+}
 
 //    ///////////////////////////////////////////
 

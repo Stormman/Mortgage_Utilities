@@ -43,6 +43,13 @@ struct DictioToStd< C :Hashable & RawRepresentable>  where C.RawValue == String 
         
     }
     
+    init() {
+        
+        
+        bookTrade = Dictionary< C, Array<Optional<Double>>>()
+        
+    }
+    
     func identity() -> DictioToStd {
         
         let t = self.bookTrade.mapValues{_ in Array<Optional<Double>>()}
@@ -76,6 +83,45 @@ func +++ < A:DictionableResultable , B:DictionableResultable > ( first:  A,secon
     
     
 }
+
+func +++ < A:DictionableResultable  > ( first:  A,second: DictioToStd<A.A> ) -> DictioToStd<A.A>    {
+    
+    typealias dcitRes = Dictionary<A.A,Array<Optional<Double>>>
+    
+    
+    
+    
+    let bookSec = first.bookTrade
+    
+    let gg = second.bookTrade.map(){ (k:A.A , v:Array<Optional<Double>>) -> (A.A, Array<Optional<Double>>) in
+        
+        if (bookSec.index(forKey: k) != nil) { return ( k, v + [bookSec[k]!])          }  else {return (k,v)}
+        
+    }
+    
+   
+    
+  
+    let dict = Dictionary(gg, uniquingKeysWith:{ (f,_)  in f} )
+   
+    
+    
+    
+    
+    
+    return DictioToStd( dict)
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
 func +++ <A> ( first: DictioToStd<A>, second : DictioToStd<A>  )-> DictioToStd<A>  {
     
     let di = first.bookTrade.merging(second.bookTrade, uniquingKeysWith: {$0 + $1})
