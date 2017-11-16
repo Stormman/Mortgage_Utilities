@@ -115,34 +115,7 @@ class simulaTest: XCTestCase {
         
         
         
-        let f1 = AnyfunNEXXTHIpo<rHipotSample>(pruebasFX())
-        
-        
-        let f = [rs.cash:90.9, rs.dia : 2]
-        let fg = [rs.cash:90.9, rs.dia : 2]
-        let ff = rHipotSample(bookTrade: f)
-        let ffg = rHipotSample(bookTrade: fg)
-        
-        let suma = ff +++ ffg
-        
-        
-        
-        let ind = indHpotecSample(bookTrade: [ie.euribor1año : 0.5770,ie.bono10Esp: 100.10, ie.eurodollar:1.1767])
-        let resIniti = rHipotSample(bookTrade: [rs.cash : 0 ,rs.dia:1 ])
-        
-        
-        
-        
-        let poSim = ONESIMCOntr(iterIndex:0,result: resIniti, indexx: ind, arrFunc: [f1,f1], converResulIndividToAgregate: converResulIndividToAgregatePruebas)
-        
-        
-        
-        
-        let nt = poSim.nexttt()
-        
-        
-        let fgpp = 9000000
-        
+       
         
         
         
@@ -152,7 +125,7 @@ class simulaTest: XCTestCase {
         
         
         let ind = indHpotecSample(bookTrade: [ie.euribor1año : 0.5770,ie.bono10Esp: 100.10, ie.eurodollar:1.1767])
-        let resIniti = rHipotSample(bookTrade: [rs.cash : 0 ,rs.dia:1 , rs.perdidasAcumuladas: -122.332])
+        let resIniti = rHipotSample(bookTrade: [rs.cash : 0 , rs.perdidasAcumuladas: -122.332])
         
         let eje = [rs.cash : [90.5] , rs.perdidasAcumuladas: [-1000.44]]
         
@@ -193,7 +166,7 @@ class simulaTest: XCTestCase {
         let ind = indHpotecSample(bookTrade: [ie.euribor1año : 0.5770,ie.bono10Esp: 100.10, ie.eurodollar:1.1767])
          */
  
-        let resIniti = rHipotSample(bookTrade: [rs.cash : 0 ,rs.dia:1 ])
+        let resIniti = rHipotSample(bookTrade: [rs.cash : 0 ,rs.beneficios: 0 ])
         
         
         

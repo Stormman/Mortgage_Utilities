@@ -332,7 +332,7 @@ struct pruebasFX : funcNX {
             let eurib = indes.bookTrade[indexesHipoSample.euribor1año] ?? 0.15
             let bono = indes.bookTrade[indexesHipoSample.bono10Esp] ?? 100.15
             
-            let cap = rHipotSample(bookTrade: [rs.beneficios : Double(intDi * 2) * eurib! , rs.cash : Double (-(intDi * 2)) - bono! , rs.dia : Double(iter)])
+            let cap = rHipotSample(bookTrade: [rs.beneficios : Double(intDi * 2) * eurib! , rs.cash : Double (-(intDi * 2)) - bono! ])
             
             return cap
             }}

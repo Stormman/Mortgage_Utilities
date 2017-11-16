@@ -161,16 +161,16 @@ enum resultsHipoSample: String   {
     
     case beneficios = "Beneficios"
     case cash = "Cash"
-    case garantisa = "Garantias"
-    case perdidasAcumuladas = "PerdidasAcumuladas"
-    case dia = "dia"
+    case garantias = "Garantias"
+    case perdidasAcumuladas = "Perdidas Acumuladas"
+    
     
     
 }
 enum indexesHipoSample : String {
     
-    case euribor1año = "Euribor1año"
-    case bono10Esp = "Bono10Esp"
+    case euribor1año = "Euribor 1 año"
+    case bono10Esp = "Bono 10 Esp"
     case eurodollar = "EuroDollar"
     
     
