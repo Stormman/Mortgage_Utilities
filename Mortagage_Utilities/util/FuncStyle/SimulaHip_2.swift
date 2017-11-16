@@ -196,7 +196,7 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
    
 }
 
-func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {
+func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {//NSim es a simulacion a hcer
     
     let indicesEnSimulacionYDiaTal = GEnerateIndexes__ <> ways
     
@@ -328,15 +328,15 @@ struct pruebasFX : funcNX {
         
         return  {indes in
             
-            let diaa = (res.bookTrade[rs.dia] )
+            let diaa = ((res.bookTrade[rs.dia] )!)! // siempre tiene que haber un campolllamado dia
             
-            let intDi =  (diaa as? Int)
+            let intDi = Int(diaa)
             
-            let cashe = ( res.bookTrade[rs.cash]!)!
+            //let cashe = ( res.bookTrade[rs.cash]!)!
             
-            let euri = (indes.bookTrade[ie.euribor1año]!)!
+            //let euri = (indes.bookTrade[ie.euribor1año]!)!
             
-            let cap = rHipotSample(bookTrade: [rs.beneficios : Double(intDi! * 2), rs.cash : Double (-(intDi! * 2))])
+            let cap = rHipotSample(bookTrade: [rs.beneficios : Double(intDi * 2), rs.cash : Double (-(intDi * 2)), rs.dia : Double(intDi + 1)])
             
             return cap
             }
@@ -461,7 +461,9 @@ let converResulIndividToAgregatePruebas : ([rHipotSample ]) -> (rHipotSample) ->
     
     let res = arHip.reduce(ned) { (res: DictioToStd<resultsHipoSample>, ele: rHipotSample) in
         
-        ele +++ res
+       let resuuOp = ele +++ res
+        
+        return resuuOp
         }
     
     let sumaDelStdDict = res.bookTrade.mapValues(){ $0.flatMap{$0}.reduce(0,+)    }
@@ -470,14 +472,6 @@ let converResulIndividToAgregatePruebas : ([rHipotSample ]) -> (rHipotSample) ->
     
     
     }
-    
-    
-    
-}
-
-
-let chari : (Int) -> (Int) -> String = { n in { ln  in String(ln + n)         }
-    
     
     
     

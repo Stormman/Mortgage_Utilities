@@ -125,15 +125,67 @@ class simulaTest: XCTestCase {
         
         let suma = ff +++ ffg
         
+        
+        
+        let ind = indHpotecSample(bookTrade: [ie.euribor1año : 0.5770,ie.bono10Esp: 100.10, ie.eurodollar:1.1767])
+        let resIniti = rHipotSample(bookTrade: [rs.cash : 0 ,rs.dia:1 ])
+        
+        
+        
+        
+        let poSim = ONESIMCOntr(result: resIniti, indexx: ind, arrFunc: [f1,f1], converResulIndividToAgregate: converResulIndividToAgregatePruebas)
+        
+        
+        
+        
+        let nt = poSim.nexttt()
+        
+        
         let fgpp = 9000000
+        
         
         
         
     }
         
-    
+    func testSumasDicResultables() {
         
-       
+        
+        let ind = indHpotecSample(bookTrade: [ie.euribor1año : 0.5770,ie.bono10Esp: 100.10, ie.eurodollar:1.1767])
+        let resIniti = rHipotSample(bookTrade: [rs.cash : 0 ,rs.dia:1 , rs.perdidasAcumuladas: -122.332])
+        
+        let eje = [rs.cash : [90.5] , rs.perdidasAcumuladas: [-1000.44]]
+        
+        
+        
+        let dicS = DictioToStd<resultsHipoSample>(eje)
+        
+        let sumat = resIniti +++ dicS
+        
+        let pppo = 9000000
+        
+        
+        
+        
+        
+        
+    }
+        
+    func testSimulIn() {
+        
+        
+        
+     
+        let wa = WaysOfIndexes.proof()
+        
+        
+        
+        
+        
+        
+        
+        
+    }
         
         
         

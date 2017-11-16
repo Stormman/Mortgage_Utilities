@@ -91,11 +91,18 @@ func +++ < A:DictionableResultable  > ( first:  A,second: DictioToStd<A.A> ) -> 
     
     
     
-    let bookSec = first.bookTrade
+    let bookSec = second.bookTrade
     
-    let gg = second.bookTrade.map(){ (k:A.A , v:Array<Optional<Double>>) -> (A.A, Array<Optional<Double>>) in
+    let gg = first.bookTrade.map(){ (k:A.A , v:Optional<Double>) -> (A.A, Array<Optional<Double>>) in
         
-        if (bookSec.index(forKey: k) != nil) { return ( k, v + [bookSec[k]!])          }  else {return (k,v)}
+        if (bookSec.index(forKey: k) != nil) { return ( k, [v] + bookSec[k]!)          }  else {
+            
+            
+            
+            
+            return (k,[v])
+            
+        }
         
     }
     
@@ -162,8 +169,8 @@ enum resultsHipoSample: String   {
 }
 enum indexesHipoSample : String {
     
-    case euribor1año = "Euribor 1 año"
-    case bono10Esp = "Bono 10 años Español"
+    case euribor1año = "Euribor1año"
+    case bono10Esp = "Bono10Esp"
     case eurodollar = "EuroDollar"
     
     
@@ -179,19 +186,24 @@ struct WaysOfIndexes {
     
     let nSimul : Int
     
-    func proof() -> WaysOfIndexes {
+   static  func proof() -> WaysOfIndexes {
         
-        let waExamp : waysOfInd = [ "Euribor" :
+        let waExamp : waysOfInd = [ "Euribor1año" :
             [ [12,13,14,15,16,17,20,24,25,29,30,31],
               [13,15,18,20,22,23,22,21,22,19,16,14],
               [14,17,20,23,24,25,21,23,24,29,30,33]
                 
-            ]   , "Bono10Años" :
+            ]   , "EuroDollar" :
                 [ [12,13,14,15,16,17,20,24,25,29,30,31],
                   [13,15,18,20,22,23,22,21,22,19,16,14],
                   [14,17,20,23,24,25,21,23,24,29,30,33]
                     
-            ]      ]
+            ]   , "Bono10Esp" :
+                [ [12,13,14,15,16,17,20,24,25,29,30,31],
+                  [13,15,18,20,22,23,22,21,22,19,16,14],
+                  [14,17,20,23,24,25,21,23,24,29,30,33]
+                    
+            ]        ]
         
         
         return WaysOfIndexes(ways: waExamp, nDays: 3, nSimul: 12)
