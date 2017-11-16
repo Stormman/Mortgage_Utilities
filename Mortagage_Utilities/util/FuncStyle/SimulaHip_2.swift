@@ -219,7 +219,7 @@ func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims
     
 }
 
-func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >(OneSim : A, _ ways: B, days : Int ) -> [[A.RESU]] where B.A == B  {
+func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >(OneSim : A, _ ways: B ) -> [[A.RESU]] where B.A == B  {
     
     let Simulaciones = ElementsOfWay(ways).1
     
@@ -231,15 +231,15 @@ func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >(OneSim : A,
     
 }
 
-func totalStadistically <A :DictionableResultable, B: StadisticalGenerator > (resultadosSim : [[A]] ) -> (B) -> [Dictionary<A.A, B.A>] {
+func totalStadistically <A :DictionableResultable, B: StadisticalGenerator > (_ estd : B, resultadosSim: [[A]] ) -> [Dictionary<A.A, B.A>] {
     
-    return { estd in
     
-        let toR = resultadosSim <=>  {aplyEstadOneDict <> $0 <> estd }
+    
+        let toR = resultadosSim <=>  {aplyEstadOneDict($0, estd) }
     
         return toR as! [Dictionary<A.A, B.A>]
-    // errorToSee
-    }
+   
+    
 }
 
 
@@ -321,7 +321,7 @@ struct pruebasFX : funcNX {
         
         return  {iter in { indes  in
             
-            let diaa = ((res.bookTrade[rs.dia] )!)! // siempre tiene que haber un campolllamado dia
+            // siempre tiene que haber un campolllamado dia
             
             let intDi = iter
             
@@ -329,7 +329,10 @@ struct pruebasFX : funcNX {
             
             //let euri = (indes.bookTrade[ie.euribor1año]!)!
             
-            let cap = rHipotSample(bookTrade: [rs.beneficios : Double(intDi * 2), rs.cash : Double (-(intDi * 2)), rs.dia : Double(intDi + 1)])
+            let eurib = indes.bookTrade[indexesHipoSample.euribor1año] ?? 0.15
+            let bono = indes.bookTrade[indexesHipoSample.bono10Esp] ?? 100.15
+            
+            let cap = rHipotSample(bookTrade: [rs.beneficios : Double(intDi * 2) * eurib! , rs.cash : Double (-(intDi * 2)) - bono! , rs.dia : Double(iter)])
             
             return cap
             }}

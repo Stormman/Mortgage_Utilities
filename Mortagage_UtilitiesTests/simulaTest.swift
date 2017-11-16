@@ -171,7 +171,7 @@ class simulaTest: XCTestCase {
         
     }
         
-    func testSimulIn() {
+    func testTotalANDSimulIn() {
         
         
         
@@ -203,6 +203,14 @@ class simulaTest: XCTestCase {
         let res = SimulateinN_(0, ini, wa)
         
         let res2 = SimulateinN_(1, ini, wa)
+        
+        let to = totalSims(OneSim: ini, wa)
+        
+        let listoparaplaicaresta = aplyEstadOneDict(to.last!,simpleS())
+        
+        let todos_los_esta_resumen = totalStadistically(simpleS(), resultadosSim: to)
+        
+        
         
         
         let rf = 120000

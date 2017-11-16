@@ -463,11 +463,11 @@ struct  simpleS : StadisticalGenerator {
         }
 }
 
-func aplyEstadOneDict <A : DictionableResultable , B: StadisticalGenerator> ( _ resultadosAgreg : [A] ) -> (B) -> Dictionary<A.A, B.A>?    {
+func aplyEstadOneDict <A : DictionableResultable , B: StadisticalGenerator> ( _ resultadosAgreg : [A] , _ estadis: B)  -> Dictionary<A.A, B.A>?   {
     
-    return { stadis in
     
-    let convert = resultadosAgreg <=> {$0.bookTrade.mapValues{ [$0]    }    }
+    
+    let convert = resultadosAgreg <=> {$0.bookTrade.mapValues{ [$0]    }}
    
     let conveObj = convert <=> {DictioToStd<A.A>($0)}
     
@@ -478,7 +478,7 @@ func aplyEstadOneDict <A : DictionableResultable , B: StadisticalGenerator> ( _ 
         let toRet = sumatorioDeTodosLosEnumerables.bookTrade.mapValues{B.stadistic($0 as! [Double])       }
         //posible errorToSee nohay q convertir as!  DOuble
         return toRet
-    }
+    
     
 }
     
