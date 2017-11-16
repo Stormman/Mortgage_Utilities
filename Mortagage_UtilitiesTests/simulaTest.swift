@@ -180,17 +180,19 @@ class simulaTest: XCTestCase {
         
         let f1 = AnyfunNEXXTHIpo<rHipotSample>(pruebasFX())
         
-        
+        /*
         let f = [rs.cash:90.9, rs.dia : 1]
         let fg = [rs.cash:90.9, rs.dia : 1]
         let ff = rHipotSample(bookTrade: f)
         let ffg = rHipotSample(bookTrade: fg)
         
         let suma = ff +++ ffg
-        
+ 
         
         
         let ind = indHpotecSample(bookTrade: [ie.euribor1año : 0.5770,ie.bono10Esp: 100.10, ie.eurodollar:1.1767])
+         */
+ 
         let resIniti = rHipotSample(bookTrade: [rs.cash : 0 ,rs.dia:1 ])
         
         
@@ -200,13 +202,13 @@ class simulaTest: XCTestCase {
         
         //let poSim = ONESIMCOntr(result: resIniti, indexx: HEadOf(wa), arrFunc: [f1,f1], converResulIndividToAgregate: converResulIndividToAgregatePruebas)
         
-        let res = SimulateinN_(0, ini, wa)
+        //let res = SimulateinN_(0, ini, wa)
         
-        let res2 = SimulateinN_(1, ini, wa)
+        //let res2 = SimulateinN_(1, ini, wa)
         
         let to = totalSims(OneSim: ini, wa)
         
-        let listoparaplaicaresta = aplyEstadOneDict(to.last!,simpleS())
+        //let listoparaplaicaresta = aplyEstadOneDict(to.last!,simpleS())
         
         let todos_los_esta_resumen = totalStadistically(simpleS(), resultadosSim: to)
         
