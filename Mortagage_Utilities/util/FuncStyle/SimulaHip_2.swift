@@ -279,7 +279,7 @@ protocol funcNEXTT_ {
     associatedtype IND : DictionableResultable
     associatedtype B
     
-    func applyNEXT_( _ res: RES ) -> (IND) -> B
+    func applyNEXT_( _ res: RES ) ->(Int) -> (IND) -> B
 }
 
 protocol ONESIMCONtroller_ {
@@ -305,7 +305,7 @@ protocol ONESIMCONtroller_ {
 }
 
 protocol  funcNEXTTHIpo_ : funcNEXTT_ where RES == rHipotSample , IND == indHpotecSample{
-    func applyNEXT_( _ res: rHipotSample ) -> (indHpotecSample) -> B
+    func applyNEXT_( _ res: rHipotSample ) ->(Int) -> (indHpotecSample) -> B
 }
 
 protocol  funcNX  : funcNEXTTHIpo_ where B == rHipotSample{}
@@ -317,13 +317,13 @@ typealias ie = indexesHipoSample
 struct pruebasFX : funcNX {
    
     
-    func applyNEXT_( _ res: rHipotSample ) -> (indHpotecSample) -> rHipotSample {
+    func applyNEXT_( _ res: rHipotSample ) -> (Int) ->(indHpotecSample) -> rHipotSample {
         
-        return  {indes in
+        return  {iter in { indes  in
             
             let diaa = ((res.bookTrade[rs.dia] )!)! // siempre tiene que haber un campolllamado dia
             
-            let intDi = Int(diaa)
+            let intDi = iter
             
             //let cashe = ( res.bookTrade[rs.cash]!)!
             
@@ -332,7 +332,7 @@ struct pruebasFX : funcNX {
             let cap = rHipotSample(bookTrade: [rs.beneficios : Double(intDi * 2), rs.cash : Double (-(intDi * 2)), rs.dia : Double(intDi + 1)])
             
             return cap
-            }
+            }}
         }
     
 }
@@ -349,14 +349,14 @@ struct AnyfunNEXXTHIpo<BB> : funcNEXTT_ {
     
     typealias B = BB
     
-    private let _applyNEXT_: (rHipotSample) -> (indHpotecSample) -> BB
+    private let _applyNEXT_: (rHipotSample) -> (Int) -> (indHpotecSample) -> BB
     
     init<U : funcNEXTT_>(_ funce : U  ) where U.RES == rHipotSample, U.IND == indHpotecSample, U.B == BB {
         
         _applyNEXT_ = funce.applyNEXT_
     }
     
-    func applyNEXT_(_ res: rHipotSample) -> (indHpotecSample) -> BB {
+    func applyNEXT_(_ res: rHipotSample) ->(Int) -> (indHpotecSample) -> BB {
         return _applyNEXT_(res)
     }
 }
@@ -403,7 +403,7 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
         
         let fu = arrFunc <=> {$0.applyNEXT_(self.result ) }
         
-        let ff = fu <=> {$0 <> self.indexx}
+        let ff = fu <=> {$0 <> self.iterIndex <>  self.indexx}
         
         //trasladar cada salida de cada funcoi al resultado gwneral
         
