@@ -15,6 +15,7 @@ func glueDicts<A,B>( _ dictOne : Dictionary<A,B>) -> (Dictionary<A,B>) -> Dictio
 }
 
 let CatchKeysInArray :(WaysOfIndexes) -> Array<String>   = {wa in Array(wa.ways.keys) }
+
 let CogeDelDictDeLosIndexEsto :  (waysOfInd) -> (Int) -> (Int) ->(String)-> Double? = { way  in
     return  { nFirst  in { nSecond in {str in
         guard let elem = way[str]?[nFirst][nSecond] else {return nil}

@@ -196,13 +196,15 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
    
 }
 
-func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims : Int, _ nDays: Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {//NSim es a simulacion a hcer
+func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims : Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {//NSim es el dato que se le da a waysofindex para darnos la simulacin , osea, la matriz de randoms que se nos dio en randomize
     
     let indicesEnSimulacionYDiaTal = GEnerateIndexes__ <> ways
     
     //Each one ------------
     
-    let indicesCadaDiaEnSimulDada =  Array(1...nDays) <=> {  indicesEnSimulacionYDiaTal <> NSims <> $0    }
+    let nDays = ElementsOfWay(ways).0
+    
+    let indicesCadaDiaEnSimulDada =  Array(0...(nDays - 1)) <=> {  indicesEnSimulacionYDiaTal <> NSims <> $0    }
     
     let reArr = indicesCadaDiaEnSimulDada.reduce([OneSim ]) { (res: [A],indes : indHpotecSample) -> [A ] in
         
@@ -217,10 +219,11 @@ func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims
     
 }
 
-func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >(OneSim : A, _ ways: B, days : Int, Simulaciones: Int ) -> [[A.RESU]] where B.A == B  {
+func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >(OneSim : A, _ ways: B, days : Int ) -> [[A.RESU]] where B.A == B  {
     
+    let Simulaciones = ElementsOfWay(ways).1
     
-    let resultadosEnCadaSimulacion = Array(1...Simulaciones) <=> {SimulateinN_($0, days , OneSim, ways)}
+    let resultadosEnCadaSimulacion = Array(0...(Simulaciones - 1)) <=> {SimulateinN_($0, OneSim, ways)}
     
     return resultadosEnCadaSimulacion
     
@@ -266,19 +269,7 @@ struct douComp {let cash:Double;let garantiasFluj:Double }
 
 
 
-protocol funcNextt {
-    
-    associatedtype A
-    associatedtype B
-    associatedtype RES
-    associatedtype IND
-    
-    func funcNext( _ a: A) -> B
-    
-    func toApplyToFuncNexts( _ x: RES) -> (IND) -> A
-    
-    
-}
+
 
 
 // / //////////////// funnext NEVOOOO
@@ -298,6 +289,8 @@ protocol ONESIMCONtroller_ {
     
     var  result : RESU {get set}
     var  indexx : INDE {get set }
+    
+    var iterIndex : Int {get set }
     
     
     func nexttt() -> RESU
@@ -375,6 +368,9 @@ protocol ONESIMCONtrollerHIPO__ : ONESIMCONtroller_ where RESU == rHipotSample, 
     
     var  result : rHipotSample {get set}
     var  indexx : indHpotecSample {get set}
+    
+    
+    
     func nexttt() -> rHipotSample //nuevo resultado
     
      func NextALL(_ indices: indHpotecSample ) -> Self
@@ -391,7 +387,7 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     
     
     
-    
+    var iterIndex : Int
     var result : rHipotSample // resultado antes de hacer la simulacion
     var indexx : indHpotecSample
     
@@ -401,7 +397,7 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     let converResulIndividToAgregate : ([B ]) -> (rHipotSample) -> rHipotSample//hay que sumar uno a la iteracion
     
     
-    func nexttt() -> rHipotSample {
+    internal func nexttt() -> rHipotSample {
         
         // extraemos las salidas de todas las cunNExts
         
@@ -421,7 +417,7 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     
     func NextALL(_ Proximosindices: indHpotecSample) -> ONESIMCOntr {//preparado para la proxima iteracion
         
-        let toRet = ONESIMCOntr(result: self.nexttt(), indexx:Proximosindices,arrFunc: self.arrFunc,converResulIndividToAgregate: self.converResulIndividToAgregate )
+        let toRet = ONESIMCOntr(iterIndex: self.iterIndex + 1 ,result: self.nexttt(), indexx:Proximosindices,arrFunc: self.arrFunc,converResulIndividToAgregate: self.converResulIndividToAgregate )
         
         return toRet
         
@@ -429,7 +425,7 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     
     func NextALL() -> ONESIMCOntr {
         
-        let toRet = ONESIMCOntr(result: self.nexttt(), indexx:indexx ,arrFunc: self.arrFunc,converResulIndividToAgregate: self.converResulIndividToAgregate )
+        let toRet = ONESIMCOntr(iterIndex: self.iterIndex + 1 , result: self.nexttt(), indexx:indexx ,arrFunc: self.arrFunc,converResulIndividToAgregate: self.converResulIndividToAgregate )
         
         return toRet
         
@@ -438,12 +434,18 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
     }
     
     
-    
-    
-    
-    
-    
 }
+
+
+
+func genSimInitial<B:IndexGenDictionableHipo> ( _ r: rHipotSample) -> (B)-> ([AnyfunNEXXTHIpo<rHipotSample>]) -> (@escaping ([rHipotSample ]) -> (rHipotSample) -> rHipotSample) -> ONESIMCOntr<rHipotSample>   where B.A == B {
+    
+    return  { ind in  { anyfuncs in { convert in
+        
+        ONESIMCOntr(iterIndex: 0,result: r, indexx: HEadOf(ind), arrFunc: anyfuncs, converResulIndividToAgregate: convert)
+        }}}}
+
+
 
 let converResulIndividToAgregatePruebas : ([rHipotSample ]) -> (rHipotSample) -> rHipotSample =  { arHip in  {resulAnterior in
     

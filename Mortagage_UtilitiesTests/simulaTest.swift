@@ -133,7 +133,7 @@ class simulaTest: XCTestCase {
         
         
         
-        let poSim = ONESIMCOntr(result: resIniti, indexx: ind, arrFunc: [f1,f1], converResulIndividToAgregate: converResulIndividToAgregatePruebas)
+        let poSim = ONESIMCOntr(iterIndex:0,result: resIniti, indexx: ind, arrFunc: [f1,f1], converResulIndividToAgregate: converResulIndividToAgregatePruebas)
         
         
         
@@ -178,10 +178,34 @@ class simulaTest: XCTestCase {
      
         let wa = WaysOfIndexes.proof()
         
+        let f1 = AnyfunNEXXTHIpo<rHipotSample>(pruebasFX())
+        
+        
+        let f = [rs.cash:90.9, rs.dia : 1]
+        let fg = [rs.cash:90.9, rs.dia : 1]
+        let ff = rHipotSample(bookTrade: f)
+        let ffg = rHipotSample(bookTrade: fg)
+        
+        let suma = ff +++ ffg
         
         
         
+        let ind = indHpotecSample(bookTrade: [ie.euribor1año : 0.5770,ie.bono10Esp: 100.10, ie.eurodollar:1.1767])
+        let resIniti = rHipotSample(bookTrade: [rs.cash : 0 ,rs.dia:1 ])
         
+        
+        
+         let ini = genSimInitial <> resIniti <> wa <> [f1,f1] <> converResulIndividToAgregatePruebas
+        
+        
+        //let poSim = ONESIMCOntr(result: resIniti, indexx: HEadOf(wa), arrFunc: [f1,f1], converResulIndividToAgregate: converResulIndividToAgregatePruebas)
+        
+        let res = SimulateinN_(0, ini, wa)
+        
+        let res2 = SimulateinN_(1, ini, wa)
+        
+        
+        let rf = 120000
         
         
         

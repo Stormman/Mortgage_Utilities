@@ -189,19 +189,19 @@ struct WaysOfIndexes {
    static  func proof() -> WaysOfIndexes {
         
         let waExamp : waysOfInd = [ "Euribor1año" :
-            [ [12,13,14,15,16,17,20,24,25,29,30,31],
-              [13,15,18,20,22,23,22,21,22,19,16,14],
-              [14,17,20,23,24,25,21,23,24,29,30,33]
+            [ [0.11,0.13,0.14,0.15,0.16,0.17,0.20,0.24,0.25,0.29,0.30,0.31],
+              [0.13,0.15,0.18,0.20,0.22,0.23,0.22,0.21,0.22,0.19,0.16,0.14],
+              [0.14,0.17,0.20,0.23,0.24,0.25,0.21,0.23,0.24,0.29,0.30,0.33]
                 
             ]   , "EuroDollar" :
-                [ [12,13,14,15,16,17,20,24,25,29,30,31],
-                  [13,15,18,20,22,23,22,21,22,19,16,14],
-                  [14,17,20,23,24,25,21,23,24,29,30,33]
+                [ [1.12,1.13,1.14,1.15,1.16,1.17,1.20,1.24,1.25,1.29,1.30,1.31],
+                  [1.13,1.15,1.18,1.20,1.22,1.23,1.22,1.21,1.22,1.19,1.16,1.14],
+                  [1.14,1.17,1.20,1.23,1.24,1.25,1.21,1.23,1.24,1.29,1.30,1.33]
                     
             ]   , "Bono10Esp" :
-                [ [12,13,14,15,16,17,20,24,25,29,30,31],
-                  [13,15,18,20,22,23,22,21,22,19,16,14],
-                  [14,17,20,23,24,25,21,23,24,29,30,33]
+                [ [100.3,100.3,100.4,100.5,100.6,100.7,200.0,200.4,200.5,200.9,300.0,300.1],
+                  [100.3,100.5,100.8,200.0,200.2,200.3,200.2,200.1,200.2,100.9,100.6,100.4],
+                  [100.4,100.7,200.0,200.3,200.4,200.5,200.1,200.3,200.4,200.9,300.0,300.3]
                     
             ]        ]
         
@@ -209,6 +209,8 @@ struct WaysOfIndexes {
         return WaysOfIndexes(ways: waExamp, nDays: 3, nSimul: 12)
         }
 
+    
+   
 
 }
 
@@ -276,13 +278,15 @@ protocol IndexesGenerDictionableResultable {
 protocol IndexGenDictionableHipo : IndexesGenerDictionableResultable {
     
     static func generateIndexes( _ i : A) -> (Int) ->(Int) -> indHpotecSample
+    static func headOf( _ i :A) ->indHpotecSample
+    static func elements( _ I :A) -> (Int,Int) //ndays y nSimulaciones
     
 }
 
 
 
 //**++++++++++++++++++++++++++++++++++++++++
-
+/*
 extension WaysOfIndexes : IndexerGenerator {
     
     
@@ -346,10 +350,8 @@ extension WaysOfIndexes : IndexesGeneratorEnumsStr {
     
     
 }
-
+*/
 extension WaysOfIndexes : IndexGenDictionableHipo  {
-    
-    
     
     static func generateIndexes( _ i : WaysOfIndexes) -> (Int) ->(Int) ->  indHpotecSample {
         
@@ -378,7 +380,24 @@ extension WaysOfIndexes : IndexGenDictionableHipo  {
         
     }
     
+    static func headOf(_ i: WaysOfIndexes) -> indHpotecSample {
+        
+            return WaysOfIndexes.generateIndexes(i)(0)(0)
+        
+        
+        
+    }
     
+    static func elements(_ I: WaysOfIndexes) -> (Int, Int) {
+        
+       let elem = I.ways.first!.value
+        
+        let dias = elem.first!.count
+        let sims = elem.count
+        return (dias,sims)
+        
+        
+    }
     
     
 }
@@ -397,6 +416,10 @@ func GEnerateIndexes__ <B:IndexGenDictionableHipo >  ( _ l: B) -> (Int) -> (Int)
     
     return B.generateIndexes(l)
 }
+
+func HEadOf<B:IndexGenDictionableHipo >  ( _ l: B) -> indHpotecSample where B.A == B  {return B.headOf(l) }
+
+func ElementsOfWay<B:IndexGenDictionableHipo >  ( _ l: B) -> (Int,Int) where B.A == B  {return B.elements(l) }
         
 //++++++++++++++++++++++++++++++++++
 
