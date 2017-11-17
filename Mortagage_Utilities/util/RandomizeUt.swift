@@ -111,6 +111,8 @@ let funcToExaple : funcDouToDOu = { dou in  if (dou < 5 ) {  return 0.05 } ;if (
 typealias   doubleGenerMetrizable = doubleGenerator & metrizable
 
 
+
+
 struct varAleatoria : doubleGenerMetrizable {
     
     init( descrip: String, step: Double, boundss : (Double,Double), generato :@escaping funcDouToDOu    ) {
