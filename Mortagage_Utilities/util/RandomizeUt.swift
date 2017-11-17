@@ -60,39 +60,28 @@ protocol doubleGenerator {
     
     
 }
+typealias   doubleGenerMetrizable = doubleGenerator & metrizable
+
+struct doudouMetriz: doubleGenerMetrizable {
+    
+    var  stepMinim : Double
+    var   bounds : (Double,Double)
+     var generat :(Double) -> Double
+}
 
 struct   interval  {
-    
     var lowBound : Double
-    
-    
     var upBound : Double
-    
-    
-    
-    
 }
 
 extension interval : Hashable  {
     
     
-    var hashValue : Int {
-        
-        
-        return lowBound.hashValue ^ upBound.hashValue &* 16777619
-        
-    }
-    
+    var hashValue : Int {return lowBound.hashValue ^ upBound.hashValue &* 16777619}
     
     static func == (lhs: interval  , rhs: interval    )-> Bool  {
-        
-        return lhs.lowBound == rhs.lowBound && rhs.upBound == lhs.upBound
-        
-        
+        return lhs.lowBound == rhs.lowBound && rhs.upBound == lhs.upBound}
     }
-    
-    
-}
 
 
 
@@ -108,7 +97,6 @@ typealias funcDouToDouOp = (Double) -> Double?
 
 let funcToExaple : funcDouToDOu = { dou in  if (dou < 5 ) {  return 0.05 } ;if ((dou >=  5) && (dou <= 10) ) {  return 0.09 };if (dou >= 10 ) {  return 0.03 }  ; return  0  }
 
-typealias   doubleGenerMetrizable = doubleGenerator & metrizable
 
 
 
@@ -341,20 +329,7 @@ struct waysOfIO {
         
         let m = arrayOfEmpties(elements) <> map{(Double(fR(1000))/1000) + $0} <> map{  invert($0)    }
         
-        //let res = m <> reduce(self.indexStarter) {  relatWithIndex($0)($1)   }
-       /*
-        let retTo: [Double] = m.reduce(into: []) { arrAcum , elem in
-            
-            let last = arrAcum.last ?? indexStarter
-            let to = relatWithIndex(elem  )(last  )
-            arrAcum.append(to) }
-            return retTo
-        }
-    */
-        
-        
-       // let retTo = m.reduceConcatInArray( indexStarter)  { elem , last in   last * ((elem / 100) + 1)   }
-    
+ 
         let retTo = m.reduceConcatInArray(indexStarter,  porcentAddable )
         
         
