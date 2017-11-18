@@ -101,7 +101,7 @@ let funcToExaple : funcDouToDOu = { dou in  if (dou < 5 ) {  return 0.05 } ;if (
 
 
 
-struct varAleatoria : doubleGenerMetrizable {
+struct varAleatoria : doubleGenerMetrizable {// tatene un error no esta intervabilizada genert
     
     init( descrip: String, step: Double, boundss : (Double,Double), generato :@escaping funcDouToDOu    ) {
         

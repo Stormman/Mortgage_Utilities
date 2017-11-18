@@ -25,7 +25,16 @@ final class mathFunctions__ {
             
                 return {kx in
                     let pte = (to.y - from.y) / (to.x - from.x)
-                    return (kx * pte ) + from.x}
+                    
+                    
+                    
+                    return (( pte ) * (kx - from.x)) + from.y
+                    
+                    
+                    
+                    
+                    
+                }
                 break
             
             }}

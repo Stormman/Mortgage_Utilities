@@ -27,7 +27,13 @@ func localizableDoubleInMetric<A>( _ val: Double , _ inMetr : A ) -> interval? w
     
    let intervalosTot = obtenerIntervalosDeLaMetrica(inMetr)
     
+   
+    
+    
     guard let invT = intervalosTot else {return  nil }
+    guard  (invT.count != 0) else {return nil}
+    
+    if( val == inMetr.bounds.1) {return invT.last}
     
     let arr = arrayOfOrdeneredZEroIndex((invT.count))
     
@@ -35,9 +41,15 @@ func localizableDoubleInMetric<A>( _ val: Double , _ inMetr : A ) -> interval? w
     
     //let filt = zipped.filter { (val >= $1.lowBound) && (val <= $1.upBound )  }
     
+     //if( val == inMetr.bounds.1) {return filt.last!.
+    
     let filt = zipped.filter { betWeen($1.lowBound, $1.upBound)(val)  }
     
+   
+    
     guard ( (filt.count != 0) ) else {return nil}
+    
+    
     
     return filt.first!.1
     

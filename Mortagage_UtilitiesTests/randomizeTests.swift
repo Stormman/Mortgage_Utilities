@@ -17,8 +17,8 @@ class randomizeTests: XCTestCase {
         var bounds: (Double, Double)
         
     }
-    
-   
+     typealias po = mathFunctions__.Point
+  // typealias fde =  CompoundVAleatoria__.
     
     
     
@@ -215,11 +215,110 @@ class randomizeTests: XCTestCase {
     }
     
     
-    func test_WhativIs() {
+    func test_numerosToIntervalosTuples() {
         
         
         
+        let arr : [Double] = [1,3,5,6,9]
+        let ivTuples = CompoundVAleatoria__.numerosToIntervalosTuples(arr)!
         
+      XCTAssert(ivTuples[0].0 == 1 && ivTuples[0].1 == 3)
+       XCTAssert(ivTuples[1].0 == 3 && ivTuples[1].1 == 5)
+       XCTAssert(ivTuples[2].0 == 5 && ivTuples[2].1 == 6)
+        XCTAssert(ivTuples[3].0 == 6 && ivTuples[3].1 == 9)
+        XCTAssert(ivTuples.count == 4)
+    }
+    
+    func test_metrizarfuncionmatematica() {
+        
+        
+        let ff = mathFunctions__.curve(.line, po(x: 1,y: 1), po(x: 10,y: 10))
+        
+        let metr = CompoundVAleatoria__.metrizarfuncionmatematica(ff, stepm: 0.5, upBounds: 10, lowBounds: 1)
+        
+        
+        XCTAssert(metr.stepMinim == 0.5 && metr.bounds.0 == 1 && metr.bounds.1 == 10)
+        
+        
+    }
+    
+    
+    
+    func test_funcintervabilizada() {
+        
+        let arr : [Double] = [1,3,5,6,9]
+        
+        
+        let ff = mathFunctions__.curve(.line, po(x: 1,y: 1), po(x: 10,y: 10))
+        let metr = CompoundVAleatoria__.metrizarfuncionmatematica(ff, stepm: 0.5, upBounds: 10, lowBounds: 1)
+        
+        let finv = CompoundVAleatoria__.funcintervabilizada(metr) {($0 + $1)/2    }
+        
+        
+        
+        let arpr : [Double] = [finv(1)!,finv(1.2)!,finv(1.5)!,finv(1.75)!,finv(10)!]
+        let res = [1.25,1.25,1.75,1.75,9.75]
+        
+        
+      
+        
+        
+        XCTAssertEqual(arpr, res)
+        XCTAssert(finv(0.5) == nil && finv(10.01) == nil)
+        
+        
+        
+    }
+    
+    
+    func test_concatenateIntervWtihLines() {
+        
+        let intervSingle: [(Double,Double)] = [(3,2),(8,12),(38,27),(78,107)    ]
+        
+        guard let f = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle, stepm: 0.5) else {return }
+        
+        
+        
+        let matRres: [Double?]=[f[0].generat(3), f[0].generat(5), f[1].generat(8) , f[1].generat(20),f[2].generat(38),f[2].generat(60),f[2].generat(78),f[2].generat(80)   ]
+        
+        let matRresSucc : [Double? ] = [2,6,12,18,27,71,107,.none     ]
+        
+       
+        XCTAssert(matRres[0] == matRresSucc[0] )
+        XCTAssert(matRres[1] == matRresSucc[1] )
+        XCTAssert(matRres[2] == matRresSucc[2] )
+        XCTAssert(matRres[3] == matRresSucc[3] )
+        XCTAssert(matRres[4] == matRresSucc[4] )
+        XCTAssert(matRres[5] == matRresSucc[5] )
+       // XCTAssert(matRres[6] == matRresSucc[6] )
+    }
+    
+    
+    func test_fde() {
+        
+        let intervSingle: [(Double,Double)] = [(3,2),(8,12),(38,27),(78,107)    ]
+        
+        guard let f = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle, stepm: 0.5) else {return }
+        
+        let comp = CompoundVAleatoria(funcs_: f)
+        
+        let r = CompoundVAleatoria__.fde(f)
+        let res1 = r <> 4
+        let res2 = r <>  8
+       let res3 = r <>  10
+        let res4 = r <>  38
+        let res5 = r <>  78.01
+        let res6 = r <>  2.90
+        
+        XCTAssert(res5 == nil)
+        XCTAssert(res6 == nil)
+        XCTAssert(res1 == 4.50)
+        XCTAssert(res2 == 12.125)
+        XCTAssert(res3 == 13.125)
+        XCTAssert(res4 == 27.5)
+        
+        
+        //let otrosRes = []
         
         
     }
