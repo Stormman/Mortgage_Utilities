@@ -141,35 +141,42 @@ func checkVarAlea(varAle : varAleatoria)-> Double?   {
     
     let generator = varAle.generat
     let trans : (interval) -> Double  = {inter in inter.lowBound     }
-    let interSum : (interval , Double, Double) -> Double = {inter , steps , fx in
-        
-        let stepsTotales = Int( (inter.upBound - inter.lowBound) / steps)
-        
-        
-        let sumaInter = arrayOfOrdeneredZEroIndex(stepsTotales) <> map{r in fx} <> reduce(0,+)
-        return sumaInter
-        
-        
-    }
-    
+   
     guard  let st = intervalosMetricos(metri: varAle) else {return nil  }
-    
-    
     let stint : [interval] = Array(st.dicMetr.keys)
-    
     let stepsTot = Int((stint.first!.upBound -  stint.first!.lowBound)/varAle.stepMinim)
-    
-    
-    
     let ff = stint <> map(trans) <> map(generator)
-    
-    
-    
     let prtt = ff <> map {$0 * Double(stepsTot) } <> reduce (0,+)
-    
-    
-    
     return prtt
+    
+    
+}
+func checkGenerAleatorioSimple<FUMET: doubleGenerMetrizable>(varAl : FUMET )-> Double?   {
+    
+    
+    let generator = varAl.generat
+    let trans : (interval) -> Double  = {inter in inter.lowBound     }
+    
+    guard  let st = intervalosMetricos(metri: varAl) else {return nil  }
+    let stint : [interval] = Array(st.dicMetr.keys)
+    let stepsTot = Int((stint.first!.upBound -  stint.first!.lowBound)/varAl.stepMinim)
+    let ff = stint <> map(trans) <> map(generator)
+    let prtt = ff <> map {$0 * Double(stepsTot) } <> reduce (0,+)
+    return prtt
+    
+    
+}
+
+
+func checkVARALEAFUNC<FU:doubleGenerMetrizable>(funcs : [FU]) -> Double? {
+    
+    let to = funcs <=> checkGenerAleatorioSimple
+    
+    if (to.contains(where: {$0 == nil})){ return nil}
+    
+    let tot = to.flatMap(){$0}.reduce(0, +)
+    
+    return tot
     
     
 }

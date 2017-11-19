@@ -193,6 +193,54 @@ class randomizeTests: XCTestCase {
     }
     
     
+    func test_checkGenerAleatorioSimple () {
+        
+        let intervSingle: [(Double,Double)] = [(3,2),(8,12),(38,27),(78,107)    ]
+        
+        guard let f = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle, stepm: 0.5) else {return }
+        
+        let fi = checkGenerAleatorioSimple(varAl: f[0])
+        
+        let sec = checkGenerAleatorioSimple(varAl: f[1])
+        let ter = checkGenerAleatorioSimple(varAl: f[2])
+        
+        XCTAssert(fi == 65)
+        XCTAssert(sec == 1162.5)
+        XCTAssert(ter == 5320)
+        
+        
+        
+        let ffp = 9990
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    func test_checkVARALEAFUNC() {
+        
+     
+        let intervSingle: [(Double,Double)] = [(3,2),(8,12),(38,27),(78,107)    ]
+        
+        guard let f = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle, stepm: 0.5) else {return }
+        
+        let tot = checkVARALEAFUNC(funcs: f)
+        
+        XCTAssert(tot == 6547.5)
+        
+        let intervSingle2: [(Double,Double)] = [(-3,0.15),(-2,0.02),(0,0.005),(2,0.212),(3,0.17)    ]
+        
+        guard let f2 = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle2, stepm: 0.5) else {return }
+        
+        let tot2 = checkVARALEAFUNC(funcs: f2)
+        
+        XCTAssert(tot2 == 1.026)
+       
+        let r = 900000
+    }
     
     func testWaysIO () {
         
@@ -291,6 +339,10 @@ class randomizeTests: XCTestCase {
         XCTAssert(matRres[4] == matRresSucc[4] )
         XCTAssert(matRres[5] == matRresSucc[5] )
        // XCTAssert(matRres[6] == matRresSucc[6] )
+        
+        let g = CompoundVAleatoria__.concatenateIntervWtihLines([(1,1)], stepm: 0.5)
+        XCTAssert(g == nil)
+        
     }
     
     
@@ -330,7 +382,7 @@ class randomizeTests: XCTestCase {
         }
     }
     
-    
-    
-    
 }
+    
+    
+

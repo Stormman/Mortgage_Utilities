@@ -40,4 +40,5 @@ let creaDictConesteArrayStringYesteDOuble : ([String]) -> ([Double?]) -> [String
     
 }
 
+ func contiene_algun_nil<A>( _ arr:[Optional<A> ]) -> Bool  {if (arr.contains(where: {$0 == nil  })) {return true} else {return false}}
 
