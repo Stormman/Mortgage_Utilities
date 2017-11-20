@@ -212,6 +212,52 @@ func obtainFDBOf< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMetrizable
     
 }
 
+func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp where A :doubleGenerMetrizable {
+    
+    
+    
+    return { x in
+        
+        guard let ind = CompoundVAleatoria__.whatIvIs(x, funcs ) else {return nil }
+        
+        
+        
+        let fsininterv = funcs[ind]
+        let valea =   CompoundVAleatoria__.funcintervabilizada(fsininterv) {($0+$1)/2}
+        let pasosNece: Int? = stepsNeceseToArrive(fsininterv, x )
+        
+        if (pasosNece == nil) {return 0}
+        if(pasosNece == 0) { return valea(fsininterv.bounds.0)    }
+        
+        assert(pasosNece != 0, "zero")
+        
+        
+        let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <> map{ (Double($0) * fsininterv.stepMinim) + fsininterv.bounds.0 }
+        
+        let mapped2 = mapped <> map{ fsininterv.generat($0)}
+        
+        let acum = mapped2 <> reduce(0,+)
+        
+        return acum
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
 
 func stepsNeceseToArrive<A: metrizable> ( _ valu: A, _ valorTo : Double ) -> Int? {
     

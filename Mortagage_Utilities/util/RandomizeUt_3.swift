@@ -37,7 +37,12 @@ final class CompoundVAleatoria__ {
         
         guard let ind = CompoundVAleatoria__.whatIvIs(x, funcs ) else {return nil }
         
-        let fdbb = obtainFDBOfMemoize(funcs[ind])
+        
+        //let fdbb = obtainFDBOfMemoize(funcs[ind])
+        
+        //let fdbb = obtainFDBOf(funcs[ind])
+        
+        let fdbb = obtainFDBofFuncss(funcs)
         
         return fdbb(x)
         
@@ -48,6 +53,11 @@ final class CompoundVAleatoria__ {
     //********************
     
     static func whatIvIs<MET : metrizable>( _ x: Double ,_ arrMEt : [MET] )-> Int?  {
+        
+        guard let las = arrMEt.last else {return nil}
+        
+        if (x == las.bounds.1) {return arrMEt.count - 1 } // si es el ultimo valor del ultimo intervalo queda dentro de la funcion
+        
         
         guard   let el = arrMEt.index(
             where: { ((x >= $0.bounds.0 ) && ( x < $0.bounds.1   )     )    })

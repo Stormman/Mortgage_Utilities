@@ -242,6 +242,31 @@ class randomizeTests: XCTestCase {
         let r = 900000
     }
     
+    
+    func test_FBde(){
+        
+        let intervSingle2: [(Double,Double)] = [(-3,0.15),(-2,0.02),(0,0.005),(2,0.205),(3,0.17)    ]
+        
+        guard let f2 = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle2, stepm: 0.5) else {return }
+        
+        let tot2 = checkVARALEAFUNC(funcs: f2)
+        
+        
+        
+        let db = CompoundVAleatoria__.FBde(f2, 0)
+        
+        
+        let db2 = CompoundVAleatoria__.FBde(f2, 3)
+        
+        let db3 = CompoundVAleatoria__.FBde(f2, 3.01)
+        
+        let fg = 9000000
+        
+        
+        
+        
+    }
+    
     func testWaysIO () {
         
         
