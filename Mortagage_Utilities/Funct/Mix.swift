@@ -42,3 +42,16 @@ let creaDictConesteArrayStringYesteDOuble : ([String]) -> ([Double?]) -> [String
 
  func contiene_algun_nil<A>( _ arr:[Optional<A> ]) -> Bool  {if (arr.contains(where: {$0 == nil  })) {return true} else {return false}}
 
+func changelastElementOfAArray<A> ( arr:[A]) -> ((A) -> A) -> [A]? {
+   
+    return { f in
+    guard let lasElement = arr.last  else {return nil}
+    
+    let newElement = f(lasElement)
+    var newArr = arr
+    
+    newArr.append(newElement)
+    
+        return newArr}
+    
+}

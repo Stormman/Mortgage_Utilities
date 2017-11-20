@@ -212,7 +212,7 @@ func obtainFDBOf< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMetrizable
     
 }
 
-func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp where A :doubleGenerMetrizable {
+func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp? where A :doubleGenerMetrizable {
     
     func fDBoneparticularFunc<A>( _ funcsi: A, _ x: Double) -> Double where A:doubleGenerMetrizable {
         
@@ -236,14 +236,21 @@ func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp where A :doubleGenerM
         
     }
     
+    if(funcs.isEmpty) {return nil}
     
     
     return { x in
         
         
-        
-        
         guard let ind = CompoundVAleatoria__.whatIvIs(x, funcs ) else {return nil }
+        
+        
+        let aBase = Array(0...(ind))
+        
+        let xToApply = aBase <=> {(funcs[$0].bounds.0) - funcs[$0].stepMinim}
+        
+        
+        
         
         
         return fDBoneparticularFunc(funcs[ind], x)

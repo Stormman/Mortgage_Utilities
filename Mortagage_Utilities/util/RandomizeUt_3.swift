@@ -42,7 +42,7 @@ final class CompoundVAleatoria__ {
         
         //let fdbb = obtainFDBOf(funcs[ind])
         
-        let fdbb = obtainFDBofFuncss(funcs)
+        guard   let fdbb = obtainFDBofFuncss(funcs) else {return nil}
         
         return fdbb(x)
         
