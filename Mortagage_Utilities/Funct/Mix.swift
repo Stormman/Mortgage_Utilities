@@ -47,11 +47,16 @@ func changelastElementOfAArray<A> ( arr:[A]) -> ((A) -> A) -> [A]? {
     return { f in
     guard let lasElement = arr.last  else {return nil}
     
-    let newElement = f(lasElement)
-    var newArr = arr
+    var newElement = f(lasElement)
+   
+     var newArr = arr
+        newArr.removeLast()
     
     newArr.append(newElement)
     
         return newArr}
     
 }
+
+let pasosIntroNewInter = 0.01
+

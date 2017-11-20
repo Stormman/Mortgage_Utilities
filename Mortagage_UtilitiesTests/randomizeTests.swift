@@ -245,7 +245,9 @@ class randomizeTests: XCTestCase {
     
     func test_FBde(){
         
-        let intervSingle2: [(Double,Double)] = [(-3,0.15),(-2,0.02),(0,0.005),(2,0.205),(3,0.17)    ]
+        let intervSingle2Bis: [(Double,Double)] = [(-3,0.15),(-2,0.02),(0,0.005),(2,0.205),(3,0.17)    ]
+        
+        let intervSingle2: [(Double,Double)] = [(-3,6),(-2,4),(-1,2),(1,3),(2,5),(3,7)    ]
         
         guard let f2 = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle2, stepm: 0.5) else {return }
         
@@ -253,7 +255,7 @@ class randomizeTests: XCTestCase {
         
         
         
-        let db = CompoundVAleatoria__.FBde(f2, 0)
+       // let db = CompoundVAleatoria__.FBde(f2, 0)
         
         
         let db2 = CompoundVAleatoria__.FBde(f2, 3)
@@ -261,6 +263,30 @@ class randomizeTests: XCTestCase {
         let db3 = CompoundVAleatoria__.FBde(f2, 3.01)
         
         let fg = 9000000
+        
+        
+        
+        
+    }
+    
+    func test_fDBoneparticularFunc () {
+        
+        let intervSingle2: [(Double,Double)] = [(-3,6),(-2,4),(-1,2),(1,3),(2,5),(3,7)    ]
+        
+        guard let f2 = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle2, stepm: 0.5) else {return }
+        
+        let tot2 = checkVARALEAFUNC(funcs: f2)
+        
+        let t1 = fDBoneparticularFunc(f2[0], -2)
+        
+        
+        
+        let t2 = fDBoneparticularFunc(f2[1], -1)
+         let t3 = fDBoneparticularFunc(f2[2], 1)
+         let t4 = fDBoneparticularFunc(f2[3], 2)
+        let t5 = fDBoneparticularFunc(f2[4], 3)
+        
+        let fg = 9900000
         
         
         

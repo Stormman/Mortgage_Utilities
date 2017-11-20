@@ -33,7 +33,8 @@ final class CompoundVAleatoria__ {
     }
     
     static func FBde<FU:doubleGenerMetrizable>(_ funcs: [FU],  _ x: Double) -> Double? {
-        
+        //hay un error , para pobtener la fdb tenemos que hacerlos no directamente de la matriz sino desde
+        // fde()
         
         guard let ind = CompoundVAleatoria__.whatIvIs(x, funcs ) else {return nil }
         

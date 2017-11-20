@@ -214,27 +214,7 @@ func obtainFDBOf< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMetrizable
 
 func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp? where A :doubleGenerMetrizable {
     
-    func fDBoneparticularFunc<A>( _ funcsi: A, _ x: Double) -> Double where A:doubleGenerMetrizable {
-        
-        let fsininterv = funcsi
-        let valea =   CompoundVAleatoria__.funcintervabilizada(fsininterv) {($0+$1)/2}
-        let pasosNece: Int? = stepsNeceseToArrive(fsininterv, x )
-        
-        if (pasosNece == nil) {return 0}
-        if(pasosNece == 0) { return valea(fsininterv.bounds.0)!    }
-        
-        assert(pasosNece != 0, "zero")
-        
-        
-        let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <> map{ (Double($0) * fsininterv.stepMinim) + fsininterv.bounds.0 }
-        
-        let mapped2 = mapped <> map{ fsininterv.generat($0)}
-        
-        let acum = mapped2 <> reduce(0,+)
-        
-        return acum
-        
-    }
+   
     
     if(funcs.isEmpty) {return nil}
     
@@ -247,31 +227,41 @@ func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp? where A :doubleGener
         
         let aBase = Array(0...(ind))
         
-        let xToApply = aBase <=> {(funcs[$0].bounds.0) - funcs[$0].stepMinim}
+        let xToApply = aBase <=> {(funcs[$0].bounds.1) }
         
+        let newToappl = changelastElementOfAArray(arr: xToApply) <> {_ in  x}
         
+        let resu = aBase <=> {fDBoneparticularFunc(funcs[$0], newToappl![$0])}
         
+        let resuSum = resu.reduce(0){$0 + $1}
         
-        
-        return fDBoneparticularFunc(funcs[ind], x)
-        
-        
+        return resuSum
         
         
         
     }
+}
+func fDBoneparticularFunc<A>( _ funcsi: A, _ x: Double) -> Double where A:doubleGenerMetrizable {
+    
+    let fsininterv = funcsi
+    let valea =   CompoundVAleatoria__.funcintervabilizada(fsininterv) {($0+$1)/2}
+    let pasosNece: Int? = stepsNeceseToArrive(fsininterv, x )
+    
+    if (pasosNece == nil) {return 0}
+    if(pasosNece == 0) { return valea(fsininterv.bounds.0)!    }
+    
+    assert(pasosNece != 0, "zero")
     
     
+    let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <> map{ (Double($0) * fsininterv.stepMinim) + fsininterv.bounds.0 }
     
+    let mapped2 = mapped <> map{ fsininterv.generat($0)}
     
+    let acum = mapped2 <> reduce(0,+)
     
-    
-    
-    
-    
+    return acum
     
 }
-
 
 func stepsNeceseToArrive<A: metrizable> ( _ valu: A, _ valorTo : Double ) -> Int? {
     
