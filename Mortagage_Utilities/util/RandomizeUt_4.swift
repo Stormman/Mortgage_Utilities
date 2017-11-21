@@ -60,13 +60,13 @@ func compoundAleaDePrueba () -> CompoundVAleatoria<doudouMetriz> {
     
 }
 
-func generByAleator ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> [Double] {
+func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> [Double] {
     
     return {nNum  in
         
         
         
-        return Array<Double>(0...nNum)
+        return Array<Double>(repeatElement(1.00, count: nNum ))
         
         
         

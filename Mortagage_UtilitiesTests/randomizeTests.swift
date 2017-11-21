@@ -395,11 +395,16 @@ class randomizeTests: XCTestCase {
         
       let compV = compoundAleaDePrueba()
         
-        let nNumeros = diasYSimulacionesPrueba().1
+        let nNumeros = 100
+        let matrRes : [Double] = generByAleator_ <> compV <> nNumeros
         
-        let matrRes : [Double] = generByAleator <> compV  <> nNumeros
         
         XCTAssert(matrRes.count == nNumeros )
+        
+        
+        
+        
+        
         
         
     }
