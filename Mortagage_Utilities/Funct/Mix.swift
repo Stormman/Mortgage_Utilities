@@ -58,5 +58,9 @@ func changelastElementOfAArray<A> ( arr:[A]) -> ((A) -> A) -> [A]? {
     
 }
 
-let pasosIntroNewInter = 0.01
+let pasosIntroNewInter = 0.01//para poder salir del extremo superior de un intervalo y meterse dentro del iv anterior ya que los iv son del tipo [ .... ) , osea, abierto por la derecha, osea, el extremo derecho o superior no pertence a este intervalo
+
+let diasYSimulacionesPruebas : () -> (Int,Int) = {return (365 * 5  ,50)}
+
+
 

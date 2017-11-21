@@ -32,6 +32,7 @@
 		C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C181F9F010D009607C1 /* calculusHipoteca.swift */; };
 		C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */; };
 		C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */; };
+		C8EC9FA21FC4201400C412CA /* RandomizeUt_4.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */; };
 		C8FA30631FA9BCE600984466 /* RandomizeUt_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */; };
 		C8FA30651FA9C07E00984466 /* Functional_Utilities_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */; };
 		C8FA30671FA9CB0900984466 /* randomizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30661FA9CB0900984466 /* randomizeTests.swift */; };
@@ -87,6 +88,7 @@
 		C8745C181F9F010D009607C1 /* calculusHipoteca.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = calculusHipoteca.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/calculusHipoteca.swift"; sourceTree = "<group>"; };
 		C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functionals_Utilities.swift; sourceTree = "<group>"; };
 		C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt.swift; sourceTree = "<group>"; };
+		C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt_4.swift; sourceTree = "<group>"; };
 		C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt_2.swift; sourceTree = "<group>"; };
 		C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functional_Utilities_2.swift; sourceTree = "<group>"; };
 		C8FA30661FA9CB0900984466 /* randomizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = randomizeTests.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				C802EA591FAF94A6007A15F7 /* FuncStyle */,
 				C80C47A71FBE2AD4001D0F64 /* RandomizeUt_3.swift */,
 				C856BC771FBEF46C0049CFCC /* MathFunctions.swift */,
+				C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				C8745C1C1F9F010D009607C1 /* FileTools.swift in Sources */,
 				C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */,
 				C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */,
+				C8EC9FA21FC4201400C412CA /* RandomizeUt_4.swift in Sources */,
 				C8745C1A1F9F010D009607C1 /* DatesTools.swift in Sources */,
 				C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */,
 				C856BC781FBEF46C0049CFCC /* MathFunctions.swift in Sources */,
@@ -579,6 +583,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Antonio.pruebas1.Mortagage-UtilitiesTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SUPPRESS_WARNINGS = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mortagage_Utilities.app/Mortagage_Utilities";
@@ -595,6 +600,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Antonio.pruebas1.Mortagage-UtilitiesTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SUPPRESS_WARNINGS = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mortagage_Utilities.app/Mortagage_Utilities";

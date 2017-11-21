@@ -270,10 +270,30 @@ class randomizeTests: XCTestCase {
          let db6 = CompoundVAleatoria__.FBde(f2, -1.5)
          let db7 = CompoundVAleatoria__.FBde(f2, -1)
         
-        XCTAssert(db1 == )
+        XCTAssert(db1 == 6)
+         XCTAssert(db2 == 6)
+         XCTAssert(db3 == 11)
+         XCTAssert(db4 == 15)
+         XCTAssert(db5 == 15)
+         XCTAssert(db6 == 18)
+         XCTAssert(db7 == 20)
         
         
+        let db8 = CompoundVAleatoria__.FBde(f2, -0.8)
+        let db9 = CompoundVAleatoria__.FBde(f2, -0.5)
+        let db10 = CompoundVAleatoria__.FBde(f2, 0.3)
+        let db11 = CompoundVAleatoria__.FBde(f2, 0 )
+        let db12 = CompoundVAleatoria__.FBde(f2, 0.2)
+        let db13 = CompoundVAleatoria__.FBde(f2, 0.5)
+        let db14 = CompoundVAleatoria__.FBde(f2, 0.8)
         
+        XCTAssert(db8 == 20)
+        XCTAssert(db9 == 22.25)
+        XCTAssert(db10 == 24.75)
+        XCTAssert(db11 == 24.75)
+        XCTAssert(db12 == 24.75)
+        XCTAssert(db13 == 27.5)
+        XCTAssert(db14 == 27.5)
         
         
         let fg = 9000000
@@ -321,7 +341,7 @@ class randomizeTests: XCTestCase {
          XCTAssert(t47 == 11)
         //let t5 = fDBoneparticularFunc(f2[4], 3)
         
-        
+        XCTAssert(tot2 == 45.5)
         
         
         let fg = 9900000
@@ -333,15 +353,18 @@ class randomizeTests: XCTestCase {
     
     func testWaysIO () {
         
+        let intervSingle2: [(Double,Double)] = [(-3,0.6),(-2,0.4),(-1,0.2),(1,0.3),(2,0.5),(3,0.7)    ]
         
-        let wa = waysOfIO.proof()
+        guard let f2 = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle2, stepm: 0.5) else {return }
         
-        let genr = wa.generateTheWayValues()
+        let funcs = CompoundVAleatoria(funcs_: f2)
         
+        let tot2 = checkVARALEAFUNC(funcs: f2)
+       
+       
+        let io = IOGenerator <> funcs  <> diasYSimulacionesPruebas()
         
-        let fop = 9000
-        
-        
+        XCTAssert(type(of: io) == type(of: WaysOfIndexes))
        
         
         

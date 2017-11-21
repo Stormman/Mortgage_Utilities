@@ -227,7 +227,7 @@ func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp? where A :doubleGener
         
         let aBase = Array(0...(ind))
         
-        let xToApply = aBase <=> {(funcs[$0].bounds.1) }
+        let xToApply = aBase <=> {(funcs[$0].bounds.1 - pasosIntroNewInter) }
         
         let newToappl = changelastElementOfAArray(arr: xToApply) <> {_ in  x}
         
