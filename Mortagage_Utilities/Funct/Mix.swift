@@ -33,6 +33,21 @@ func  CreaDictionaryCOnEStosArrays<A,B> (fir : [A], sec: [B]) -> Dictionary<A,B>
     
 }
 
+func creawaysConEstos(firs:[String], sec:[[[Double]]] ) -> waysOfInd {
+    
+    var dic :waysOfInd = [:]
+    
+    
+    let une = zip(firs,sec).enumerated().map{ dic[$0.element.0] = sec[$0.offset] }
+    
+    return dic
+    
+    
+    
+    
+}
+
+
 let creaDictConesteArrayStringYesteDOuble : ([String]) -> ([Double?]) -> [String:Double?] = { strArr in {
     douArray in CreaDictionaryCOnEStosArrays(fir: strArr, sec: douArray)
     }

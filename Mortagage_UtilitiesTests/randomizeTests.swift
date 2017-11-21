@@ -353,23 +353,53 @@ class randomizeTests: XCTestCase {
     
     func testWaysIO () {
         
-        let intervSingle2: [(Double,Double)] = [(-3,0.6),(-2,0.4),(-1,0.2),(1,0.3),(2,0.5),(3,0.7)    ]
+        let intervSingle2: [(Double,Double)] = [(-3,0.12),(-2,0.13),(-1,0.04),(1,0.06),(2,0.10),(3,0.14)    ]
         
         guard let f2 = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle2, stepm: 0.5) else {return }
         
         let funcs = CompoundVAleatoria(funcs_: f2)
+        let funcs2 = CompoundVAleatoria(funcs_: f2)
+        let funcs3 = CompoundVAleatoria(funcs_: f2)
         
-        let tot2 = checkVARALEAFUNC(funcs: f2)
+        
+        
+        let diasYsim = diasYSimulacionesPruebas()
+        
+       let indexesAndItsAleaVars : [String : CompoundVAleatoria<doudouMetriz> ] = ["Euribor 1 año" :funcs, "Bono 10 Esp":funcs2, "EuroDollar":funcs3   ]
        
-       
-        let io = IOGenerator <> funcs  <> diasYSimulacionesPruebas()
+        guard let io = IOGenerator <> indexesAndItsAleaVars <> diasYsim else {return}
         
-        XCTAssert(type(of: io) == type(of: WaysOfIndexes))
-       
+        XCTAssert(type(of: io) == WaysOfIndexes.self)
+        
+        XCTAssert(io.nDays == diasYsim.0 && io.nSimul == diasYsim.1)
+        XCTAssert(io.ways.count == 3)
+        
+        
+        guard let fi = io.ways.first else {return }
+        
+        XCTAssert( type(of:(fi.key)) == String.self )
+        XCTAssert(fi.value.count == diasYsim.1)
+        XCTAssert(fi.value.first?.count == diasYsim.0)
         
         
         
         
+        
+        
+        
+        
+        
+    }
+    
+    func test_generByaleator() {
+        
+      let compV = compoundAleaDePrueba()
+        
+        let nNumeros = diasYSimulacionesPrueba().1
+        
+        let matrRes : [Double] = generByAleator <> compV  <> nNumeros
+        
+        XCTAssert(matrRes.count == nNumeros )
         
         
     }
