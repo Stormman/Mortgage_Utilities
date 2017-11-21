@@ -66,6 +66,12 @@ func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> 
         
         
         
+        
+        
+        
+        
+        
+        
         return Array<Double>(repeatElement(1.00, count: nNum ))
         
         
@@ -76,3 +82,48 @@ func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> 
     
     
 }
+
+
+func InvertFunction(_ f : doudouMetriz) -> funcDouToDouOp {
+    
+   
+        
+        
+        
+    func inverter ( val: Double, ff: funcDouToDOu, steps:Double, min: Double, bounds: (Double,Double)  )-> Double? {
+        
+        if(val < bounds.0){return nil}
+        //if(val > bounds.1){return nil}
+        
+        
+        if( min  < bounds.0 ) {return nil}
+        if( min > bounds.1) {return nil}
+        
+        if ( ff(min) >= val) {
+            return min
+       } else {
+            
+            //if( min  > bounds.1) {return nil}
+            
+            return inverter(val: val , ff: ff , steps: steps , min: min  + steps ,bounds: bounds  )
+        }}
+        
+    return {x in
+        
+        return inverter(val: x, ff: f.generat, steps: f.stepMinim, min: f.bounds.0, bounds: f.bounds)
+        
+        
+    }
+        
+    
+        
+        
+    
+    
+    
+    
+}
+
+
+
+

@@ -37,6 +37,13 @@ class randomizeTests: XCTestCase {
         super.tearDown()
     }
     
+    func test_simpleGenerations () {
+        
+        let f = Array(1...200) <=> {_ in simpleGenerations() <> 100}
+        
+        let fg = 9000000
+    }
+    
     func testExample() {
         
         
@@ -401,6 +408,8 @@ class randomizeTests: XCTestCase {
         
         XCTAssert(matrRes.count == nNumeros )
         
+        XCTAssert(TodosIguales(matrRes) == false )
+        
         
         
         
@@ -408,6 +417,8 @@ class randomizeTests: XCTestCase {
         
         
     }
+    
+    
     
     func test_Invertible() {
         
@@ -419,6 +430,20 @@ class randomizeTests: XCTestCase {
         let im2 = FDde1 <> -2.4
         let im3 = FDde1 <> -3
         
+        let f : (Double) -> Double = {n in n * 2}
+        
+        let inert = invv(generat: f, stepMinim: 1, bounds: (0,1000))
+        
+        let f2 = inert.inversefun(4)
+        let f3 = inert.inversefun(6)
+        let f10 = inert.inversefun(20)
+        
+        XCTAssert(f2 == 2)
+        XCTAssert(f3 == 3)
+        XCTAssert(f10 == 10)
+        
+        
+        
         
         
         
@@ -429,6 +454,44 @@ class randomizeTests: XCTestCase {
         
     }
     
+    func test_InvertFunction() {
+        
+         let f : (Double) -> Double = {n in n * 2}
+        
+        let dou = doudouMetriz(stepMinim: 1, bounds: (1,1000), generat: f)
+        
+        let invert = InvertFunction(dou)
+        
+        
+        let invni1 = invert <> 0
+        let inv2 = invert <> 4
+        let inv4 = invert <> 8
+        let inv5 = invert <> 10
+        let inv60 = invert <> 120
+        let inv1000 = invert <> 2000
+        let invnil2 = invert <> 2002
+        
+        let inv495 = invert <> 990
+        
+        let invsuperayes5 = invert <> 9
+        let casi1000 = invert <> 1998
+        
+        
+        XCTAssert(invni1 == nil)
+        XCTAssert(invnil2 == nil)
+        XCTAssert(inv2 == 2)
+         XCTAssert(inv4 == 4)
+         XCTAssert(inv5 == 5)
+         XCTAssert(inv60 == 60)
+         XCTAssert(inv1000 == 1000)
+        XCTAssert(inv495 == 495)
+       XCTAssert(casi1000 == 999)
+        XCTAssert(invsuperayes5 == 5)
+        
+        let fg = 900000
+        
+        
+    }
     
     
     

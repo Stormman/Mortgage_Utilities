@@ -187,6 +187,20 @@ func twoDouToDouCurri( _ f: @escaping (Double , Double) -> Double  ) -> (Double)
     }}
 
 
-
+func TodosIguales<A: Numeric> ( _ arrDou: [A])-> Bool  {
+    
+    
+    let sameArray = arrDou
+    
+   let elem = arrDou.first!
+    
+    let d = arrDou <=> {($0 == elem)}
+    
+    let red = d.reduce(true) { ($0 && $1)       }
+    
+    return red
+    
+    
+}
 
 

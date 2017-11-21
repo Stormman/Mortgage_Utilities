@@ -148,6 +148,31 @@ class functionalTests: XCTestCase {
         
     }
     
+    
+    func test_todosIguales() {
+        
+        let iguales = [2,2,2,2,2,2,2,2,2,2,2,2]
+        let noiguales = [1,2,2,2,2,2,2,2,2]
+        let nogiuales2 = [2,2,2,2,2,2,2,2,2,2,2,2,1]
+        let nogiuales3 = [11,2,4,5,6,6,6,6,6,6,6,6,6,6]
+        
+        XCTAssert(TodosIguales(iguales) == true)
+        XCTAssert(TodosIguales(noiguales) == false)
+        XCTAssert(TodosIguales(nogiuales2) == false)
+        XCTAssert(TodosIguales(nogiuales3) == false)
+        
+        let iguales2 = [2,2]
+        let noiguales4 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2]
+        let nogiuales5 = [2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,]
+        let nogiuales6 = [11,2,4,5,6,6,6,6,6,6,6,6,6,6]
+        XCTAssert(TodosIguales(iguales2) == true)
+        XCTAssert(TodosIguales(noiguales4) == false)
+        XCTAssert(TodosIguales(nogiuales5) == false)
+        XCTAssert(TodosIguales(nogiuales6) == false)
+        
+        
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
