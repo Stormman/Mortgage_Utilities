@@ -244,7 +244,7 @@ func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp? where A :doubleGener
 func fDBoneparticularFunc<A>( _ funcsi: A, _ x: Double) -> Double where A:doubleGenerMetrizable {
     
     let fsininterv = funcsi
-    let valea =   CompoundVAleatoria__.funcintervabilizada(fsininterv) {($0+$1)/2}
+    let valea =   CompoundVAleatoria__.funcintervabilizada(fsininterv) {(f,_) -> Double in f}
     let pasosNece: Int? = stepsNeceseToArrive(fsininterv, x )
     
     if (pasosNece == nil) {return 0}
@@ -252,8 +252,9 @@ func fDBoneparticularFunc<A>( _ funcsi: A, _ x: Double) -> Double where A:double
     
     assert(pasosNece != 0, "zero")
     
+    let pasus = pasosNece!
     
-    let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <> map{ (Double($0) * fsininterv.stepMinim) + fsininterv.bounds.0 }
+    let mapped = Array (0...pasus) <> map{ (Double($0) * fsininterv.stepMinim) + fsininterv.bounds.0 }
     
     let mapped2 = mapped <> map{ fsininterv.generat($0)}
     

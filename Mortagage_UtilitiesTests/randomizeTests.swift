@@ -255,12 +255,26 @@ class randomizeTests: XCTestCase {
         
         
         
-       // let db = CompoundVAleatoria__.FBde(f2, 0)
+       
         
         
-        let db2 = CompoundVAleatoria__.FBde(f2, 3)
+        //let db2 = CompoundVAleatoria__.FBde(f2, 3)
         
-        let db3 = CompoundVAleatoria__.FBde(f2, 3.01)
+       // let db3 = CompoundVAleatoria__.FBde(f2, 3.01)
+        
+        let db1 = CompoundVAleatoria__.FBde(f2, -3)
+        let db2 = CompoundVAleatoria__.FBde(f2, -2.7)
+         let db3 = CompoundVAleatoria__.FBde(f2, -2.3)
+         let db4 = CompoundVAleatoria__.FBde(f2, -2)
+         let db5 = CompoundVAleatoria__.FBde(f2, -1.7)
+         let db6 = CompoundVAleatoria__.FBde(f2, -1.5)
+         let db7 = CompoundVAleatoria__.FBde(f2, -1)
+        
+        XCTAssert(db1 == )
+        
+        
+        
+        
         
         let fg = 9000000
         
@@ -277,14 +291,38 @@ class randomizeTests: XCTestCase {
         
         let tot2 = checkVARALEAFUNC(funcs: f2)
         
-        let t1 = fDBoneparticularFunc(f2[0], -2)
+        //let t1 = fDBoneparticularFunc(f2[0], -2)
         
         
         
-        let t2 = fDBoneparticularFunc(f2[1], -1)
-         let t3 = fDBoneparticularFunc(f2[2], 1)
-         let t4 = fDBoneparticularFunc(f2[3], 2)
-        let t5 = fDBoneparticularFunc(f2[4], 3)
+        let t2 = fDBoneparticularFunc(f2[1], -1.3)
+        
+        let t3 = fDBoneparticularFunc(f2[2], 0.9)
+        let t31 = fDBoneparticularFunc(f2[3], 1.1)
+        let t32 = fDBoneparticularFunc(f2[3], 1.5)
+        let t33 = fDBoneparticularFunc(f2[3], 1.7)
+       
+        
+        
+        let t4 = fDBoneparticularFunc(f2[4], 2)
+        
+        let t45 = fDBoneparticularFunc(f2[4], 2.4)
+        let t46 = fDBoneparticularFunc(f2[4], 2.5)
+         let t47 = fDBoneparticularFunc(f2[4], 2.6)
+        
+        XCTAssert(t2 == 7)
+         XCTAssert(t3 == 9.5)
+         XCTAssert(t31 == 3)
+         XCTAssert(t32 == 7)
+         XCTAssert(t33 == 7)
+         XCTAssert(t4 == 5)
+         XCTAssert(t45 == 5)
+         XCTAssert(t46 == 11)
+         XCTAssert(t47 == 11)
+        //let t5 = fDBoneparticularFunc(f2[4], 3)
+        
+        
+        
         
         let fg = 9900000
         

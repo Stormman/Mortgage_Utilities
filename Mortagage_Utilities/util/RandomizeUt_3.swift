@@ -24,7 +24,7 @@ final class CompoundVAleatoria__ {
             
         guard let ind = CompoundVAleatoria__.whatIvIs(x, funcs ) else {return nil }
         
-        let fintevr =   CompoundVAleatoria__.funcintervabilizada(funcs[ind]) {($0+$1)/2}
+        let fintevr =   CompoundVAleatoria__.funcintervabilizada(funcs[ind]) {(f,_) -> Double in f}
         
         guard let toR = fintevr(x) else {return nil}
         
