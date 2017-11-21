@@ -409,6 +409,28 @@ class randomizeTests: XCTestCase {
         
     }
     
+    func test_Invertible() {
+        
+        let compV = compoundAleaDePrueba()
+        
+        let FDde1 = CompoundVAleatoria__.fde <> compV.funcs_
+        
+        let im1 = FDde1 <> -1
+        let im2 = FDde1 <> -2.4
+        let im3 = FDde1 <> -3
+        
+        
+        
+        
+        
+       // let invert : invv = invv(
+        
+        
+        
+    }
+    
+    
+    
     
     func test_numerosToIntervalosTuples() {
         
