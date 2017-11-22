@@ -310,6 +310,35 @@ class randomizeTests: XCTestCase {
         
     }
     
+    func test_FDB_curried () {
+        
+        
+     let d = compoundvAleaTeste()
+        
+        let g : funcDouToDouOp = CompoundVAleatoria__.FBdec <> d
+        
+        let db1 = g <> -3
+        let db2 = g <> -2.7
+        let db3 = g <> -2.3
+        let db4 = g <> -2
+        let db5 = g <> -1.7
+        let db6 = g <> -1.5
+        let db7 = g <> -1
+        
+        XCTAssert(db1 == 6)
+        XCTAssert(db2 == 6)
+        XCTAssert(db3 == 11)
+        XCTAssert(db4 == 15)
+        XCTAssert(db5 == 15)
+        XCTAssert(db6 == 18)
+        XCTAssert(db7 == 20)
+        
+        
+        
+        
+    }
+    
+    
     func test_fDBoneparticularFunc () {
         
         let intervSingle2: [(Double,Double)] = [(-3,6),(-2,4),(-1,2),(1,3),(2,5),(3,7)    ]
@@ -489,6 +518,16 @@ class randomizeTests: XCTestCase {
         XCTAssert(invsuperayes5 == 5)
         
         let fg = 900000
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
     }

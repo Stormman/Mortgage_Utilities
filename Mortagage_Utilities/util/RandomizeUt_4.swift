@@ -60,12 +60,23 @@ func compoundAleaDePrueba () -> CompoundVAleatoria<doudouMetriz> {
     
 }
 
+func compoundvAleaTeste() -> CompoundVAleatoria<doudouMetriz> {
+    
+    let intervSingle2: [(Double,Double)] = [(-3,6),(-2,4),(-1,2),(1,3),(2,5),(3,7)    ]
+    
+   let f2 = CompoundVAleatoria__.concatenateIntervWtihLines(intervSingle2, stepm: 0.5)
+    
+    return CompoundVAleatoria(funcs_: f2!)
+    
+}
+
 func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> [Double] {
     
     return {nNum  in
         
         
         
+        let simplesAleatoriosde1a100 = Array(1...nNum) <=> {_ in simpleGenerations() <> 100}
         
         
         

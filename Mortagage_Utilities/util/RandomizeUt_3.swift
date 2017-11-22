@@ -51,6 +51,30 @@ final class CompoundVAleatoria__ {
         
     }
     
+    //curried
+    static func FBdec<FU:doubleGenerMetrizable>(_ comp: CompoundVAleatoria<FU>) ->( Double) -> Double? {
+        //hay un error , para pobtener la fdb tenemos que hacerlos no directamente de la matriz sino desde
+        // fde()
+      
+        return {x  in
+            
+         let funcs = comp.funcs_
+            
+        guard let ind = CompoundVAleatoria__.whatIvIs(x, funcs ) else {return nil }
+        
+        
+        //let fdbb = obtainFDBOfMemoize(funcs[ind])
+        
+        //let fdbb = obtainFDBOf(funcs[ind])
+        
+        guard   let fdbb = obtainFDBofFuncss(funcs) else {return nil}
+        
+        return fdbb(x)
+        }
+        
+        
+    }
+    
     //********************
     
     static func whatIvIs<MET : metrizable>( _ x: Double ,_ arrMEt : [MET] )-> Int?  {
