@@ -339,6 +339,8 @@ class randomizeTests: XCTestCase {
     }
     
     
+    
+    
     func test_fDBoneparticularFunc () {
         
         let intervSingle2: [(Double,Double)] = [(-3,6),(-2,4),(-1,2),(1,3),(2,5),(3,7)    ]
@@ -532,7 +534,32 @@ class randomizeTests: XCTestCase {
         
     }
     
-    
+    func test_InvertFunctionOp () {
+        
+        let d = compoundvAleaTeste()
+        
+        //let g : funcDouToDouOp = CompoundVAleatoria__.FBdec <> d
+        
+        
+        let inv : funcDouToDouOp! = InvertFunctionOp <> d
+        
+        
+        let a1 = inv <> 6
+        let a2 = inv <> 11
+        let a3 = inv <> 15
+        let a4 = inv <> 18
+        let a5 = inv <> 20
+        
+        XCTAssert(a1 == -3)
+        XCTAssert(a2 == -2.5)
+        XCTAssert(a3 == -2)
+        XCTAssert(a4 == -1.5)
+        XCTAssert(a5 == -1)
+        
+        
+        
+        
+    }
     
     func test_numerosToIntervalosTuples() {
         

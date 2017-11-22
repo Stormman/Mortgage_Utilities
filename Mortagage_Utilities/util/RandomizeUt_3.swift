@@ -75,6 +75,15 @@ final class CompoundVAleatoria__ {
         
     }
     
+    static func obtainMetricaAllFuncTogether<FU:doubleGenerMetrizable>(_ comp: CompoundVAleatoria<FU>)-> metroSimpleWithFunc? {
+    
+    
+        guard let ffirst = comp.funcs_.first , let flast = comp.funcs_.last else {return nil}
+    
+    return metroSimpleWithFunc(stepMinim: ffirst.stepMinim, bounds: (ffirst.bounds.0,flast.bounds.1))
+    
+    }
+    
     //********************
     
     static func whatIvIs<MET : metrizable>( _ x: Double ,_ arrMEt : [MET] )-> Int?  {

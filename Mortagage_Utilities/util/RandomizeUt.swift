@@ -52,6 +52,14 @@ protocol metrizable {
     
 }
 
+struct metroSimpleWithFunc: metrizable  {
+    
+    var  stepMinim : Double
+    var   bounds : (Double,Double)
+    
+    
+}
+
 protocol doubleGenerator {
     
     
@@ -68,7 +76,12 @@ struct doudouMetriz: doubleGenerMetrizable {
     var   bounds : (Double,Double)
      var generat :(Double) -> Double
 }
-
+struct doudouMetrizOp {
+    
+    var  stepMinim : Double
+    var   bounds : (Double,Double)
+    var generat :(Double) -> Double?
+}
 struct   interval  {
     var lowBound : Double
     var upBound : Double

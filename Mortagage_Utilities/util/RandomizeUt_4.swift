@@ -98,10 +98,7 @@ func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> 
 func InvertFunction(_ f : doudouMetriz) -> funcDouToDouOp {
     
    
-        
-        
-        
-    func inverter ( val: Double, ff: funcDouToDOu, steps:Double, min: Double, bounds: (Double,Double)  )-> Double? {
+        func inverter ( val: Double, ff: funcDouToDOu, steps:Double, min: Double, bounds: (Double,Double)  )-> Double? {
         
         if(val < bounds.0){return nil}
         //if(val > bounds.1){return nil}
@@ -125,16 +122,43 @@ func InvertFunction(_ f : doudouMetriz) -> funcDouToDouOp {
         
         
     }
-        
+}
+
+func InvertFunctionOp<FU:doubleGenerMetrizable>(_ f:CompoundVAleatoria<FU>) -> funcDouToDouOp? {
     
+    
+    guard let met = CompoundVAleatoria__.obtainMetricaAllFuncTogether(f) else {return nil}
+    
+    func inverter ( val: Double, ff: funcDouToDouOp, steps:Double, min: Double, bounds: (Double,Double)  )-> Double? {
+        
+        if(val < bounds.0){return nil}
+        //if(val > bounds.1){return nil}
         
         
-    
-    
+        if( min  < bounds.0 ) {return nil}
+        if( min > bounds.1) {return nil}
+        
+        guard let fmi = ff(min) else {return nil}
+        
+        if ( fmi >= val) {
+            return min
+        } else {
+            
+            //if( min  > bounds.1) {return nil}
+            
+            return inverter(val: val , ff: ff , steps: steps , min: min  + steps ,bounds: bounds  )
+        }}
+   
+    return {x in
+        
+        let fToDb = CompoundVAleatoria__.FBdec(f)
+        
+        return inverter(val: x, ff: fToDb , steps: met.stepMinim, min:met.bounds.0, bounds:(met.bounds.0, met.bounds.1))
+        
+        
+    }
     
     
 }
-
-
 
 
