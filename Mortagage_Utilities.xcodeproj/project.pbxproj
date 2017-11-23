@@ -33,6 +33,7 @@
 		C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */; };
 		C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */; };
 		C8EC9FA21FC4201400C412CA /* RandomizeUt_4.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */; };
+		C8EC9FA41FC6F05B00C412CA /* Mix_MOrtgage_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC9FA31FC6F05B00C412CA /* Mix_MOrtgage_Test.swift */; };
 		C8FA30631FA9BCE600984466 /* RandomizeUt_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */; };
 		C8FA30651FA9C07E00984466 /* Functional_Utilities_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */; };
 		C8FA30671FA9CB0900984466 /* randomizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA30661FA9CB0900984466 /* randomizeTests.swift */; };
@@ -89,6 +90,7 @@
 		C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functionals_Utilities.swift; sourceTree = "<group>"; };
 		C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt.swift; sourceTree = "<group>"; };
 		C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt_4.swift; sourceTree = "<group>"; };
+		C8EC9FA31FC6F05B00C412CA /* Mix_MOrtgage_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mix_MOrtgage_Test.swift; sourceTree = "<group>"; };
 		C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt_2.swift; sourceTree = "<group>"; };
 		C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functional_Utilities_2.swift; sourceTree = "<group>"; };
 		C8FA30661FA9CB0900984466 /* randomizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = randomizeTests.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				C84972181FAE46A4002AB709 /* simulaTest.swift */,
 				C856BC791FBF57420049CFCC /* MAth__Tests.swift */,
 				C856BC7B1FC2D2210049CFCC /* Mix_test.swift */,
+				C8EC9FA31FC6F05B00C412CA /* Mix_MOrtgage_Test.swift */,
 			);
 			path = Mortagage_UtilitiesTests;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			files = (
 				C8745BF41F9E881D009607C1 /* Mortagage_UtilitiesTests.swift in Sources */,
 				C8FA30691FA9DA4000984466 /* functionalTests.swift in Sources */,
+				C8EC9FA41FC6F05B00C412CA /* Mix_MOrtgage_Test.swift in Sources */,
 				C84972191FAE46A4002AB709 /* simulaTest.swift in Sources */,
 				C856BC7A1FBF57420049CFCC /* MAth__Tests.swift in Sources */,
 				C856BC7C1FC2D2210049CFCC /* Mix_test.swift in Sources */,

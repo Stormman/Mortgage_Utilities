@@ -73,7 +73,7 @@ func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> 
         let simplesAleatajustadosAlafunc = simplesAleatoriosde1a100 <=> {$0 / 100}
         let re = simplesAleatajustadosAlafunc <=>  inver
         let sre = re.flatMap{$0}
-        print("aleatorio ......")
+       // print("aleatorio ......")
         
         return sre}
 }
@@ -82,7 +82,7 @@ func generByAleatorLists(_ varAlea : CompoundVAleatoria<doudouMetriz>) -> (Int) 
     return { nDias in { nSmus in
         let f = arrayOfOrdeneredZEroIndex(nSmus) <=> {_ in (generByAleator_ <> varAlea <> nDias)!  }
         
-        print("aleatorio list -------------------------")
+        // print("aleatorio list -------------------------")
         return f
     }}}
 

@@ -193,10 +193,8 @@ class simulaTest: XCTestCase {
         
         
     }
-        
-        
-        
     
+   
         
     
     

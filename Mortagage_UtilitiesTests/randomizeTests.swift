@@ -477,6 +477,17 @@ class randomizeTests: XCTestCase {
         
     }
     
+    func test_examples() {
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
     
     func test_Invertible() {
         
