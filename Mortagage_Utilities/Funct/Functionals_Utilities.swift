@@ -203,4 +203,14 @@ func TodosIguales<A: Numeric> ( _ arrDou: [A])-> Bool  {
     
 }
 
-
+func BoolToInt(_ d : Bool) -> Int {
+    
+    switch d {
+    case true:
+        return 1
+    case false:
+        return 0
+    }
+    
+    
+}

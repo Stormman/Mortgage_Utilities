@@ -173,6 +173,20 @@ class functionalTests: XCTestCase {
         
     }
     
+    func test_BoolToInt() {
+        
+        
+        let g = BoolToInt(true)
+        let h = BoolToInt(false)
+        
+        XCTAssert(g == 1)
+        XCTAssert(h == 0)
+        
+        
+        
+        
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

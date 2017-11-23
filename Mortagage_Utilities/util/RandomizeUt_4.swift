@@ -33,16 +33,11 @@ func extraa(_ infVar : indexesAndVarAleatoria) ->((Int,Int))-> waysOfInd? {
         let k = Array(infVar.keys)
     
         
-        let cadastringConsusdias = Array(0...k.count-1) <=> {_ in Array<Double>(repeatElement(1.00, count: tup.1))}
+        let toRet = infVar.mapValues{ (generByAleatorLists <> $0 <> tup.0 <> tup.1)!        }
         
-        let tot = cadastringConsusdias <=> {$0 <=> {_ in Array<Double>(repeatElement(1.00, count: tup.0))} }
-        
-        
-        //let arrOfDa = arrayOfArr <=> {_ in Array<Double>(repeatElement(1.00, count: tup.1))}
     
-        let b = creawaysConEstos(firs: k, sec: tot)
-    
-        return Optional<waysOfInd>(b)
+        
+        return toRet
         
     
     }
@@ -70,29 +65,29 @@ func compoundvAleaTeste() -> CompoundVAleatoria<doudouMetriz> {
     
 }
 
-func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> [Double] {
+func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> [Double]? {
     
     return {nNum  in
+        let simplesAleatoriosde1a100 = Array(1...nNum) <=> {_ in Double(simpleGenerations() <> 100)}
+        guard  let inver = InvertFunctionOp(varAlea) else {return nil}
+        let simplesAleatajustadosAlafunc = simplesAleatoriosde1a100 <=> {$0 / 100}
+        let re = simplesAleatajustadosAlafunc <=>  inver
+        let sre = re.flatMap{$0}
+        print("aleatorio ......")
         
-        
-        
-        let simplesAleatoriosde1a100 = Array(1...nNum) <=> {_ in simpleGenerations() <> 100}
-        
-        
-        
-        
-        
-        
-        return Array<Double>(repeatElement(1.00, count: nNum ))
-        
-        
-        
-    }
-    
-    
-    
-    
+        return sre}
 }
+
+func generByAleatorLists(_ varAlea : CompoundVAleatoria<doudouMetriz>) -> (Int) -> (Int)-> [[Double]]? {
+    return { nDias in { nSmus in
+        let f = arrayOfOrdeneredZEroIndex(nSmus) <=> {_ in (generByAleator_ <> varAlea <> nDias)!  }
+        
+        print("aleatorio list -------------------------")
+        return f
+    }}}
+
+
+
 
 
 func InvertFunction(_ f : doudouMetriz) -> funcDouToDouOp {

@@ -401,7 +401,7 @@ class randomizeTests: XCTestCase {
         
         
         
-        let diasYsim = diasYSimulacionesPruebas()
+        let diasYsim = (100,20)
         
        let indexesAndItsAleaVars : [String : CompoundVAleatoria<doudouMetriz> ] = ["Euribor 1 año" :funcs, "Bono 10 Esp":funcs2, "EuroDollar":funcs3   ]
        
@@ -419,9 +419,13 @@ class randomizeTests: XCTestCase {
         XCTAssert(fi.value.count == diasYsim.1)
         XCTAssert(fi.value.first?.count == diasYsim.0)
         
+                    let p = fi.value <=> TodosIguales
+                    let q = (p  <=> BoolToInt) <> TodosIguales
+       
+        XCTAssert(q == true)
         
-        
-        
+       
+    
         
         
         
@@ -431,17 +435,41 @@ class randomizeTests: XCTestCase {
     
     func test_generByaleator() {
         
-      let compV = compoundAleaDePrueba()
+      //let compV = compoundvAleaTeste()
+        let compV = compoundAleaDePrueba()
         
         let nNumeros = 100
-        let matrRes : [Double] = generByAleator_ <> compV <> nNumeros
+        let matrRes : [Double] = (generByAleator_ <> compV <> nNumeros)!
         
         
         XCTAssert(matrRes.count == nNumeros )
         
         XCTAssert(TodosIguales(matrRes) == false )
         
+        let met = CompoundVAleatoria__.obtainMetricaAllFuncTogether(compV)
         
+        let betwRangeFunc = matrRes <=> (betWeen(met!.bounds.0, met!.bounds.1) <> BoolToInt)
+        
+        let todigu = TodosIguales(betwRangeFunc)
+        
+        XCTAssert(todigu  && betwRangeFunc.first! == 1)
+        
+        
+        
+        
+    }
+    
+    func test_generByAleatorLists() {
+        
+        let compV = compoundAleaDePrueba()
+        
+         let diasYsim = (100,30)
+        
+        let matrRes : [[Double]] = (generByAleatorLists <> compV <> diasYsim.0 <> diasYsim.1)!
+        
+        XCTAssert(matrRes.count == diasYsim.1 )
+        
+        XCTAssert(matrRes.first!.count == diasYsim.0)
         
         
         
@@ -450,10 +478,9 @@ class randomizeTests: XCTestCase {
     }
     
     
-    
     func test_Invertible() {
         
-        let compV = compoundAleaDePrueba()
+        let compV = compoundvAleaTeste()
         
         let FDde1 = CompoundVAleatoria__.fde <> compV.funcs_
         
@@ -555,6 +582,25 @@ class randomizeTests: XCTestCase {
         XCTAssert(a3 == -2)
         XCTAssert(a4 == -1.5)
         XCTAssert(a5 == -1)
+        
+        
+        let y1 = inv <> 0.28
+        let y2 = inv <> 4.56
+        let y3 = inv <> 0.01
+        XCTAssert(y1 == -3)
+        XCTAssert(y2 == -3)
+        XCTAssert(y3 == -3)
+        
+        
+        let z1 = inv <> 6.01
+        let z2 = inv <> 4.29
+        let z3 =  inv <> 6.400001
+        
+        
+        XCTAssert(z1 == -2.5)
+        XCTAssert(z2 == -3)
+        XCTAssert(z3 == -2.5)
+        
         
         
         
