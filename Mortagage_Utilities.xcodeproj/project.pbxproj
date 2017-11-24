@@ -15,6 +15,7 @@
 		C856BC781FBEF46C0049CFCC /* MathFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C856BC771FBEF46C0049CFCC /* MathFunctions.swift */; };
 		C856BC7A1FBF57420049CFCC /* MAth__Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C856BC791FBF57420049CFCC /* MAth__Tests.swift */; };
 		C856BC7C1FC2D2210049CFCC /* Mix_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C856BC7B1FC2D2210049CFCC /* Mix_test.swift */; };
+		C8667C3B1FC70F8C00519218 /* Mix_Mortgage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8667C3A1FC70F8C00519218 /* Mix_Mortgage2.swift */; };
 		C8745BDF1F9E881D009607C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745BDE1F9E881D009607C1 /* AppDelegate.swift */; };
 		C8745BE11F9E881D009607C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745BE01F9E881D009607C1 /* ViewController.swift */; };
 		C8745BE41F9E881D009607C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8745BE21F9E881D009607C1 /* Main.storyboard */; };
@@ -66,6 +67,7 @@
 		C856BC771FBEF46C0049CFCC /* MathFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFunctions.swift; sourceTree = "<group>"; };
 		C856BC791FBF57420049CFCC /* MAth__Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAth__Tests.swift; sourceTree = "<group>"; };
 		C856BC7B1FC2D2210049CFCC /* Mix_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mix_test.swift; sourceTree = "<group>"; };
+		C8667C3A1FC70F8C00519218 /* Mix_Mortgage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mix_Mortgage2.swift; sourceTree = "<group>"; };
 		C8745BDB1F9E881D009607C1 /* Mortagage_Utilities.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mortagage_Utilities.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8745BDE1F9E881D009607C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8745BE01F9E881D009607C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				C8745C101F9EFFA2009607C1 /* Mix_Mortgage.swift */,
 				C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */,
 				C8FA30641FA9C07E00984466 /* Functional_Utilities_2.swift */,
+				C8667C3A1FC70F8C00519218 /* Mix_Mortgage2.swift */,
 			);
 			path = Funct;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */,
 				C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */,
 				C8EC9FA21FC4201400C412CA /* RandomizeUt_4.swift in Sources */,
+				C8667C3B1FC70F8C00519218 /* Mix_Mortgage2.swift in Sources */,
 				C8745C1A1F9F010D009607C1 /* DatesTools.swift in Sources */,
 				C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */,
 				C856BC781FBEF46C0049CFCC /* MathFunctions.swift in Sources */,
