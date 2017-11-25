@@ -39,7 +39,7 @@ class randomizeTests: XCTestCase {
     
     func test_simpleGenerations () {
         
-        let f = Array(1...200) <=> {_ in simpleGenerations() <> 100}
+        let f = Array(1...200) <==> {_ in simpleGenerations() <&> 100}
         
         let fg = 9000000
     }
@@ -315,15 +315,15 @@ class randomizeTests: XCTestCase {
         
      let d = compoundvAleaTeste()
         
-        let g : funcDouToDouOp = CompoundVAleatoria__.FBdec <> d
+        let g : funcDouToDouOp = CompoundVAleatoria__.FBdec <&> d
         
-        let db1 = g <> -3
-        let db2 = g <> -2.7
-        let db3 = g <> -2.3
-        let db4 = g <> -2
-        let db5 = g <> -1.7
-        let db6 = g <> -1.5
-        let db7 = g <> -1
+        let db1 = g <&> -3
+        let db2 = g <&> -2.7
+        let db3 = g <&> -2.3
+        let db4 = g <&> -2
+        let db5 = g <&> -1.7
+        let db6 = g <&> -1.5
+        let db7 = g <&> -1
         
         XCTAssert(db1 == 6)
         XCTAssert(db2 == 6)
@@ -405,7 +405,7 @@ class randomizeTests: XCTestCase {
         
        let indexesAndItsAleaVars : [String : CompoundVAleatoria<doudouMetriz> ] = ["Euribor 1 año" :funcs, "Bono 10 Esp":funcs2, "EuroDollar":funcs3   ]
        
-        guard let io = IOGenerator <> indexesAndItsAleaVars <> diasYsim else {return}
+        guard let io = IOGenerator <&> indexesAndItsAleaVars <&> diasYsim else {return}
         
         XCTAssert(type(of: io) == WaysOfIndexes.self)
         
@@ -419,8 +419,8 @@ class randomizeTests: XCTestCase {
         XCTAssert(fi.value.count == diasYsim.1)
         XCTAssert(fi.value.first?.count == diasYsim.0)
         
-                    let p = fi.value <=> TodosIguales
-                    let q = (p  <=> BoolToInt) <> TodosIguales
+                    let p = fi.value <==> TodosIguales
+                    let q = (p  <==> BoolToInt) <&> TodosIguales
        
         XCTAssert(q == true)
         
@@ -439,7 +439,7 @@ class randomizeTests: XCTestCase {
         let compV = compoundAleaDePrueba()
         
         let nNumeros = 100
-        let matrRes : [Double] = (generByAleator_ <> compV <> nNumeros)!
+        let matrRes : [Double] = (generByAleator_ <&> compV <&> nNumeros)!
         
         
         XCTAssert(matrRes.count == nNumeros )
@@ -448,7 +448,7 @@ class randomizeTests: XCTestCase {
         
         let met = CompoundVAleatoria__.obtainMetricaAllFuncTogether(compV)
         
-        let betwRangeFunc = matrRes <=> (betWeen(met!.bounds.0, met!.bounds.1) <> BoolToInt)
+        let betwRangeFunc = matrRes <==> (betWeen(met!.bounds.0, met!.bounds.1) <&> BoolToInt)
         
         let todigu = TodosIguales(betwRangeFunc)
         
@@ -465,7 +465,7 @@ class randomizeTests: XCTestCase {
         
          let diasYsim = (100,30)
         
-        let matrRes : [[Double]] = (generByAleatorLists <> compV <> diasYsim.0 <> diasYsim.1)!
+        let matrRes : [[Double]] = (generByAleatorLists <&> compV <&> diasYsim.0 <&> diasYsim.1)!
         
         XCTAssert(matrRes.count == diasYsim.1 )
         
@@ -493,11 +493,11 @@ class randomizeTests: XCTestCase {
         
         let compV = compoundvAleaTeste()
         
-        let FDde1 = CompoundVAleatoria__.fde <> compV.funcs_
+        let FDde1 = CompoundVAleatoria__.fde <&> compV.funcs_
         
-        let im1 = FDde1 <> -1
-        let im2 = FDde1 <> -2.4
-        let im3 = FDde1 <> -3
+        let im1 = FDde1 <&> -1
+        let im2 = FDde1 <&> -2.4
+        let im3 = FDde1 <&> -3
         
         let f : (Double) -> Double = {n in n * 2}
         
@@ -532,18 +532,18 @@ class randomizeTests: XCTestCase {
         let invert = InvertFunction(dou)
         
         
-        let invni1 = invert <> 0
-        let inv2 = invert <> 4
-        let inv4 = invert <> 8
-        let inv5 = invert <> 10
-        let inv60 = invert <> 120
-        let inv1000 = invert <> 2000
-        let invnil2 = invert <> 2002
+        let invni1 = invert <&> 0
+        let inv2 = invert <&> 4
+        let inv4 = invert <&> 8
+        let inv5 = invert <&> 10
+        let inv60 = invert <&> 120
+        let inv1000 = invert <&> 2000
+        let invnil2 = invert <&> 2002
         
-        let inv495 = invert <> 990
+        let inv495 = invert <&> 990
         
-        let invsuperayes5 = invert <> 9
-        let casi1000 = invert <> 1998
+        let invsuperayes5 = invert <&> 9
+        let casi1000 = invert <&> 1998
         
         
         XCTAssert(invni1 == nil)
@@ -576,17 +576,17 @@ class randomizeTests: XCTestCase {
         
         let d = compoundvAleaTeste()
         
-        //let g : funcDouToDouOp = CompoundVAleatoria__.FBdec <> d
+        //let g : funcDouToDouOp = CompoundVAleatoria__.FBdec <&> d
         
         
-        let inv : funcDouToDouOp! = InvertFunctionOp <> d
+        let inv : funcDouToDouOp! = InvertFunctionOp <&> d
         
         
-        let a1 = inv <> 6
-        let a2 = inv <> 11
-        let a3 = inv <> 15
-        let a4 = inv <> 18
-        let a5 = inv <> 20
+        let a1 = inv <&> 6
+        let a2 = inv <&> 11
+        let a3 = inv <&> 15
+        let a4 = inv <&> 18
+        let a5 = inv <&> 20
         
         XCTAssert(a1 == -3)
         XCTAssert(a2 == -2.5)
@@ -595,17 +595,17 @@ class randomizeTests: XCTestCase {
         XCTAssert(a5 == -1)
         
         
-        let y1 = inv <> 0.28
-        let y2 = inv <> 4.56
-        let y3 = inv <> 0.01
+        let y1 = inv <&> 0.28
+        let y2 = inv <&> 4.56
+        let y3 = inv <&> 0.01
         XCTAssert(y1 == -3)
         XCTAssert(y2 == -3)
         XCTAssert(y3 == -3)
         
         
-        let z1 = inv <> 6.01
-        let z2 = inv <> 4.29
-        let z3 =  inv <> 6.400001
+        let z1 = inv <&> 6.01
+        let z2 = inv <&> 4.29
+        let z3 =  inv <&> 6.400001
         
         
         XCTAssert(z1 == -2.5)
@@ -710,12 +710,12 @@ class randomizeTests: XCTestCase {
         let comp = CompoundVAleatoria(funcs_: f)
         
         let r = CompoundVAleatoria__.fde(f)
-        let res1 = r <> 4
-        let res2 = r <>  8
-       let res3 = r <>  10
-        let res4 = r <>  38
-        let res5 = r <>  78.01
-        let res6 = r <>  2.90
+        let res1 = r <&> 4
+        let res2 = r <&>  8
+       let res3 = r <&>  10
+        let res4 = r <&>  38
+        let res5 = r <&>  78.01
+        let res6 = r <&>  2.90
         
         XCTAssert(res5 == nil)
         XCTAssert(res6 == nil)

@@ -36,7 +36,7 @@ func Var(args: [Double]) -> Double {
     
     let mea = mean(args: args)
     let pow : transfDouble  = { return $0 * $0}
-    let diferCuadrados = args <> map{ $0 - mea} <> map (pow)
+    let diferCuadrados = args <&> map{ $0 - mea} <&> map (pow)
     return diferCuadrados.reduce(0,+) / Double(args.count)
 }
 
@@ -53,26 +53,26 @@ func generaDoubleEnElPeriodo(_ n : Int) -> (funcIntToDouble ) -> Double {
 
 
 
-let arrpo = arrayDeNumeros <> take(30)
+let arrpo = arrayDeNumeros <&> take(30)
 
-let arrdefunctionsInts = arrpo <> map(  generIntInts )
+let arrdefunctionsInts = arrpo <&> map(  generIntInts )
 
 
 
 let curroAhora = generaDoubleEnElPeriodo(12)
 
-let otraSimul = arrayDeNumeros <> take(100) <> map(generIntInts) <> map (curroAhora)
+let otraSimul = arrayDeNumeros <&> take(100) <&> map(generIntInts) <&> map (curroAhora)
 
 
 
 
-func generateSamplesOfFuncIntToDou (_ n: Int) -> [funcIntToDouble] {return Array(1...n) <> map(generIntInts)}
+func generateSamplesOfFuncIntToDou (_ n: Int) -> [funcIntToDouble] {return Array(1...n) <&> map(generIntInts)}
 
 let sampleFuncArray = generateSamplesOfFuncIntToDou(20)
 
 
 
-let simula3 = sampleFuncArray <> map( generaDoubleEnElPeriodo(10)  )
+let simula3 = sampleFuncArray <&> map( generaDoubleEnElPeriodo(10)  )
 
 //let fGen :generatorsOfSimul = generatorsOfSimul(functionsOf: generateSamplesOfFuncIntToDou(20), estadisitcos: [mean,desvTip])
 
@@ -95,7 +95,7 @@ struct generatorsOfSimul {
     
     func simulateIn (_ n :Int) -> Double {
         
-        let arrayTo = self.functionsOf <> map(generaDoubleEnElPeriodo(n))
+        let arrayTo = self.functionsOf <&> map(generaDoubleEnElPeriodo(n))
         
         return arrayTo.reduce(0, +)
         

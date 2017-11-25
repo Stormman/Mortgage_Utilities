@@ -118,8 +118,8 @@ func pure<A> (_ x:A) -> Result<A> {
     
 }
 
-func <=> <A,B> ( x: Result<A>  , f: @escaping (A) -> B ) -> Result<B>  { return x.map(f)         }
-func <=> <A,B> ( f: @escaping (A) -> B,x: Result<A>   ) -> Result<B>  { return x.map(f)         }
+func <==> <A,B> ( x: Result<A>  , f: @escaping (A) -> B ) -> Result<B>  { return x.map(f)         }
+func <==> <A,B> ( f: @escaping (A) -> B,x: Result<A>   ) -> Result<B>  { return x.map(f)         }
 
 /*
 

@@ -15,7 +15,7 @@ func metrizarArray<A>  (_ metr: A   ) -> [Double] where A : metrizable {
     
     let pasos = stepsNeceseToArrive(metr, metr.bounds.1)
     
-    let mapp = arrayOfOrdeneredZEroIndex(pasos! + 1 ) <> map{ (Double($0) * metr.stepMinim) + metr.bounds.0    }
+    let mapp = arrayOfOrdeneredZEroIndex(pasos! + 1 ) <&> map{ (Double($0) * metr.stepMinim) + metr.bounds.0    }
     
     return mapp
     
@@ -69,7 +69,7 @@ func obtenerIntervalosDeLaMetrica<A> ( _ metr: A) -> [interval]?  where A : metr
     
     guard let steps = step_ else {return nil}
     
-    let mappe = arrayOfOrdered <> steps <> map {($0,$0)}
+    let mappe = arrayOfOrdered <&> steps <&> map {($0,$0)}
     
     let metrIni = metr.bounds.0
     
@@ -92,9 +92,9 @@ func obtenerIntervalosDeLaMetrica<A> ( _ metr: A) -> [interval]?  where A : metr
     }
     
     
-    let mappedd = mappe <> map {convert($0,metr)  }
+    let mappedd = mappe <&> map {convert($0,metr)  }
     
-    let toMetr = mappedd  <> map {  interval(lowBound: $0!.0, upBound: $0!.1 )        }
+    let toMetr = mappedd  <&> map {  interval(lowBound: $0!.0, upBound: $0!.1 )        }
     
     
     return toMetr
@@ -219,9 +219,9 @@ func obtainFDBOfMemoize< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMet
             if (pasosNece == nil) {return 0}
             if(pasosNece == 0) { return valea.generat(valea.bounds.0)    }
             assert(pasosNece != 0, "zero")
-            let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <> map{ (Double($0) * valea.stepMinim) + valea.bounds.0 }
-            let mapped2 = mapped <> map{ valea.generat($0)}
-            let acum = mapped2 <> reduce(0,+)
+            let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <&> map{ (Double($0) * valea.stepMinim) + valea.bounds.0 }
+            let mapped2 = mapped <&> map{ valea.generat($0)}
+            let acum = mapped2 <&> reduce(0,+)
             
             cache.appendValue(gener, acum)
             

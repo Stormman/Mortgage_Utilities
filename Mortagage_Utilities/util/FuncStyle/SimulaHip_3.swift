@@ -67,15 +67,15 @@ struct DictioToStd< C :Hashable & RawRepresentable>  where C.RawValue == String 
 
 
 
-func +++ < A:DictionableResultable , B:DictionableResultable > ( first:  A,second: B ) -> DictioToStd<A.A>   where A.A == B.A {
+func ++++ < A:DictionableResultable , B:DictionableResultable > ( first:  A,second: B ) -> DictioToStd<A.A>   where A.A == B.A {
     
     typealias dcitRes = Dictionary<A.A,Array<Optional<Double>>>
     
     let t = [first.bookTrade, second.bookTrade]
     
-    let todaslospares = (t <=> {$0.map{($0,$1)}}) .flatMap{$0}
+    let todaslospares = (t <==> {$0.map{($0,$1)}}) .flatMap{$0}
     
-    let po = todaslospares <=> {($0,[$1])}
+    let po = todaslospares <==> {($0,[$1])}
         
     let dictT = Dictionary(po, uniquingKeysWith: {(f,s) in f + s         })
     
@@ -84,7 +84,7 @@ func +++ < A:DictionableResultable , B:DictionableResultable > ( first:  A,secon
     
 }
 
-func +++ < A:DictionableResultable  > ( first:  A,second: DictioToStd<A.A> ) -> DictioToStd<A.A>    {
+func ++++ < A:DictionableResultable  > ( first:  A,second: DictioToStd<A.A> ) -> DictioToStd<A.A>    {
     
     typealias dcitRes = Dictionary<A.A,Array<Optional<Double>>>
     
@@ -129,7 +129,7 @@ func +++ < A:DictionableResultable  > ( first:  A,second: DictioToStd<A.A> ) -> 
 
 
 
-func +++ <A> ( first: DictioToStd<A>, second : DictioToStd<A>  )-> DictioToStd<A>  {
+func ++++ <A> ( first: DictioToStd<A>, second : DictioToStd<A>  )-> DictioToStd<A>  {
     
     let di = first.bookTrade.merging(second.bookTrade, uniquingKeysWith: {$0 + $1})
     
@@ -299,15 +299,15 @@ extension WaysOfIndexes : IndexerGenerator {
         return { nSim in return { nDays in
             
             
-            let allIndes = CatchKeysInArray <> i
+            let allIndes = CatchKeysInArray <&> i
             
-            let coge = (CogeDelDictDeLosIndexEsto <> i.ways <> nSim <> nDays)
+            let coge = (CogeDelDictDeLosIndexEsto <&> i.ways <&> nSim <&> nDays)
             
-            let valuesTo = allIndes <=> coge
+            let valuesTo = allIndes <==> coge
             
             //let une = zip(allIndes,valuesTo)
             
-            let dicTo = creaDictConesteArrayStringYesteDOuble <> allIndes <> valuesTo
+            let dicTo = creaDictConesteArrayStringYesteDOuble <&> allIndes <&> valuesTo
             
             return dicTo
             
@@ -329,14 +329,14 @@ extension WaysOfIndexes : IndexesGeneratorEnumsStr {
             
             let allIndes = Array(i.ways.keys)
             
-            let coge = (CogeDelDictDeLosIndexEsto <> i.ways <> nSim <> nDays)
+            let coge = (CogeDelDictDeLosIndexEsto <&> i.ways <&> nSim <&> nDays)
             
-            let valuesTo = allIndes <=> coge
+            let valuesTo = allIndes <==> coge
             
             //let une = zip(allIndes,valuesTo)
             
             
-            let aLLIndesEnum = ( allIndes <=> { indexesHipoSample(rawValue: $0)     }).flatMap{$0}
+            let aLLIndesEnum = ( allIndes <==> { indexesHipoSample(rawValue: $0)     }).flatMap{$0}
             
             let dicTo = CreaDictionaryCOnEStosArrays( fir: aLLIndesEnum , sec: valuesTo)
             
@@ -360,14 +360,14 @@ extension WaysOfIndexes : IndexGenDictionableHipo  {
             
             let allIndes = Array(i.ways.keys)
             
-            let coge = (CogeDelDictDeLosIndexEsto <> i.ways <> nSim <> nDays)
+            let coge = (CogeDelDictDeLosIndexEsto <&> i.ways <&> nSim <&> nDays)
             
-            let valuesTo = allIndes <=> coge
+            let valuesTo = allIndes <==> coge
             
             //let une = zip(allIndes,valuesTo)
             
             
-            let aLLIndesEnum = ( allIndes <=> { indexesHipoSample(rawValue: $0)     }).flatMap{$0}
+            let aLLIndesEnum = ( allIndes <==> { indexesHipoSample(rawValue: $0)     }).flatMap{$0}
             
             let dicTo = CreaDictionaryCOnEStosArrays( fir: aLLIndesEnum , sec: valuesTo)
             
@@ -456,7 +456,7 @@ struct  simpleS : StadisticalGenerator {
     static func stadistic(_ d : [Double]) -> simpleStd {
         
         let media = (d.reduce(0,+) ) / Double(d.count)
-        let varianz = ((d <=> { pow($0-media,2)}).reduce(0, +) ) / Double(d.count)
+        let varianz = ((d <==> { pow($0-media,2)}).reduce(0, +) ) / Double(d.count)
         
         
         return simpleStd(media: media, varianza: varianz)
@@ -467,13 +467,13 @@ func aplyEstadOneDict <A : DictionableResultable , B: StadisticalGenerator> ( _ 
     
     
     
-    let convert = resultadosAgreg <=> {$0.bookTrade.mapValues{ [$0]    }}
+    let convert = resultadosAgreg <==> {$0.bookTrade.mapValues{ [$0]    }}
    
-    let conveObj = convert <=> {DictioToStd<A.A>($0)}
+    let conveObj = convert <==> {DictioToStd<A.A>($0)}
     
     guard let firsObj = conveObj.first else { return nil}
     
-    let sumatorioDeTodosLosEnumerables = conveObj.reduce(firsObj.identity()) { (res:DictioToStd<A.A>, el: DictioToStd<A.A> ) -> DictioToStd<A.A> in  res +++ el }
+    let sumatorioDeTodosLosEnumerables = conveObj.reduce(firsObj.identity()) { (res:DictioToStd<A.A>, el: DictioToStd<A.A> ) -> DictioToStd<A.A> in  res ++++ el }
     
         let toRet = sumatorioDeTodosLosEnumerables.bookTrade.mapValues{B.stadistic($0 as! [Double])       }
         //posible errorToSee nohay q convertir as!  DOuble

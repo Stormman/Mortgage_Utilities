@@ -158,8 +158,8 @@ func checkVarAlea(varAle : varAleatoria)-> Double?   {
     guard  let st = intervalosMetricos(metri: varAle) else {return nil  }
     let stint : [interval] = Array(st.dicMetr.keys)
     let stepsTot = Int((stint.first!.upBound -  stint.first!.lowBound)/varAle.stepMinim)
-    let ff = stint <> map(trans) <> map(generator)
-    let prtt = ff <> map {$0 * Double(stepsTot) } <> reduce (0,+)
+    let ff = stint <&> map(trans) <&> map(generator)
+    let prtt = ff <&> map {$0 * Double(stepsTot) } <&> reduce (0,+)
     return prtt
     
     
@@ -173,8 +173,8 @@ func checkGenerAleatorioSimple<FUMET: doubleGenerMetrizable>(varAl : FUMET )-> D
     guard  let st = intervalosMetricos(metri: varAl) else {return nil  }
     let stint : [interval] = Array(st.dicMetr.keys)
     let stepsTot = Int((stint.first!.upBound -  stint.first!.lowBound)/varAl.stepMinim)
-    let ff = stint <> map(trans) <> map(generator)
-    let prtt = ff <> map {$0 * Double(stepsTot) } <> reduce (0,+)
+    let ff = stint <&> map(trans) <&> map(generator)
+    let prtt = ff <&> map {$0 * Double(stepsTot) } <&> reduce (0,+)
     return prtt
     
     
@@ -183,7 +183,7 @@ func checkGenerAleatorioSimple<FUMET: doubleGenerMetrizable>(varAl : FUMET )-> D
 
 func checkVARALEAFUNC<FU:doubleGenerMetrizable>(funcs : [FU]) -> Double? {
     
-    let to = funcs <=> checkGenerAleatorioSimple
+    let to = funcs <==> checkGenerAleatorioSimple
     
     if (to.contains(where: {$0 == nil})){ return nil}
     
@@ -209,11 +209,11 @@ func obtainFDBOf< A>(_ valea : A) -> funcDouToDOu where A: doubleGenerMetrizable
         assert(pasosNece != 0, "zero")
         
         
-        let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <> map{ (Double($0) * valea.stepMinim) + valea.bounds.0 }
+        let mapped = arrayOfOrdeneredZEroIndex(pasosNece!) <&> map{ (Double($0) * valea.stepMinim) + valea.bounds.0 }
         
-        let mapped2 = mapped <> map{ valea.generat($0)}
+        let mapped2 = mapped <&> map{ valea.generat($0)}
         
-        let acum = mapped2 <> reduce(0,+)
+        let acum = mapped2 <&> reduce(0,+)
         
         return acum
         
@@ -240,11 +240,11 @@ func obtainFDBofFuncss<A>( _ funcs :[A]) -> funcDouToDouOp? where A :doubleGener
         
         let aBase = Array(0...(ind))
         
-        let xToApply = aBase <=> {(funcs[$0].bounds.1 - pasosIntroNewInter) }
+        let xToApply = aBase <==> {(funcs[$0].bounds.1 - pasosIntroNewInter) }
         
-        let newToappl = changelastElementOfAArray(arr: xToApply) <> {_ in  x}
+        let newToappl = changelastElementOfAArray(arr: xToApply) <&> {_ in  x}
         
-        let resu = aBase <=> {fDBoneparticularFunc(funcs[$0], newToappl![$0])}
+        let resu = aBase <==> {fDBoneparticularFunc(funcs[$0], newToappl![$0])}
         
         let resuSum = resu.reduce(0){$0 + $1}
         
@@ -267,11 +267,11 @@ func fDBoneparticularFunc<A>( _ funcsi: A, _ x: Double) -> Double where A:double
     
     let pasus = pasosNece!
     
-    let mapped = Array (0...pasus) <> map{ (Double($0) * fsininterv.stepMinim) + fsininterv.bounds.0 }
+    let mapped = Array (0...pasus) <&> map{ (Double($0) * fsininterv.stepMinim) + fsininterv.bounds.0 }
     
-    let mapped2 = mapped <> map{ fsininterv.generat($0)}
+    let mapped2 = mapped <&> map{ fsininterv.generat($0)}
     
-    let acum = mapped2 <> reduce(0,+)
+    let acum = mapped2 <&> reduce(0,+)
     
     return acum
     
@@ -398,7 +398,7 @@ struct waysOfIO {
         let invert =  invv(generat: vAlea.fDb!, stepMinim: vAlea.stepMinim, bounds: vAlea.bounds).inversefun
         
         
-        let m = arrayOfEmpties(elements) <> map{(Double(fR(1000))/1000) + $0} <> map{  invert($0)    }
+        let m = arrayOfEmpties(elements) <&> map{(Double(fR(1000))/1000) + $0} <&> map{  invert($0)    }
         
  
         let retTo = m.reduceConcatInArray(indexStarter,  porcentAddable )

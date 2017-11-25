@@ -25,11 +25,11 @@ precedencegroup gr {
 }
 
 
-infix operator <> : gr
-infix operator <!> : gr
-infix operator <*> : gr
-infix operator <=> : gr //map
-infix operator +++ : gr // suma dictionable resultable , lso values se amontonan en un array
+infix operator <&> : gr
+//infix operator <!> : gr
+//infix operator <*> : gr
+infix operator <==> : gr //map
+infix operator ++++ : gr // suma dictionable resultable , lso values se amontonan en un array
 infix operator ++ : gr
 
 //infix operator <-> : gr  //monad
@@ -37,15 +37,15 @@ infix operator ++ : gr
 
 
 
-func <> < A , B > ( f:  (A) ->B,x: A ) -> B {return f(x)}
+func <&> < A , B > ( f:  (A) ->B,x: A ) -> B {return f(x)}
 
-func <> < A , B > (x:A, f:  (A) ->B ) -> B {return f(x)}
+func <&> < A , B > (x:A, f:  (A) ->B ) -> B {return f(x)}
 
-func <> <A,B,C> ( f:@escaping (A) -> B ,g:@escaping  (B) -> C  ) -> ((A) ->C) {return { a in return g( f( a ) )}}
+func <&> <A,B,C> ( f:@escaping (A) -> B ,g:@escaping  (B) -> C  ) -> ((A) ->C) {return { a in return g( f( a ) )}}
 
 
-func <=> <A,B> ( x: [A] , f: @escaping (A) -> B ) -> [B] { return x.map(f)         }
-func <=> <A,B> ( f: @escaping (A) -> B,x: [A]  ) -> [B] { return x.map(f)         }
+func <==> <A,B> ( x: [A] , f: @escaping (A) -> B ) -> [B] { return x.map(f)         }
+func <==> <A,B> ( f: @escaping (A) -> B,x: [A]  ) -> [B] { return x.map(f)         }
 
 
 
@@ -106,11 +106,11 @@ final class Future<A> {
     
 }
 
-func <*> <A,B> (f: Future<(A) -> B>, x:Future<A> ) -> Future<B> {
+//func <*> <A,B> (f: Future<(A) -> B>, x:Future<A> ) -> Future<B> {
     
-    return f.flatmap{  f in x.map{  x in f(x)  }     }
+//    return f.flatmap{  f in x.map{  x in f(x)  }     }
     
-}
+//}
 func pure<A> (_ x:A) -> Future<A> {
     return Future <A> {f in f(x)}
 }
@@ -120,7 +120,7 @@ let resultado  = Future<Int>.onResult
 
 
 
-let compute : () -> (Int) = {Array(1...200) <> reduce(0 , +)}
+let compute : () -> (Int) = {Array(1...200).reduce(0 , +)}
 
 //Future <Int> { f in   let comp = compute()  ;  f(comp)      }
 
@@ -194,7 +194,7 @@ func TodosIguales<A: Numeric> ( _ arrDou: [A])-> Bool  {
     
    let elem = arrDou.first!
     
-    let d = arrDou <=> {($0 == elem)}
+    let d = arrDou <==> {($0 == elem)}
     
     let red = d.reduce(true) { ($0 && $1)       }
     

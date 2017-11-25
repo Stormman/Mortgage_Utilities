@@ -137,17 +137,17 @@ final class CompoundVAleatoria__ {
         
         guard intervSinglesandImages.count > 1 else {return nil}
         
-        let images_Of_Funciotns_Density_Desired = intervSinglesandImages <=> {$0.1}
+        let images_Of_Funciotns_Density_Desired = intervSinglesandImages <==> {$0.1}
         
-        guard  let intervalos_Tuplas = CompoundVAleatoria__.numerosToIntervalosTuples((intervSinglesandImages <=> {$0.0}) ) else {return nil }
+        guard  let intervalos_Tuplas = CompoundVAleatoria__.numerosToIntervalosTuples((intervSinglesandImages <==> {$0.0}) ) else {return nil }
         
         let arrBase = Array(0...intervalos_Tuplas.count - 1 )
         
-       let iamgesOfEachInter = arrBase <=> {(images_Of_Funciotns_Density_Desired[$0], images_Of_Funciotns_Density_Desired[$0 + 1]    )        }
+       let iamgesOfEachInter = arrBase <==> {(images_Of_Funciotns_Density_Desired[$0], images_Of_Funciotns_Density_Desired[$0 + 1]    )        }
         
-        let points_to_make_lines = arrBase <=> {(po(x: intervalos_Tuplas[$0].0, y: iamgesOfEachInter[$0].0),po(x: intervalos_Tuplas[$0].1, y: iamgesOfEachInter[$0].1)                                          )}
+        let points_to_make_lines = arrBase <==> {(po(x: intervalos_Tuplas[$0].0, y: iamgesOfEachInter[$0].0),po(x: intervalos_Tuplas[$0].1, y: iamgesOfEachInter[$0].1)                                          )}
         
-        let funciones_de_cada_intervalo = arrBase <=> {mathFunctions__.curve(.line, points_to_make_lines[$0].0, points_to_make_lines[$0].1)}
+        let funciones_de_cada_intervalo = arrBase <==> {mathFunctions__.curve(.line, points_to_make_lines[$0].0, points_to_make_lines[$0].1)}
         
         let funciones_Metrizadas = funciones_de_cada_intervalo.enumerated().map {metrizarfuncionmatematica($1, stepm: stepm, upBounds:intervalos_Tuplas[$0].1 , lowBounds:intervalos_Tuplas[$0].0 )}
         

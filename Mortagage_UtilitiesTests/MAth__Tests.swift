@@ -31,7 +31,7 @@ class MAth__Tests: XCTestCase {
         let ff = mathFunctions__.curve(.line, po(x: 4,y: 8), po(x: 10,y: 20))
         
         
-        let p = ff <> 8
+        let p = ff <&> 8
         
         XCTAssert(p == 16)
         

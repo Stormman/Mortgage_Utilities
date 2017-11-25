@@ -72,14 +72,14 @@ class functionalTests: XCTestCase {
         
         let score = (23,"pepe")
         
-        let newSocre = score <> first(incr2) <> second(strpointed)
+        let newSocre = score <&> first(incr2) <&> second(strpointed)
         
         XCTAssert(newSocre.0 == 25 && newSocre.1 == "pepe.....")
         
         
         
         
-        let newtipoScore = score <> first(String.init)
+        let newtipoScore = score <&> first(String.init)
         
         XCTAssert(newtipoScore.0 == "23")
         
@@ -89,13 +89,13 @@ class functionalTests: XCTestCase {
         let socreInScore = ((23,"lolo"), "pepe")
         
         
-        let newscore = socreInScore <> first { $0 <> first(incr2)         }
+        let newscore = socreInScore <&> first { $0 <&> first(incr2)         }
         
         XCTAssert(newscore.0.0 == 25)
         
         
         
-        let otroScore = socreInScore <> (  second <> first ) {_ in 500 }
+        let otroScore = socreInScore <&> (  second <&> first ) {_ in 500 }
         
         XCTAssert(otroScore.0.1 == 500)
         
@@ -109,7 +109,7 @@ class functionalTests: XCTestCase {
         
         //let k = \person.name
         
-        //let otro =    pepe <> (prop(k)){ $0.uppercased()}
+        //let otro =    pepe <&> (prop(k)){ $0.uppercased()}
         
         //XCTAssert(otro.name == "PEPE")
         
@@ -125,9 +125,9 @@ class functionalTests: XCTestCase {
         let strToDouble = {(st:String) in  Double(5)  }
         
         
-        let ro = re <=> strToDouble
+        let ro = re <==> strToDouble
         
-        let pppo = re <> map(strToLongmore)
+        let pppo = re <&> map(strToLongmore)
         
         let ooo = 9000000
         
@@ -140,7 +140,7 @@ class functionalTests: XCTestCase {
         
         let miraqueHago = {( p : pepe ) -> pepe in pepe(nombre: p.nombre + " ...", age: p.age + 20)}
         
-        let arr = sequenceTransformArrayElementsByElements <> pepedelqiuinto <> 100 <> miraqueHago
+        let arr = sequenceTransformArrayElementsByElements <&> pepedelqiuinto <&> 100 <&> miraqueHago
         
         let goo = 900000
         

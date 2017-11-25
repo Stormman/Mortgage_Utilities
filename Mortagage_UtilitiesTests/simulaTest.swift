@@ -28,27 +28,27 @@ class simulaTest: XCTestCase {
     
     func testgeneratorOfSimulT() {
         
-        let funcsGeneratordeprueba = generateSamplesOfFuncIntToDou <> 10
+        let funcsGeneratordeprueba = generateSamplesOfFuncIntToDou <&> 10
         
-        let doubles = funcsGeneratordeprueba <=> ( generaDoubleEnElPeriodo <> 20 )
+        let doubles = funcsGeneratordeprueba <==> ( generaDoubleEnElPeriodo <&> 20 )
         
         let estadisticosTipicos = [mean , desvTip]
         
         
        // let fGe = generatorsOfSimul(functionsOf: funcsGeneratordeprueba, estadisitcos: estadisticosTipicos)
         
-        let fGe2 = simulacionDe <> funcsGeneratordeprueba <> estadisticosTipicos
+        let fGe2 = simulacionDe <&> funcsGeneratordeprueba <&> estadisticosTipicos
         
         
        
         
-        let sim = fGe2 <> simulatIn <> 5
+        let sim = fGe2 <&> simulatIn <&> 5
         
         print (sim)
         
         
         
-        let ar = (arrayDeNumeros <> take(20) ) <=> (fGe2 <> simulatIn)
+        let ar = (arrayDeNumeros <&> take(20) ) <==> (fGe2 <&> simulatIn)
         
         
         
@@ -73,7 +73,7 @@ class simulaTest: XCTestCase {
         
         let eee = se.map(set)
         
-        let ooo = se <=> set
+        let ooo = se <==> set
         
         
         let rrr = 900000
@@ -82,7 +82,7 @@ class simulaTest: XCTestCase {
         let l = miPNext(20,{(s : Int  ) in Double(s) / 100   })
         
         
-        let ppp = l <=> set
+        let ppp = l <==> set
         
         
         //let kkgv = l.forEach{$0}
@@ -90,7 +90,7 @@ class simulaTest: XCTestCase {
         
        
         
-        //let pp = arr <=> sot
+        //let pp = arr <==> sot
         
         let kkkk = 9900009099
         
@@ -133,7 +133,7 @@ class simulaTest: XCTestCase {
         
         let dicS = DictioToStd<resultsHipoSample>(eje)
         
-        let sumat = resIniti +++ dicS
+        let sumat = resIniti ++++ dicS
         
         let pppo = 9000000
         
@@ -170,7 +170,7 @@ class simulaTest: XCTestCase {
         
         
         
-         let ini = genSimInitial <> resIniti <> wa <> [f1,f1] <> converResulIndividToAgregatePruebas
+         let ini = genSimInitial <&> resIniti <&> wa <&> [f1,f1] <&> converResulIndividToAgregatePruebas
         
         
         //let poSim = ONESIMCOntr(result: resIniti, indexx: HEadOf(wa), arrFunc: [f1,f1], converResulIndividToAgregate: converResulIndividToAgregatePruebas)

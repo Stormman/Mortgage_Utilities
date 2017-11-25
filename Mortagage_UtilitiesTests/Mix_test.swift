@@ -29,7 +29,7 @@ class Mix_test: XCTestCase {
     
     let arr = [23,34,5,6,7,8]
         
-        let new = changelastElementOfAArray(arr: arr) <> {$0 + 10}
+        let new = changelastElementOfAArray(arr: arr) <&> {$0 + 10}
         
     
     XCTAssert(new?.last! == 18)

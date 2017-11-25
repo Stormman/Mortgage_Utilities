@@ -14,7 +14,7 @@ func IOGenerator(_ funcs :indexesAndVarAleatoria ) -> ((Int,Int  )) -> WaysOfInd
     return {tup in
     
      
-        guard let xx = extraa <> funcs <> tup else {return nil}
+        guard let xx = extraa <&> funcs <&> tup else {return nil}
         
         
          let waTor = WaysOfIndexes(ways: xx , nDays: tup.0, nSimul: tup.1)
@@ -33,7 +33,7 @@ func extraa(_ infVar : indexesAndVarAleatoria) ->((Int,Int))-> waysOfInd? {
         let k = Array(infVar.keys)
     
         
-        let toRet = infVar.mapValues{ (generByAleatorLists <> $0 <> tup.0 <> tup.1)!        }
+        let toRet = infVar.mapValues{ (generByAleatorLists <&> $0 <&> tup.0 <&> tup.1)!        }
         
     
         
@@ -68,10 +68,10 @@ func compoundvAleaTeste() -> CompoundVAleatoria<doudouMetriz> {
 func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> [Double]? {
     
     return {nNum  in
-        let simplesAleatoriosde1a100 = Array(1...nNum) <=> {_ in Double(simpleGenerations() <> 100)}
+        let simplesAleatoriosde1a100 = Array(1...nNum) <==> {_ in Double(simpleGenerations() <&> 100)}
         guard  let inver = InvertFunctionOp(varAlea) else {return nil}
-        let simplesAleatajustadosAlafunc = simplesAleatoriosde1a100 <=> {$0 / 100}
-        let re = simplesAleatajustadosAlafunc <=>  inver
+        let simplesAleatajustadosAlafunc = simplesAleatoriosde1a100 <==> {$0 / 100}
+        let re = simplesAleatajustadosAlafunc <==>  inver
         let sre = re.flatMap{$0}
        // print("aleatorio ......")
         
@@ -80,7 +80,7 @@ func generByAleator_ ( _ varAlea: CompoundVAleatoria<doudouMetriz>) -> (Int) -> 
 
 func generByAleatorLists(_ varAlea : CompoundVAleatoria<doudouMetriz>) -> (Int) -> (Int)-> [[Double]]? {
     return { nDias in { nSmus in
-        let f = arrayOfOrdeneredZEroIndex(nSmus) <=> {_ in (generByAleator_ <> varAlea <> nDias)!  }
+        let f = arrayOfOrdeneredZEroIndex(nSmus) <==> {_ in (generByAleator_ <&> varAlea <&> nDias)!  }
         
         // print("aleatorio list -------------------------")
         return f

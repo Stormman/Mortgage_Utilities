@@ -42,8 +42,8 @@ class  SeqSimul : Sequence {
     
     
 }
-func <=> <B> ( x: SeqSimul , f: @escaping (Double ) -> B ) -> [B] { return x.map(f)        }
-func <=> <B> ( f: @escaping (Double ) -> B,x: SeqSimul  ) -> [B] { return x.map(f)         }
+func <==> <B> ( x: SeqSimul , f: @escaping (Double ) -> B ) -> [B] { return x.map(f)        }
+func <==> <B> ( f: @escaping (Double ) -> B,x: SeqSimul  ) -> [B] { return x.map(f)         }
 
 
 
@@ -177,8 +177,8 @@ extension simALLGener  {
 //++++++++++++++++++++++++++++++++
 
     
-func <=> <B> ( x: miPNext , f: @escaping (Double ) -> B ) -> [B] { return x.map(f)        }
-func <=> <B> ( f: @escaping (Double ) -> B,x: miPNext  ) -> [B] { return x.map(f)         }
+func <==> <B> ( x: miPNext , f: @escaping (Double ) -> B ) -> [B] { return x.map(f)        }
+func <==> <B> ( f: @escaping (Double ) -> B,x: miPNext  ) -> [B] { return x.map(f)         }
     
 
 // totalSIMulation ////////
@@ -198,19 +198,19 @@ struct TotalSimulation <A : ONESIMCONtrollerHIPO__ > {
 
 func SimulateinN_ <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >( _ NSims : Int ,  _ OneSim : A, _ ways: B) -> [A.RESU]  where B.A == B {//NSim es el dato que se le da a waysofindex para darnos la simulacin , osea, la matriz de randoms que se nos dio en randomize
     
-    let indicesEnSimulacionYDiaTal = GEnerateIndexes__ <> ways
+    let indicesEnSimulacionYDiaTal = GEnerateIndexes__ <&> ways
     
     //Each one ------------
     
     let nDays = ElementsOfWay(ways).0
     
-    let indicesCadaDiaEnSimulDada =  Array(0...(nDays - 1)) <=> {  indicesEnSimulacionYDiaTal <> NSims <> $0    }
+    let indicesCadaDiaEnSimulDada =  Array(0...(nDays - 1)) <==> {  indicesEnSimulacionYDiaTal <&> NSims <&> $0    }
     
     let reArr = indicesCadaDiaEnSimulDada.reduce([OneSim ]) { (res: [A],indes : indHpotecSample) -> [A ] in
         
         res + [(res.last?.NextALL(indes))!]}
     
-    let resultados = reArr <=> {$0.result }
+    let resultados = reArr <==> {$0.result }
     
     // each one-------------
     
@@ -223,7 +223,7 @@ func totalSims <A:ONESIMCONtrollerHIPO__,B:IndexGenDictionableHipo >(OneSim : A,
     
     let Simulaciones = ElementsOfWay(ways).1
     
-    let resultadosEnCadaSimulacion = Array(0...(Simulaciones - 1)) <=> {SimulateinN_($0, OneSim, ways)}
+    let resultadosEnCadaSimulacion = Array(0...(Simulaciones - 1)) <==> {SimulateinN_($0, OneSim, ways)}
     
     return resultadosEnCadaSimulacion
     
@@ -235,7 +235,7 @@ func totalStadistically <A :DictionableResultable, B: StadisticalGenerator > (_ 
     
     
     
-        let toR = resultadosSim <=>  {aplyEstadOneDict($0, estd) }
+        let toR = resultadosSim <==>  {aplyEstadOneDict($0, estd) }
     
         return toR as! [Dictionary<A.A, B.A>]
    
@@ -404,13 +404,13 @@ struct ONESIMCOntr<B>  : ONESIMCONtrollerHIPO__ {
         
         // extraemos las salidas de todas las cunNExts
         
-        let fu = arrFunc <=> {$0.applyNEXT_(self.result ) }
+        let fu = arrFunc <==> {$0.applyNEXT_(self.result ) }
         
-        let ff = fu <=> {$0 <> self.iterIndex <>  self.indexx}
+        let ff = fu <==> {$0 <&> self.iterIndex <&>  self.indexx}
         
         //trasladar cada salida de cada funcoi al resultado gwneral
         
-        let toRet = converResulIndividToAgregate <> ff <> self.result
+        let toRet = converResulIndividToAgregate <&> ff <&> self.result
         
         return toRet
         
@@ -460,13 +460,13 @@ let converResulIndividToAgregatePruebas : ([rHipotSample ]) -> (rHipotSample) ->
         
         res + [(res.last?.NextALL(indes))!]}
     
-    let resultados = reArr <=> {$0.result
+    let resultados = reArr <==> {$0.result
     
     }*/
     
     let res = arHip.reduce(ned) { (res: DictioToStd<resultsHipoSample>, ele: rHipotSample) in
         
-       let resuuOp = ele +++ res
+       let resuuOp = ele ++++ res
         
         return resuuOp
         }
