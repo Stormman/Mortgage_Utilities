@@ -30,10 +30,13 @@ class Mix_MOrtgage_Test: XCTestCase {
     func test_prestamoHipotecario() {
         
         
+       let clpo = closeAllPositions()
         
+        let addi = addToPortfolio([])
         
+        let mona : (product ) -> State<portFolio,rHipotSample> = { pr in addToPortfolio([pr]) }
         
-        
+        let otEx = clpo >>- addi
         
         
         

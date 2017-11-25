@@ -30,6 +30,9 @@ struct portFolio {
 }
 let portf = portFolio(products: [], dateAct: 1, saldo: 1000, garantias: 0, PyGLantentes: 0, PYGRealizadas: 0)
 
+
+
+
 struct prestamoHipotecario {
     let CapitalVivoRestante : Double
     let tipo : Double
@@ -38,21 +41,51 @@ struct prestamoHipotecario {
     let periodosPorPagar : Int
 }
 
-func addToPortfolio(_ p: portFolio) -> ([product]) -> portFolio {
+func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
     
-    return { pds in
-    return portf
-    }
+    return State{portf in
+    
+    let newPro = portf.products + ps
+    let newSaldo = portf.saldo - 1000
+    let newGaran = portf.garantias + 1000
+    
+    
+    let newPort = portFolio(products: newPro, dateAct: portf.dateAct + 1, saldo: newSaldo, garantias: newGaran, PyGLantentes: 0, PYGRealizadas: 0)
+    let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
+        
+        return (res,newPort   )
+        
+         }
 }
-func closeAllPositions(_ p : portFolio) -> portFolio {
+
+func closeAllPositions() -> State<portFolio,rHipotSample>  {
     
-    return portf
+    
+    return State {portf in
+        
+       
+        let newSaldo = portf.saldo - 2000
+        
+        
+        
+        let newPort = portFolio(products: [], dateAct: portf.dateAct + 1, saldo: newSaldo, garantias: 0, PyGLantentes: 0, PYGRealizadas: -1000)
+        let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
+        
+        return (res,newPort   )
+        
+        
+    }
+    
+    
+    
 }
 
 // CFDSS ///////////////////////////////////////////////////////////////////////
 
-func resultadoOfCfd(_p : portFolio, period: Int, ind: indHpotecSample) -> rHipotSample {
-    return rHipotSample(bookTrade: [resultsHipoSample.cash : -1000])}
+func resultadoOfCfd( period: Int, ind: indHpotecSample) -> State<portFolio,rHipotSample> {
+    
+   return   State{ portf in  ( rHipotSample(bookTrade: [resultsHipoSample.cash : -1000]) , portf)}
+}
 
 
 
