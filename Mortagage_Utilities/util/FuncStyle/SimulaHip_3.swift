@@ -149,6 +149,29 @@ struct rHipotSample : DictionableResultable {
     var bookTrade : Dictionary< resultsHipoSample, Optional<Double>>
     
 }
+func + (f:rHipotSample, sec:rHipotSample) -> rHipotSample {
+    
+    
+    let newDic = f.bookTrade.mapWithKey { (r1 : resultsHipoSample, dou: Optional<Double>) -> Optional<Double>  in
+        
+        guard let d = dou else {return nil}
+        guard let otrod = sec.bookTrade[r1] else {return nil}
+        
+        
+        let newd = d + otrod!
+        
+        return newd
+        
+        
+        
+    }
+    
+    return rHipotSample(bookTrade: newDic)
+    
+    
+}
+
+
 struct indHpotecSample : DictionableResultable {
     
     var bookTrade : Dictionary< indexesHipoSample, Optional<Double>>

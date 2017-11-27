@@ -195,7 +195,14 @@ class simulaTest: XCTestCase {
     }
     
    
+    func test_sumrhipotests () {
         
+     
+        
+        
+        
+        
+    }
     
     
     

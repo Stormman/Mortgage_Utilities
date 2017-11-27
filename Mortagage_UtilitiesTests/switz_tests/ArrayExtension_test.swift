@@ -1,16 +1,17 @@
 //
-//  Mix_MOrtgage_Test.swift
+//  ArrayExtension_test.swift
 //  Mortagage_UtilitiesTests
 //
-//  Created by Antonio Muñoz on 23/11/17.
+//  Created by Antonio Muñoz on 26/11/17.
 //  Copyright © 2017 Antonio Muñoz. All rights reserved.
 //
 
 import XCTest
+
 @testable import Mortagage_Utilities
 
 
-class Mix_MOrtgage_Test: XCTestCase {
+class ArrayExtension_test: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -27,25 +28,28 @@ class Mix_MOrtgage_Test: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    func test_prestamoHipotecario() {
+    func test_scans () {
+        
+        let array = [2,3,6,8,9,11,23,45,67,89]
         
         
-       let clpo = closeAllPositions()
-        
-        let addi = addToPortfolio([])
-        
-        let act = actualizeProduct(indHpotecSample(bookTrade: [:]))
-        
-        let actpo = curry(actualizePortfolio)
+        let tranf : (String ,Int) -> String  = {$0 + String($1)      }
         
         
-       //
+        
+        
+        
+        let sc = array.scanl("eee", tranf)
+        
         
        
         
         
         
     }
+    
+    
+    
     
     func testPerformanceExample() {
         // This is an example of a performance test case.

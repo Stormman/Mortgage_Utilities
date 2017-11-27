@@ -80,19 +80,155 @@ func closeAllPositions() -> State<portFolio,rHipotSample>  {
     
 }
 
+
+func actualizeProduct(_ val: indHpotecSample) -> State<product,rHipotSample> {
+    
+    return State{prod in ( rHipotSample(bookTrade: [resultsHipoSample.perdidasAcumuladas : -1000     ]) ,prod   )   }
+    
+    
+    
+}
 // CFDSS ///////////////////////////////////////////////////////////////////////
 
-func resultadoOfCfd( period: Int, ind: indHpotecSample) -> State<portFolio,rHipotSample> {
+func actualizePortfolio( period: Int, ind: indHpotecSample) -> State<portFolio,rHipotSample> {
     
-   return   State{ portf in  ( rHipotSample(bookTrade: [resultsHipoSample.cash : -1000]) , portf)}
+  
+    
+    
+    let qappl = actualizeProduct(ind)
+    
+    
+    return   State{ portf in
+        
+        let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
+        let newProds = portf.products <==> qappl.exec
+        let newPortf = portFolio(products: newProds, dateAct: period, saldo: 0, garantias: 0, PyGLantentes: 0, PYGRealizadas: 0)
+        
+        
+       return  (res,newPortf  ) }
+    
+    
 }
 
 
+enum compPortfolio {
+    
+    case addPortfolio (prs: [product])
+    case closeAllPositions
+}
+enum predicResults {
+    
+    case resultsPred ((rHipotSample) -> Bool  )
+    case indexPred ((indHpotecSample) -> Bool)
+    case BothResultsAndIndexPred( (indHpotecSample)->(rHipotSample)-> Bool )
+}
+struct commmandsPortfolio {
+    
+    let comm : [(predicResults,compPortfolio)]
+    
+    func nextCommand( resultsandIndexes: (rHipotSample, indHpotecSample)) -> State<portFolio,rHipotSample>?{
+        
+        return State {portf in (  rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ]) ,portf)     }
+        
+    }
+}
 
+struct PortfolioSIM {
+    let comm : commmandsPortfolio
+    let portfol : portFolio
+    
+    
+    
+}
 
-
-
-
+extension PortfolioSIM : funcNX {
+    
+    func applyNEXT_(_ res: rHipotSample) -> (Int) -> (indHpotecSample) -> rHipotSample{
+        
+        var cache : portFolio?
+        
+        return {iter in  { ides in
+            
+            let porAct  = actualizePortfolio(period: iter, ind: ides)
+            
+            let commandsTo = self.comm.nextCommand(resultsandIndexes: (res, ides))
+            
+            
+            if let portAnterior = cache { // si hay en cache el portfolio anterior
+         
+                if let comandos_aplicar = commandsTo {// hay comandos que aplicar
+                  
+                    //antes de nuevos indices y nuevo dia
+                 let newP = comandos_aplicar.exec(portAnterior)
+                 let newR = comandos_aplicar.eval(portAnterior)
+                  //  ^^^^^^ esto es antes de aplicar el nuevo indice y el nuevo dia ^^^
+                    
+                  let newnewP = porAct.exec(newP)
+                let newnewR = porAct.eval(newP) + newR
+                   
+                    cache = newnewP
+                    return newnewR
+                    
+                    
+                }else{ // no hay comandos que aplicar
+                
+                
+                
+                let toretResult = porAct.eval(portAnterior)
+                
+                let newPortf = porAct.exec(portAnterior)
+            
+                return toretResult
+                }
+                
+            }else {// si en cache no hay nada, es el primer porfolio
+                
+                if let comandos_aplicar = commandsTo {// hay comandos que aplicar
+                    
+                    //antes de nuevos indices y nuevo dia
+                    let newP = comandos_aplicar.exec(self.portfol)
+                    let newR = comandos_aplicar.eval(self.portfol)
+                    //  ^^^^^^ esto es antes de aplicar el nuevo indice y el nuevo dia ^^^
+                    
+                    let newnewP = porAct.exec(newP)
+                    let newnewR = porAct.eval(newP) + newR
+                    
+                    return newnewR
+                    
+                    
+                }else{ // no hay comandos que aplicar
+                    
+                    
+                    
+                    let tor = porAct.eval (self.portfol)
+                    
+                    cache = porAct.exec (self.portfol)
+                    
+                    
+                    return tor
+                    
+                }
+                
+                
+                
+                
+                
+               
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            }}
+    }
+}
 
 
 
