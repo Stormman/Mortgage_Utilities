@@ -31,9 +31,29 @@ struct portFolio {
 let portf = portFolio(products: [], dateAct: 1, saldo: 1000, garantias: 0, PyGLantentes: 0, PYGRealizadas: 0)
 
 
+protocol prestamoH {
+    
+    var  CapitalVivoRestante : Double {get}
+    var tipo : Double{get}
+    var dateActual:Int{get}
+    var  isThisPeriodoToPay: (Int) -> Bool{get} //
+    var  dateIntTOString: (Int) -> String{get} // nos da la fech formateada
+    
+    var  periodosPorPagar : Int{get}// cuantos pediodos mensuales
+    
+    func nextCuota() -> Double
+    
+    
+    
+    
+}
 
 
-struct prestamoHipotecario {
+
+
+
+//pasos secuenciales uno a uno
+struct prestamoHipotecario : prestamoH {
     
     let CapitalVivoRestante : Double
     let tipo : Double
