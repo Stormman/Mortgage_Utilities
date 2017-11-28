@@ -31,6 +31,8 @@ infix operator <&> : gr
 infix operator <==> : gr //map
 infix operator ++++ : gr // suma dictionable resultable , lso values se amontonan en un array
 infix operator ++ : gr
+infix operator >+> : gr
+
 
 //infix operator <-> : gr  //monad
 //infix operator <*> : gr // aplicative

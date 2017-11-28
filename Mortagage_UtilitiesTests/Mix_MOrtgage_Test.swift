@@ -23,8 +23,15 @@ class Mix_MOrtgage_Test: XCTestCase {
     }
     
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
     func test_prestamoHipotecario() {
@@ -37,6 +44,15 @@ class Mix_MOrtgage_Test: XCTestCase {
         let act = actualizeProduct(indHpotecSample(bookTrade: [:]))
         
         let actpo = curry(actualizePortfolio)
+        
+        let transpo = clpo >+> addi >+> clpo
+        
+        let po : Int? = nil
+        let nu : Double? = 78.90
+        
+        
+       
+        
         
         
        //

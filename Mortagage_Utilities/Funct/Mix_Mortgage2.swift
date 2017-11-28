@@ -34,12 +34,22 @@ let portf = portFolio(products: [], dateAct: 1, saldo: 1000, garantias: 0, PyGLa
 
 
 struct prestamoHipotecario {
+    
     let CapitalVivoRestante : Double
     let tipo : Double
     let dateActual:Int
-    let unperiodo:Int //cuantos datacuales tiene un periodo, ex, 31 dias tienen un periodo por pagar
-    let periodosPorPagar : Int
+    let isThisPeriodoToPay: (Int) -> Bool //
+    let dateIntTOString: (Int) -> String // nos da la fech formateada
+    
+    let periodosPorPagar : Int// cuantos pediodos mensuales
+    
+    func nextCuota() -> Double{return 1000}
+    
+    
 }
+
+
+let prest = prestamoHipotecario(CapitalVivoRestante: 120000, tipo: 0.03, dateActual: 0, isThisPeriodoToPay: { $0 % 30 == 0     }, dateIntTOString: {String($0) + "/00/2000"}, periodosPorPagar: 300)
 
 func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
     
@@ -111,6 +121,35 @@ func actualizePortfolio( period: Int, ind: indHpotecSample) -> State<portFolio,r
 }
 
 
+func actualizePrestHIpotecario(period: Int, _ val: indHpotecSample) -> State<prestamoHipotecario,rHipotSample  >? {
+    
+    
+   
+    
+    return State {prest in
+        
+        var newCap : Double
+        
+        if prest.isThisPeriodoToPay(period) {
+            
+            newCap = prest.CapitalVivoRestante - prest.nextCuota()
+            
+            
+        }else {  newCap = prest.CapitalVivoRestante    }
+        
+        let newPrest = prestamoHipotecario(CapitalVivoRestante: newCap , tipo: 0.03, dateActual: prest.dateActual + 1, isThisPeriodoToPay: prest.isThisPeriodoToPay, dateIntTOString: prest.dateIntTOString, periodosPorPagar: prest.periodosPorPagar)
+        
+        
+        
+        
+        
+        return ( rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])   ,  newPrest     )            }
+    
+    
+    
+}
+
+
 enum compPortfolio {
     
     case addPortfolio (prs: [product])
@@ -126,7 +165,13 @@ struct commmandsPortfolio {
     
     let comm : [(predicResults,compPortfolio)]
     
-    func nextCommand( resultsandIndexes: (rHipotSample, indHpotecSample)) -> State<portFolio,rHipotSample>?{
+    func nextCommand( _ resultsandIndexes: (rHipotSample, indHpotecSample)) -> State<portFolio,rHipotSample>?{
+        
+        // buscar en la matriz la condicion que sea true
+        //aplicar el comando con un pattenr matching de switch
+        
+        
+        
         
         return State {portf in (  rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ]) ,portf)     }
         
@@ -141,6 +186,19 @@ struct PortfolioSIM {
     
 }
 
+
+func >+> ( firs : State<portFolio,rHipotSample> , seco : State<portFolio, rHipotSample>        ) -> State<portFolio,rHipotSample>  {
+    
+    return State {portf in
+        let newRe = firs.eval(portf) + seco.eval(firs.exec(portf))
+        return ( newRe, seco.exec(firs.exec(portf)))
+    }
+}
+
+
+
+
+
 extension PortfolioSIM : funcNX {
     
     func applyNEXT_(_ res: rHipotSample) -> (Int) -> (indHpotecSample) -> rHipotSample{
@@ -151,7 +209,7 @@ extension PortfolioSIM : funcNX {
             
             let porAct  = actualizePortfolio(period: iter, ind: ides)
             
-            let commandsTo = self.comm.nextCommand(resultsandIndexes: (res, ides))
+            let commandsTo = self.comm.nextCommand((res, ides))
             
             
             if let portAnterior = cache { // si hay en cache el portfolio anterior
@@ -193,10 +251,16 @@ extension PortfolioSIM : funcNX {
                     let newnewP = porAct.exec(newP)
                     let newnewR = porAct.eval(newP) + newR
                     
+                    cache = newnewP
+                    
+                    
+                    
                     return newnewR
                     
                     
                 }else{ // no hay comandos que aplicar
+                    
+                    
                     
                     
                     
