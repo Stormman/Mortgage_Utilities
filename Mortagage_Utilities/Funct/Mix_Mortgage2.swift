@@ -187,7 +187,7 @@ struct PortfolioSIM {
 }
 
 
-func >+> ( firs : State<portFolio,rHipotSample> , seco : State<portFolio, rHipotSample>        ) -> State<portFolio,rHipotSample>  {
+func >+><A> ( firs : State<A,rHipotSample> , seco : State<A, rHipotSample>        ) -> State<A,rHipotSample>  {
     
     return State {portf in
         let newRe = firs.eval(portf) + seco.eval(firs.exec(portf))
