@@ -24,7 +24,18 @@ class Mix_MOrtgage_Test: XCTestCase {
     
     func testExample() {
         
+        let clpo = closeAllPositions()
         
+        let addi = addToPortfolio([])
+        
+        let act = actualizeProduct(indHpotecSample(bookTrade: [:]))
+        
+        let actpo = curry(actualizePortfolio)
+        
+        let transpo = clpo >+> addi >+> clpo
+        
+        let po : Int? = nil
+        let nu : Double? = 78.90
         
         
         
@@ -37,18 +48,7 @@ class Mix_MOrtgage_Test: XCTestCase {
     func test_prestamoHipotecario() {
         
         
-       let clpo = closeAllPositions()
-        
-        let addi = addToPortfolio([])
-        
-        let act = actualizeProduct(indHpotecSample(bookTrade: [:]))
-        
-        let actpo = curry(actualizePortfolio)
-        
-        let transpo = clpo >+> addi >+> clpo
-        
-        let po : Int? = nil
-        let nu : Double? = 78.90
+       
         
         
        

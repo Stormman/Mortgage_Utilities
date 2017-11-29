@@ -41,11 +41,8 @@ protocol prestamoH {
     
     var  periodosPorPagar : Int{get}// cuantos pediodos mensuales
     
-    func nextCuota() -> Double
-    
-    
-    
-    
+    func nextCuota() -> (Double,Double) //amortizacion e intereses
+     func euriborWithPeriod(_ per: Int) -> Double
 }
 
 
@@ -56,17 +53,56 @@ protocol prestamoH {
 struct prestamoHipotecario : prestamoH {
     
     let CapitalVivoRestante : Double
-    let tipo : Double
+    var  tipo : Double {  return euriborWithPeriod(dateActual)   }
     let dateActual:Int
     let isThisPeriodoToPay: (Int) -> Bool //
     let dateIntTOString: (Int) -> String // nos da la fech formateada
     
     let periodosPorPagar : Int// cuantos pediodos mensuales
     
-    func nextCuota() -> Double{return 1000}
+    func nextCuota() -> (Double,Double) {return (700,200)}
+    func euriborWithPeriod(_ per: Int) -> Double {return 0.04}
+    
+}
+
+
+//prestamo hipotecario por tramos
+struct prestamoHipotTramos : prestamoH {
+    
+    
+    func nextCuota() -> (Double, Double) {
+        return (700,200)
+        
+    }
+    
+    
+    
+    
+    let CapitalVivoRestante : Double
+    var tipo : Double
+    
+    //let tramos : [Int:Double]
+    let dateActual:Int
+    let isThisPeriodoToPay: (Int) -> Bool //
+    let dateIntTOString: (Int) -> String // nos da la fech formateada
+    
+    let periodosPorPagar : Int// cuantos pediodos mensuales
+    
+    func euriborWithPeriod(_ per: Int) -> Double {
+        
+        switch per {
+    
+        case 0...120:return 0.03
+        default:return 0.04
+            
+        }
+    
+       
+        
     
     
 }
+
 
 
 let prest = prestamoHipotecario(CapitalVivoRestante: 120000, tipo: 0.03, dateActual: 0, isThisPeriodoToPay: { $0 % 30 == 0     }, dateIntTOString: {String($0) + "/00/2000"}, periodosPorPagar: 300)
