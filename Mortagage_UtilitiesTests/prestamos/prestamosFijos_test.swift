@@ -23,22 +23,9 @@ class prestamosFijos_test: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
-    func test_WheThefuncIsOverPeriodoIsNIll() {
-        
-        
-        let overPeriod = (31 * 20 ) + 500
-        
-        let pr = prestamoInThePeriod_ <&> prestamoFijo_ <&> overPeriod
-        
-        XCTAssert(pr == nil)
-        
-        
-        
-        
-    }
-    
+   
     func test_WhenThefuncIsOverPeriodoIsNIll() {
-        let overPeriod = (31 * 20 ) + 500
+        let overPeriod = (31 * 20 * 12 ) + 500
         let pr = prestamoInThePeriod_ <&> prestamoFijo_ <&> overPeriod
         XCTAssert(pr == nil)
     }

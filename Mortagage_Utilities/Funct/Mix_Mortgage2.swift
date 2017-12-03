@@ -58,7 +58,7 @@ protocol prestamoH {
     
     func nextCuota() -> (Double,Double) //intereses y amortizacion
     func euriborWithPeriod() -> Double
-    func nextdate(withIndex: Double ) -> prestamoH //devuelve el miusmo objeto mutado con el paso de un periodo o dia
+    func nextdate(withIndex: Double ) -> prestamoH? //devuelve el miusmo objeto mutado con el paso de un periodo o dia
 }
 extension prestamoH {
     
@@ -105,13 +105,16 @@ struct prestamoHipotecarioFijo : prestamoH {
     func euriborWithPeriod() -> Double {return self.tipo}
     
     
-    func nextdate(withIndex: Double) -> prestamoH{
+    func nextdate(withIndex: Double) -> prestamoH?{
         
         let cuota = self.cuotaDeHoy
         
         let newCap = self.CapitalVivoRestante - cuota.1
         let newDay = self.dateActual + SEcondsPerDay
         let newPer = (isThisPeriodoToPay(self.dateActual)) ? (self.periodosPorPagar - 1) : (self.periodosPorPagar)
+        
+        
+        if(newCap <= 0) {return nil}
         
         let newPrest = prestamoHipotecarioFijo(CapitalVivoRestante: newCap, tipo: self.tipo, tipoActual: withIndex, dateActual: newDay, isThisPeriodoToPay: self.isThisPeriodoToPay, periodosPorPagar: newPer)
         
@@ -156,9 +159,13 @@ func prestamoInThePeriod_ (_ pre: prestamoH) -> (Int) -> prestamoH? {
         
        let tipoFi = pre.tipoActual
         
-        let dar = Array(0...period).scanl(pre) { (p : prestamoH, e: Int ) -> prestamoH in  p.nextdate(withIndex: tipoFi )  }
+        let dar = Array(0...period).scanl(pre) { (p : prestamoH?, e: Int ) -> prestamoH? in
+            p?.nextdate(withIndex: tipoFi ) }
         
-        return dar.last
+        guard let t = dar.last else {return nil}
+        
+        return t
+        
         
         
          }
@@ -209,7 +216,7 @@ struct prestamoHipotecarioVariable : prestamoH {
     }
     
     
-    func nextdate(withIndex: Double) -> prestamoH {
+    func nextdate(withIndex: Double) -> prestamoH? {
         
          let cuota = self.cuotaDeHoy
         
@@ -270,7 +277,7 @@ struct prestamoHipotTramos : prestamoH {
     }}
     
     
-    func nextdate(withIndex: Double) -> prestamoH {
+    func nextdate(withIndex: Double) -> prestamoH? {
         
         let cuota = self.cuotaDeHoy
         
@@ -537,7 +544,7 @@ struct hipotecaSIM<A:prestamoH>  {
     
     
 }
-func actualizePrestHIpotecario(period: Int, _ val: indHpotecSample) -> State<prestamoH,rHipotSample  > {
+func actualizePrestHIpotecario(period: Int, _ val: indHpotecSample) -> State<prestamoH?,rHipotSample> {
     
     
     
@@ -549,10 +556,10 @@ func actualizePrestHIpotecario(period: Int, _ val: indHpotecSample) -> State<pre
         
         let indiEuri = val.bookTrade[indexesHipoSample.euribor1año] ?? 0.03
         
-        let newPrest =  prest.nextdate(withIndex: indiEuri!)
+        let newPrest =  prest!.nextdate(withIndex: indiEuri!)
         
         //ahora sacamos la cuota
-        let cuo = prest.nextCuota()
+        let cuo = prest!.nextCuota()
         
         
         return ( rHipotSample(bookTrade: [resultsHipoSample.cash : cuo.0 + cuo.1     ])   ,  newPrest     )            }
@@ -568,6 +575,8 @@ extension hipotecaSIM : funcNX{
          var cache : prestamoH?
         
         return {iter in  { ides in
+            
+            let rId = rHipotSample(bookTrade: [:])
         
              let hipAtc = actualizePrestHIpotecario(period: iter, ides)
             
@@ -577,7 +586,7 @@ extension hipotecaSIM : funcNX{
                 
                
                 
-                let fff  = hipAtc.exec(self.prestam)
+                let fff = hipAtc.exec(self.prestam)
                 
                 cache = fff
                 

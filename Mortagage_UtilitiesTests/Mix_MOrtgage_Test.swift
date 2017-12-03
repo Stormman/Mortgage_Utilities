@@ -197,31 +197,14 @@ class Mix_MOrtgage_Test: XCTestCase {
         
         XCTAssert(cuota.0 == 400.00 && c == 327.18)
         
-        let prestmomasunperiodo = prestamoFijo_.nextdate(withIndex: 0.03)
+        guard  let prestmomasunperiodo = prestamoFijo_.nextdate(withIndex: 0.03) else {XCTFail();return}
         
         //aunque cambie el euribor sigue el mismo fijo
         XCTAssert(prestmomasunperiodo.euriborWithPeriod() == 0.04)
         XCTAssert(prestmomasunperiodo.actualDateSt == "02-01-2018")
         XCTAssert(prestmomasunperiodo.isThisPeriodoToPay((Date.dateWithDayMonthAndYear(2, 1, 2018)?.numberAssoc)!     ) == false)
         
-        //avanzamos hasta el dia 15
-        
-        let indiceseuriborParaUnperiododeNdias =  Array(repeatElement(0.03, count: 100))
-        
-        let recorridoPrestamo = indiceseuriborParaUnperiododeNdias.scanl(prestamoFijo_) { (p : prestamoH, e: Double ) -> prestamoH in  p.nextdate(withIndex: e)  }
-        
-        let reFecha = Reader{(p:prestamoH) -> String in p.actualDateSt      }
-        
-        let diasRecorridos = recorridoPrestamo <==> reFecha.runReader
-        
-        
-        let reIsDiaPago : Reader<prestamoH,Bool> = Reader{$0.isThisPeriodoToPay($0.dateActual) }
-        
-        let diasRecorridosYdiaDePagoesono = recorridoPrestamo <==> reIsDiaPago.runReader
-        
-        
-        //cosillas ^^^^^^^^^^
-        
+       
         
         
         
