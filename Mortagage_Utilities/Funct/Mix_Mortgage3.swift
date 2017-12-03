@@ -9,6 +9,8 @@
 import Foundation
 
 
+let SEcondsPerDay : Double  = 24 * 60 * 60
+
 struct hipotDate {
     
     let fInit : Date
@@ -48,6 +50,21 @@ func isFechaProsimoPago(_ hip : hipotDate) -> (Date) -> Bool {
         
         return diaAstring == fechaProximoPago(dateHipoteca: hip, hoy: dat).toStringRepresent()
         
+        
+    }
+    
+    
+    
+}
+func isFechaPxoimoPagoDouble(_ hip : hipotDate) -> (Double) -> Bool {
+    
+    return {datDouble in
+        
+        let dat = datDouble.dateAssoccDouble
+        
+        let diaAstring = dat.toStringRepresent()
+        
+        return diaAstring == fechaProximoPago(dateHipoteca: hip, hoy: dat).toStringRepresent()
         
     }
     

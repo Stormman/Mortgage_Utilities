@@ -144,5 +144,12 @@ func value_< A,B > ( _ f: @escaping (A) -> B)-> (Result< A>) -> Result<B> {
 
 //-----------------------------------------------------------
 
-
+func tDate_ (_ d:Int,_ m:Int,_ y:Int)-> Date?  {
+    return Date.dateWithDayMonthAndYear(d, m, y)
+    
+    
+    
+    
+    
+}
 

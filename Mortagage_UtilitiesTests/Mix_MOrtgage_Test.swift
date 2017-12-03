@@ -50,20 +50,7 @@ class Mix_MOrtgage_Test: XCTestCase {
     
     func test_prestamoHipotecarioFijo() {
         
-       // let presF = prestamoHipotecarioFijo(CapitalVivoRestante: 120000, tipo: 0.04, tipoActual: 0.04, dateActual: 0, isThisPeriodoToPay: <#T##(Int) -> Bool#>, dateIntTOString: <#T##(Int) -> String#>, periodosPorPagar: <#T##Int#>)
-       
-        
-        
-       
-        
-        
-        
-       //
-        
-       
-        
-        
-        
+                   
     }
     
     func test_fechaProximopago () {
@@ -173,7 +160,120 @@ class Mix_MOrtgage_Test: XCTestCase {
         
         let resul4 = cada3mesesElDia15 <&> today4
         
-        XCTAssert(resul4 == true)
+        XCTAssert(resul4 == false )
+        
+        let today5 :Date! = Date.dateWithDayMonthAndYear(15, 12, 2018)
+        
+        let resul5 = cada3mesesElDia15 <&> today5
+        
+        XCTAssert(resul5 == true)
+        
+        
+        let today6 :Date! = Date.dateWithDayMonthAndYear(16, 12, 2018)
+        
+        let resul6 = cada3mesesElDia15 <&> today6
+        
+        XCTAssert(resul6 == false)
+        
+        let fgvv = 90000
+        
+        
+    }
+    
+    
+    func test_prestamohipotecarioFijo() {
+        
+      // let presamoFijo =
+        
+        let dat: Date! = Date.dateWithDayMonthAndYear(1, 1, 2018)
+        
+        
+        let prestamoFijo_ = prestFijo <&> 120000.00 <&> 0.04 <&> dat <&> 20
+       
+        let cuota = prestamoFijo_.nextCuota()
+        
+        let c = cuota.1.givemeRoundTwoplaces()
+        
+        
+        XCTAssert(cuota.0 == 400.00 && c == 327.18)
+        
+        let prestmomasunperiodo = prestamoFijo_.nextdate(withIndex: 0.03)
+        
+        //aunque cambie el euribor sigue el mismo fijo
+        XCTAssert(prestmomasunperiodo.euriborWithPeriod() == 0.04)
+        XCTAssert(prestmomasunperiodo.actualDateSt == "02-01-2018")
+        XCTAssert(prestmomasunperiodo.isThisPeriodoToPay((Date.dateWithDayMonthAndYear(2, 1, 2018)?.numberAssoc)!     ) == false)
+        
+        //avanzamos hasta el dia 15
+        
+        let indiceseuriborParaUnperiododeNdias =  Array(repeatElement(0.03, count: 100))
+        
+        let recorridoPrestamo = indiceseuriborParaUnperiododeNdias.scanl(prestamoFijo_) { (p : prestamoH, e: Double ) -> prestamoH in  p.nextdate(withIndex: e)  }
+        
+        let reFecha = Reader{(p:prestamoH) -> String in p.actualDateSt      }
+        
+        let diasRecorridos = recorridoPrestamo <==> reFecha.runReader
+        
+        
+        let reIsDiaPago : Reader<prestamoH,Bool> = Reader{$0.isThisPeriodoToPay($0.dateActual) }
+        
+        let diasRecorridosYdiaDePagoesono = recorridoPrestamo <==> reIsDiaPago.runReader
+        
+        
+        //cosillas ^^^^^^^^^^
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+       let fffff = 96886
+        
+        
+        
+        
+        
+        
+    }
+    
+    func test_matrixOfPrestamoHDadounosResultadosDeleuribor() {
+        
+        
+        let recorridoDelEuribordeNdias = recorridoEuribor <&> 1000
+        
+        XCTAssert(recorridoDelEuribordeNdias.count == 1000)
+        
+        XCTAssert(recorridoDelEuribordeNdias[0] != 0)
+        
+        
+        let matrix = prestamosResultAbout <&> recorridoDelEuribordeNdias
+        
+        XCTAssert(matrix.count != 0)
+        
+        XCTAssert(matrix[0] is prestamoH)
+        
+        XCTAssert(matrix.count == 1000)
+        
+        let EnEstaMatrizLosPrestamosVanDeDiaEnDia : ([prestamoH]) ->[Double] = {
+            ($0 <==>  { $0.dateActual}).reduceConcatInArray(0, {$1 - $0})
+        
+        
+        
+        }
+        
+        let r = EnEstaMatrizLosPrestamosVanDeDiaEnDia <&> matrix
+        
+        //XCTAssert(EnEstaMatrizLosPrestamosVanDeDiaEnDia <&> matrix )
+        
+        
+        
+        
         
         
         

@@ -8,13 +8,22 @@
 
 import Foundation
 
+class ConstantsHipot {
+    
+    static let diaDePago_ = 18
+    
+    
+}
+
+
+
 
 struct product {
     let name:String
     let priceBuy:Double
     let multiplier:Double
     let contrats:Double
-    let dateBuy: Int
+    let dateBuy: Double
     let garantiasPorContrato:Double
 }
 let pr1 = product(name: "euriborCFD", priceBuy: 100.1, multiplier: 100, contrats: 5, dateBuy: 1, garantiasPorContrato: 250)
@@ -22,7 +31,7 @@ let pr2 = product(name: "Bono10AñosEsp", priceBuy: 105, multiplier: 100, contra
 
 struct portFolio {
     let products : [product]
-    let dateAct : Int
+    let dateAct : Double
     let saldo:Double
     let garantias:Double
     let PyGLantentes:Double
@@ -37,9 +46,13 @@ protocol prestamoH {
     
     var tipoActual : Double {get}//tipo actual del mercado hipotecario
     
-    var dateActual:Int{get}
-    var  isThisPeriodoToPay: (Int) -> Bool{get} //
-    var  dateIntTOString: (Int) -> String{get} // nos da la fech formateada
+    
+    
+    var dateActual:Double{get}
+    var  isThisPeriodoToPay: (Double) -> Bool{get} //
+    var  dateIntTOString: (Double) -> String{get} // nos da la fech formateada
+    
+    
     
     var  periodosPorPagar : Int{get}// cuantos pediodos mensuales
     
@@ -47,7 +60,18 @@ protocol prestamoH {
     func euriborWithPeriod() -> Double
     func nextdate(withIndex: Double ) -> prestamoH //devuelve el miusmo objeto mutado con el paso de un periodo o dia
 }
-
+extension prestamoH {
+    
+    
+    var actualDateSt : String {return dateIntTOString(dateActual)}
+    
+    var cuotaDeHoy : (Double,Double) {
+        
+        if (isThisPeriodoToPay(dateActual)){ return nextCuota()          } else {return (0,0)}
+    }
+    
+    
+}
 
 
 
@@ -55,14 +79,18 @@ protocol prestamoH {
 //pasos secuenciales uno a uno
 struct prestamoHipotecarioFijo : prestamoH {
     
+    
+    
     let CapitalVivoRestante : Double
     var  tipo : Double
     
     let tipoActual: Double
-    let dateActual:Int
+    let dateActual:Double
     
-    let isThisPeriodoToPay: (Int) -> Bool //
-    let dateIntTOString: (Int) -> String // nos da la fech formateada
+    let isThisPeriodoToPay: (Double) -> Bool //
+    
+    // nos da la fech formateada
+    let dateIntTOString: (Double) -> String = {$0.dateAssoccDouble.toStringRepresent()!}
     
     let periodosPorPagar : Int// cuantos pediodos mensuales
     
@@ -79,13 +107,13 @@ struct prestamoHipotecarioFijo : prestamoH {
     
     func nextdate(withIndex: Double) -> prestamoH{
         
-        let cuota = self.nextCuota()
+        let cuota = self.cuotaDeHoy
         
         let newCap = self.CapitalVivoRestante - cuota.1
-        let newDay = self.dateActual + 1
+        let newDay = self.dateActual + SEcondsPerDay
         let newPer = (isThisPeriodoToPay(self.dateActual)) ? (self.periodosPorPagar - 1) : (self.periodosPorPagar)
         
-        let newPrest = prestamoHipotecarioFijo(CapitalVivoRestante: newCap, tipo: self.tipo, tipoActual: withIndex, dateActual: newDay, isThisPeriodoToPay: self.isThisPeriodoToPay, dateIntTOString: self.dateIntTOString, periodosPorPagar: newPer)
+        let newPrest = prestamoHipotecarioFijo(CapitalVivoRestante: newCap, tipo: self.tipo, tipoActual: withIndex, dateActual: newDay, isThisPeriodoToPay: self.isThisPeriodoToPay, periodosPorPagar: newPer)
         
         return newPrest
         
@@ -96,7 +124,47 @@ struct prestamoHipotecarioFijo : prestamoH {
     }
     
 }
+
+func prestFijo (_ Capit: Double) -> (Double) -> (Date) ->(Int)-> prestamoHipotecarioFijo {
+    
+    return {tipo  in {fechaInicio in { años in
+        
+        
+        let componentesFInicio = fechaInicio.componetsOf()!
+        let nuevaFechaFinal = Date.dateWithDayMonthAndYear(componentesFInicio.day!, componentesFInicio.month!, componentesFInicio.year! + años)
+        
+        
+        let hi = hipotDate(fInit: fechaInicio, fEnd: nuevaFechaFinal!, dayToPay: ConstantsHipot.diaDePago_)
+        
+        let isthisPe = isFechaPxoimoPagoDouble <&> hi
+        
+       let p = prestamoHipotecarioFijo(CapitalVivoRestante: Capit, tipo: tipo, tipoActual: tipo, dateActual:fechaInicio.numberAssoc, isThisPeriodoToPay: isthisPe, periodosPorPagar: (años * 12))
+        
+        return p
+        
+        
+        } }}
+    
+    
+    
+    
+}
+
+func prestamoInThePeriod_ (_ pre: prestamoH) -> (Int) -> prestamoH? {
+    
+    return {period in     nil }
+    
+    
+    
+    
+}
+
+
+
+
+
 struct prestamoHipotecarioVariable : prestamoH {
+   
    
     
     let CapitalVivoRestante : Double
@@ -105,10 +173,10 @@ struct prestamoHipotecarioVariable : prestamoH {
     
     let tipoFijadoDelPeriodo : Double
     
-    let dateActual:Int
+    let dateActual:Double
     
-    let isThisPeriodoToPay: (Int) -> Bool //
-    let dateIntTOString: (Int) -> String // nos da la fech formateada
+    let isThisPeriodoToPay: (Double) -> Bool //
+    let dateIntTOString: (Double) -> String = {$0.dateAssoccDouble.toStringRepresent()!}
     
     let periodosPorPagar : Int// cuantos pediodos mensuales
     
@@ -119,7 +187,7 @@ struct prestamoHipotecarioVariable : prestamoH {
         
     }
     
-    func IsthisPeriodRevisedIndexEurib(_ d: Int) -> Bool {
+    func IsthisPeriodRevisedIndexEurib(_ d: Double) -> Bool {
         
         if(Double(d).truncatingRemainder(dividingBy: 300) == 0) {return true}
         
@@ -129,10 +197,10 @@ struct prestamoHipotecarioVariable : prestamoH {
     
     func nextdate(withIndex: Double) -> prestamoH {
         
-        let cuota = self.nextCuota()
+         let cuota = self.cuotaDeHoy
         
         let newCap = self.CapitalVivoRestante - cuota.0
-        let newDay = self.dateActual + 1
+        let newDay = self.dateActual + SEcondsPerDay
         
         
         let newPer = (isThisPeriodoToPay(self.dateActual)) ? (self.periodosPorPagar - 1) : (self.periodosPorPagar)
@@ -143,7 +211,7 @@ struct prestamoHipotecarioVariable : prestamoH {
         
         
         
-        let newPrest = prestamoHipotecarioVariable(CapitalVivoRestante: newCap, tipoActual: withIndex, tipoFijadoDelPeriodo: newTipo, dateActual: newDay, isThisPeriodoToPay: isThisPeriodoToPay, dateIntTOString: dateIntTOString, periodosPorPagar: newPer)
+        let newPrest = prestamoHipotecarioVariable(CapitalVivoRestante: newCap, tipoActual: withIndex, tipoFijadoDelPeriodo: newTipo, dateActual: newDay, isThisPeriodoToPay: isThisPeriodoToPay, periodosPorPagar: newPer)
         
         return newPrest
         
@@ -171,9 +239,9 @@ struct prestamoHipotTramos : prestamoH {
     let tramos : [Int : Double]
   
     
-    let dateActual:Int
-    let isThisPeriodoToPay: (Int) -> Bool //
-    let dateIntTOString: (Int) -> String // nos da la fech formateada
+    let dateActual:Double
+    let isThisPeriodoToPay: (Double) -> Bool //
+    let dateIntTOString: (Double) -> String = {$0.dateAssoccDouble.toStringRepresent()!}
     
     let periodosPorPagar : Int// cuantos pediodos mensuales
     
@@ -185,33 +253,33 @@ struct prestamoHipotTramos : prestamoH {
             case 120...240 : return 0.02
             default: return self.tipoFijadoDelPeriodo
         
-        }}
+    }}
     
     
     func nextdate(withIndex: Double) -> prestamoH {
         
-        let cuota = self.nextCuota()
+        let cuota = self.cuotaDeHoy
         
         let newCap = self.CapitalVivoRestante - cuota.0
-        let newDay = self.dateActual + 1
+        let newDay = self.dateActual + SEcondsPerDay
         let newPer = (isThisPeriodoToPay(newDay)) ? (self.periodosPorPagar - 1) : (self.periodosPorPagar)
         
        
         
         let newTipo = IsthisPeriodRevisedIndexEurib(newDay ) ? (withIndex) : (self.tipoFijadoDelPeriodo)
         
-        let newPrest = prestamoHipotTramos(CapitalVivoRestante: newCap, tipoActual: self.euriborWithPeriod(), tipoFijadoDelPeriodo: newTipo, tramos: self.tramos, dateActual: newDay, isThisPeriodoToPay: isThisPeriodoToPay, dateIntTOString: dateIntTOString, periodosPorPagar: newPer)
+        let newPrest = prestamoHipotTramos(CapitalVivoRestante: newCap, tipoActual: self.euriborWithPeriod(), tipoFijadoDelPeriodo: newTipo, tramos: self.tramos, dateActual: newDay, isThisPeriodoToPay: isThisPeriodoToPay, periodosPorPagar: newPer)
         
         return newPrest
         
         
-        
+    
         
         
         
         
     }
-   func IsthisPeriodRevisedIndexEurib(_ d: Int) -> Bool {
+   func IsthisPeriodRevisedIndexEurib(_ d: Double) -> Bool {
         
         
     if(Double(d).truncatingRemainder(dividingBy: 300) == 0) {return true}
@@ -239,7 +307,7 @@ func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
     let newGaran = portf.garantias + 1000
     
     
-    let newPort = portFolio(products: newPro, dateAct: portf.dateAct + 1, saldo: newSaldo, garantias: newGaran, PyGLantentes: 0, PYGRealizadas: 0)
+    let newPort = portFolio(products: newPro, dateAct: portf.dateAct + SEcondsPerDay, saldo: newSaldo, garantias: newGaran, PyGLantentes: 0, PYGRealizadas: 0)
     let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
         
         return (res,newPort   )
@@ -257,7 +325,7 @@ func closeAllPositions() -> State<portFolio,rHipotSample>  {
         
         
         
-        let newPort = portFolio(products: [], dateAct: portf.dateAct + 1, saldo: newSaldo, garantias: 0, PyGLantentes: 0, PYGRealizadas: -1000)
+        let newPort = portFolio(products: [], dateAct: portf.dateAct + SEcondsPerDay, saldo: newSaldo, garantias: 0, PyGLantentes: 0, PYGRealizadas: -1000)
         let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
         
         return (res,newPort   )
@@ -279,7 +347,7 @@ func actualizeProduct(_ val: indHpotecSample) -> State<product,rHipotSample> {
 }
 // CFDSS ///////////////////////////////////////////////////////////////////////
 
-func actualizePortfolio( period: Int, ind: indHpotecSample) -> State<portFolio,rHipotSample> {
+func actualizePortfolio( period: Double, ind: indHpotecSample) -> State<portFolio,rHipotSample> {
     
   
     
@@ -359,7 +427,7 @@ extension PortfolioSIM : funcNX {
         
         return {iter in  { ides in
             
-            let porAct  = actualizePortfolio(period: iter, ind: ides)
+            let porAct  = actualizePortfolio(period: Double(iter), ind: ides)
             
             let commandsTo = self.comm.nextCommand((res, ides))
             
@@ -518,7 +586,22 @@ extension hipotecaSIM : funcNX{
     }
 }
 
+//++++++++++++++++++++++++++
+func recorridoEuribor( _ elem: Int) -> [Double]  {
+    
+    
+    
+    
+    return Array(repeatElement(0.04, count: elem))
+}
 
-
-
+func prestamosResultAbout(_ reocrridoEuri: [Double] ) -> [prestamoH] {
+    
+    let pres = prestFijo <&> 120000.00 <&> 0.04 <&> tDate_(1, 1, 2018)! <&> 20
+    
+    
+return Array(repeatElement(pres , count: reocrridoEuri.count))
+    
+    
+}
 

@@ -47,6 +47,15 @@ class ArrayExtension_test: XCTestCase {
         
         
     }
+    func test_concatArray() {
+        
+        let arr = Array(repeatElement(100.00, count: 100))
+
+        let ena = arr.reduceConcatInArray(arr[0]) {$1 - $0}
+        
+        let vvv = 0
+        
+    }
     
     
     
