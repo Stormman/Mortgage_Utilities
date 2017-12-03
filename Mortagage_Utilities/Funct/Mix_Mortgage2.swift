@@ -152,14 +152,28 @@ func prestFijo (_ Capit: Double) -> (Double) -> (Date) ->(Int)-> prestamoHipotec
 
 func prestamoInThePeriod_ (_ pre: prestamoH) -> (Int) -> prestamoH? {
     
-    return {period in     nil }
+    return {period in
+        
+       let tipoFi = pre.tipoActual
+        
+        let dar = Array(0...period).scanl(pre) { (p : prestamoH, e: Int ) -> prestamoH in  p.nextdate(withIndex: tipoFi )  }
+        
+        return dar.last
+        
+        
+         }
     
     
     
     
 }
 
-
+func prestamoInThePeriod_ (_ pre: prestamoH) -> ([Double]) -> (Int) -> prestamoH? {
+    
+    return {indes in {period in return nil       }}
+    
+    
+}
 
 
 

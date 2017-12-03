@@ -37,6 +37,27 @@ class prestamosFijos_test: XCTestCase {
         
     }
     
+    func test_WhenThefuncIsOverPeriodoIsNIll() {
+        let overPeriod = (31 * 20 ) + 500
+        let pr = prestamoInThePeriod_ <&> prestamoFijo_ <&> overPeriod
+        XCTAssert(pr == nil)
+    }
+    
+    func test_whenTheFuncIsOnPeriodIsNotnil() {
+        let otroprInTheperiod = prestamoInThePeriod_ <&> prestamoFijo_ <&> 100
+        XCTAssert(otroprInTheperiod != nil )
+        
+        let otroprInTheperiod2 = prestamoInThePeriod_ <&> prestamoFijo_ <&> 50
+        XCTAssert(otroprInTheperiod2 != nil )
+        
+        let otroprInTheperiod3 = prestamoInThePeriod_ <&> prestamoFijo_ <&> 70
+        XCTAssert(otroprInTheperiod3 != nil )
+        
+        let otroprInTheperiod4 = prestamoInThePeriod_ <&> prestamoFijo_ <&> 150
+        XCTAssert(otroprInTheperiod4 != nil )
+    }
+
+
    
     
 }
