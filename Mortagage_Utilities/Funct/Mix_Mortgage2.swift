@@ -114,7 +114,7 @@ struct prestamoHipotecarioFijo : prestamoH {
         let newPer = (isThisPeriodoToPay(self.dateActual)) ? (self.periodosPorPagar - 1) : (self.periodosPorPagar)
         
         
-        if(newCap <= 0) {return nil}
+        if(newCap <= 0 || newPer == 0) {return nil}
         
         let newPrest = prestamoHipotecarioFijo(CapitalVivoRestante: newCap, tipo: self.tipo, tipoActual: withIndex, dateActual: newDay, isThisPeriodoToPay: self.isThisPeriodoToPay, periodosPorPagar: newPer)
         
@@ -128,6 +128,8 @@ struct prestamoHipotecarioFijo : prestamoH {
     
 }
 
+
+//constructor hipo fija
 func prestFijo (_ Capit: Double) -> (Double) -> (Date) ->(Int)-> prestamoHipotecarioFijo {
     
     return {tipo  in {fechaInicio in { años in
@@ -153,6 +155,7 @@ func prestFijo (_ Capit: Double) -> (Double) -> (Date) ->(Int)-> prestamoHipotec
     
 }
 
+//nos da el prestamo en un periodo dado si existe
 func prestamoInThePeriod_ (_ pre: prestamoH) -> (Int) -> prestamoH? {
     
     return {period in
@@ -175,6 +178,21 @@ func prestamoInThePeriod_ (_ pre: prestamoH) -> (Int) -> prestamoH? {
     
 }
 
+//nos da el recorrido del prestamo en el periodo
+func prestamosAllInTHePeriod_ (pre:prestamoH) ->(Int)-> [prestamoH?] {
+    
+    return { period in
+    let tipoFi = pre.tipoActual
+    
+    let dar = Array(0...period).scanl(pre) { (p : prestamoH?, e: Int ) -> prestamoH? in
+        p?.nextdate(withIndex: tipoFi ) }
+    
+    return dar
+    }
+}
+
+
+//nos da el recorrido del prestamo dado el recorrido del euribor para prestvar o semivariables
 func prestamoInThePeriod_ (_ pre: prestamoH) -> ([Double]) -> (Int) -> prestamoH? {
     
     return {indes in {period in return nil       }}

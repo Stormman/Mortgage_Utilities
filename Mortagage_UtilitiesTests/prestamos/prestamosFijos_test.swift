@@ -27,7 +27,12 @@ class prestamosFijos_test: XCTestCase {
     func test_WhenThefuncIsOverPeriodoIsNIll() {
         let overPeriod = (31 * 20 * 12 ) + 500
         let pr = prestamoInThePeriod_ <&> prestamoFijo_ <&> overPeriod
-        XCTAssert(pr == nil)
+       
+        
+        
+        
+        
+        
     }
     
     func test_whenTheFuncIsOnPeriodIsNotnil() {
@@ -44,6 +49,24 @@ class prestamosFijos_test: XCTestCase {
         XCTAssert(otroprInTheperiod4 != nil )
     }
 
+    func test_TheLastperiodISthePrevist()  {
+        
+        
+        let periodsOfPrest = prestamosAllInTHePeriod_ <&> prestamoFijo_ <&> 12000
+        
+        let firstNotNIl = periodsOfPrest.filter { $0 != nil   }
+        
+        let lastFives = firstNotNIl.dropFirst(firstNotNIl.count - 5)
+        
+        let diaUltimo = firstNotNIl.last!?.actualDateSt
+        
+        XCTAssert(diaUltimo! == "18-12-2037")
+        
+        
+        
+        
+    }
+    
 
    
     
