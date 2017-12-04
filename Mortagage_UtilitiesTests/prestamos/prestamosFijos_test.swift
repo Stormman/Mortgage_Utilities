@@ -67,7 +67,30 @@ class prestamosFijos_test: XCTestCase {
         
     }
     
+    func test_cuotaApagar() {
+        
+        let cuot = prestamoFijo_.nextCuota()
+        
+        let f = cuot.0 + cuot.1
+        
+        XCTAssert(f.givemeRoundTwoplaces() == 727.18)
+        
+        
+        
+    }
 
+    
+    func test_DivisionInteresesYAmortizacionYCapitalPendiente() {
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
    
     
 }

@@ -11,8 +11,8 @@ import Foundation
 class ConstantsHipot {
     
     static let diaDePago_ = 18
-    
-    
+    static let diaRenovac_ = 15
+    static let frecuenciaNormalMensuaRenovacio_ = 6
 }
 
 
@@ -219,18 +219,24 @@ struct prestamoHipotecarioVariable : prestamoH {
     
     let periodosPorPagar : Int// cuantos pediodos mensuales
     
-    func nextCuota() -> (Double,Double) {return (700,200)}
+    func nextCuota() -> (Double,Double) {
+        let cuo = prestamos.cuotaDividida(capPte: CapitalVivoRestante, tipo: euriborWithPeriod(), periodosRestan: periodosPorPagar)
+        
+        return cuo
+        
+    }
+    
     func euriborWithPeriod() -> Double {
         
        return tipoFijadoDelPeriodo
         
     }
     
-    func IsthisPeriodRevisedIndexEurib(_ d: Double) -> Bool {
+    let  IsthisPeriodRevisedIndexEurib: (Double) -> Bool = {d in
         
-        if(Double(d).truncatingRemainder(dividingBy: 300) == 0) {return true}
+      let t =  isfechaProximaRenovacionIndice <&> ConstantsHipot.diaRenovac_ <&> ConstantsHipot.frecuenciaNormalMensuaRenovacio_ <&> d.dateAssoccDouble
+        return t
         
-        return false
     }
     
     
@@ -244,7 +250,7 @@ struct prestamoHipotecarioVariable : prestamoH {
         
         let newPer = (isThisPeriodoToPay(self.dateActual)) ? (self.periodosPorPagar - 1) : (self.periodosPorPagar)
         
-        
+        if( newPer == 0) {return nil}
         
         let newTipo = IsthisPeriodRevisedIndexEurib(newDay ) ? (withIndex) : (self.tipoFijadoDelPeriodo)
         
@@ -259,6 +265,34 @@ struct prestamoHipotecarioVariable : prestamoH {
         
         
     }
+    
+}
+
+//constructor hipo Vairable
+func prestamoVariable (_ Capit: Double) -> (Double) -> (Date) ->(Int)-> prestamoHipotecarioVariable {
+    
+    return {tipo  in {fechaInicio in { años in
+        
+        
+        let componentesFInicio = fechaInicio.componetsOf()!
+        let nuevaFechaFinal = Date.dateWithDayMonthAndYear(componentesFInicio.day!, componentesFInicio.month!, componentesFInicio.year! + años)
+        
+        
+        let hi = hipotDate(fInit: fechaInicio, fEnd: nuevaFechaFinal!, dayToPay: ConstantsHipot.diaDePago_)
+        
+        let isthisPe = isFechaPxoimoPagoDouble <&> hi
+        
+        //let p = prestamoHipotecarioFijo(CapitalVivoRestante: Capit, tipo: tipo, tipoActual: tipo, dateActual:fechaInicio.numberAssoc, isThisPeriodoToPay: isthisPe, periodosPorPagar: (años * 12))
+        
+        let p = prestamoHipotecarioVariable(CapitalVivoRestante: Capit, tipoActual: tipo, tipoFijadoDelPeriodo: tipo, dateActual: fechaInicio.numberAssoc, isThisPeriodoToPay: isthisPe, periodosPorPagar: (años * 12))
+        
+        return p
+        
+        
+        } }}
+    
+    
+    
     
 }
 

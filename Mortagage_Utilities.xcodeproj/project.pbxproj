@@ -80,6 +80,7 @@
 		C8745C1D1F9F010D009607C1 /* calculusHipoteca.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C181F9F010D009607C1 /* calculusHipoteca.swift */; };
 		C8745C1F1F9F2485009607C1 /* Functionals_Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */; };
 		C8AAB5191FD471C600CA67FC /* prestamosFijos_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AAB5181FD471C600CA67FC /* prestamosFijos_test.swift */; };
+		C8AAB51B1FD556E800CA67FC /* Prest_Variables_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AAB51A1FD556E800CA67FC /* Prest_Variables_test.swift */; };
 		C8B15E6F1FA9A84F005E68FA /* RandomizeUt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */; };
 		C8EC9FA21FC4201400C412CA /* RandomizeUt_4.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */; };
 		C8EC9FA41FC6F05B00C412CA /* Mix_MOrtgage_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EC9FA31FC6F05B00C412CA /* Mix_MOrtgage_Test.swift */; };
@@ -187,6 +188,7 @@
 		C8745C181F9F010D009607C1 /* calculusHipoteca.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = calculusHipoteca.swift; path = "../../../../../../Desktop/swift/Mortgage Utilities/Mortga/calculusHipoteca.swift"; sourceTree = "<group>"; };
 		C8745C1E1F9F2485009607C1 /* Functionals_Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functionals_Utilities.swift; sourceTree = "<group>"; };
 		C8AAB5181FD471C600CA67FC /* prestamosFijos_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prestamosFijos_test.swift; sourceTree = "<group>"; };
+		C8AAB51A1FD556E800CA67FC /* Prest_Variables_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prest_Variables_test.swift; sourceTree = "<group>"; };
 		C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt.swift; sourceTree = "<group>"; };
 		C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt_4.swift; sourceTree = "<group>"; };
 		C8EC9FA31FC6F05B00C412CA /* Mix_MOrtgage_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mix_MOrtgage_Test.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				C8AAB5181FD471C600CA67FC /* prestamosFijos_test.swift */,
+				C8AAB51A1FD556E800CA67FC /* Prest_Variables_test.swift */,
 			);
 			path = prestamos;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 			files = (
 				C8745BF41F9E881D009607C1 /* Mortagage_UtilitiesTests.swift in Sources */,
 				C8FA30691FA9DA4000984466 /* functionalTests.swift in Sources */,
+				C8AAB51B1FD556E800CA67FC /* Prest_Variables_test.swift in Sources */,
 				C8AAB5191FD471C600CA67FC /* prestamosFijos_test.swift in Sources */,
 				C8EC9FA41FC6F05B00C412CA /* Mix_MOrtgage_Test.swift in Sources */,
 				C84972191FAE46A4002AB709 /* simulaTest.swift in Sources */,
