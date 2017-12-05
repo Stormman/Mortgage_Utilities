@@ -168,15 +168,7 @@ func prestamoInThePeriod_ (_ pre: prestamoH) -> (Int) -> prestamoH? {
         guard let t = dar.last else {return nil}
         
         return t
-        
-        
-        
-         }
-    
-    
-    
-    
-}
+}}
 
 //nos da el recorrido del prestamo en el periodo
 func prestamosAllInTHePeriod_ (pre:prestamoH) ->(Int)-> [prestamoH?] {
@@ -195,9 +187,19 @@ func prestamosAllInTHePeriod_ (pre:prestamoH) ->(Int)-> [prestamoH?] {
 //nos da el recorrido del prestamo dado el recorrido del euribor para prestvar o semivariables
 func prestamoInThePeriod_ (_ pre: prestamoH) -> ([Double]) -> (Int) -> prestamoH? {
     
-    return {indes in {period in return nil       }}
-    
-    
+    return {indes in {period in
+        
+        let indexpr = (take <&> period) <&> indes
+        
+        let dar = indexpr.scanl(pre){ (p : prestamoH?, e: Double) -> prestamoH? in
+            p?.nextdate(withIndex: e)
+            
+        }
+        
+        guard let dt = dar.last  else {return nil}
+        return dt
+        
+    }}
 }
 
 
@@ -268,7 +270,7 @@ struct prestamoHipotecarioVariable : prestamoH {
     
 }
 
-//constructor hipo Vairable
+//constructor hipoteca Vairable
 func prestamoVariable (_ Capit: Double) -> (Double) -> (Date) ->(Int)-> prestamoHipotecarioVariable {
     
     return {tipo  in {fechaInicio in { años in
@@ -620,6 +622,32 @@ func actualizePrestHIpotecario(period: Int, _ val: indHpotecSample) -> State<pre
     
 }
 
+func actualizePrestamoHipotecario(period : Int) -> ([Double]) -> State<prestamoH?,rHipotSample> {
+    
+    return  {indes in
+        
+        State {pre in
+            
+            let indexpr = (take <&> period) <&> indes
+            
+            let newS = indexpr.scanl(pre) { (pr:prestamoH?, d:Double) -> prestamoH? in
+                guard let prr = pr else {return nil}
+                guard let qr = prr.nextdate(withIndex: d) else {return nil }
+                
+                
+                return qr}
+            
+            let newPre = newS.last ?? nil
+            
+            let cuotas = newS.flatMap{$0} <==> {($0.cuotaDeHoy.0) + ($0.cuotaDeHoy.1) }
+            let sumaDelascuotas = cuotas.reduce(0) {$0 + $1}
+            
+            
+            return (rHipotSample(bookTrade: [resultsHipoSample.cash: -sumaDelascuotas]), newPre)}
+        
+    }
+}
+
 extension hipotecaSIM : funcNX{
     
     func applyNEXT_(_ res: rHipotSample) -> (Int) -> (indHpotecSample) -> rHipotSample {
@@ -664,10 +692,12 @@ extension hipotecaSIM : funcNX{
 //++++++++++++++++++++++++++
 func recorridoEuribor( _ elem: Int) -> [Double]  {
     
+    let f = Array(repeatElement(0.03, count: 160))
+    let s = Array(repeatElement(0.05, count: 200))
+    let t = Array(repeatElement(0.06, count: 1000))
     
     
-    
-    return Array(repeatElement(0.04, count: elem))
+    return f + s + t
 }
 
 func prestamosResultAbout(_ reocrridoEuri: [Double] ) -> [prestamoH] {

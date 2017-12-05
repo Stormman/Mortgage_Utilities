@@ -128,6 +128,138 @@ class Prest_Variables_test: XCTestCase {
         
         
     }
+    func test_WhenEuriborchanges_thecnagesnotchangedtothepreviousvalue() {
+        
+        let tEnDias = dateTools.differenceDays(start: tDate_(1, 1, 2018)!, toDate: tDate_(15, 6, 2018)!)
+        
+        let otroprInTheperiod = prestamoInThePeriod_ <&>  prestVar <&> (tEnDias - 2 )
+        
+        let st =  actualizePrestHIpotecario(period: tEnDias  ,indHpotecSample(bookTrade: [indexesHipoSample.euribor1año:0.03]) )
+        
+        let pr = st.exec(otroprInTheperiod)
+        
+        let d = pr?.euriborWithPeriod()
+        let dia = pr?.actualDateSt
+        let ffp = (pr as! prestamoHipotecarioVariable).IsthisPeriodRevisedIndexEurib((pr?.dateActual)!)
+        
+        XCTAssert(d == 0.03)
+        
+        
+        
+    }
+    
+    func test_itCanProduceArecorridoOfPrestamosWithRecorridoeuriborthere(){
+        
+        
+         let tEnDias = dateTools.differenceDays(start: tDate_(1, 1, 2018)!, toDate: tDate_(15, 12, 2018)!)
+        
+        
+        
+        let unrecorridodelEuribor = recorridoEuribor <&> 12000
+        
+        let noigual = TodosIguales(unrecorridodelEuribor)
+        
+        XCTAssert(noigual == false )
+        
+        
+        
+        let prestIn = prestamoInThePeriod_ <&> prestVar <&> unrecorridodelEuribor <&> 200
+        
+        XCTAssert(prestIn != nil)
+        
+        let euriborenelperiodo = prestIn?.euriborWithPeriod()
+        
+        XCTAssert(prestIn?.euriborWithPeriod() == 0.05)
+        
+        
+        
+        
+    }
+    
+    func test_AcutalizrPrestamoHipotecario_Exists() {
+        
+        let unrecorridodelEuribor = recorridoEuribor <&> 12000
+        
+        let actualPresstamoState = actualizePrestamoHipotecario  <&> 560 <&> unrecorridodelEuribor
+        
+        XCTAssertNotNil(actualPresstamoState)
+        XCTAssertTrue(actualPresstamoState is State<prestamoH?, rHipotSample> )
+    }
+    func test_ActualizePrestamoHipotecario_returnsStateThaCOnvertThrprestamoInotherPrest() {
+        
+        let unrecorridodelEuribor = recorridoEuribor <&> 12000
+        
+        let actualPresstamoState = actualizePrestamoHipotecario  <&> 560 <&> unrecorridodelEuribor
+        
+        
+        let anotherPrest = actualPresstamoState.exec(prestVar)
+        XCTAssertTrue(anotherPrest is prestamoH?)
+        
+    }
+    
+    
+    func test_ActualizePrestamoHipotecario_returnsStateThaCOnvertThrprestamoInotherPrestinThisPeriodExact() {
+        
+        
+        let unrecorridodelEuribor = recorridoEuribor <&> 12000
+        
+        let actualPresstamoState = actualizePrestamoHipotecario  <&> 560 <&> unrecorridodelEuribor
+        
+        
+        let anotherPrest = actualPresstamoState.exec(prestVar)
+        
+        
+        let gg = (tDate_(1, 1, 2018)!.numberAssoc + SEcondsPerDay * 560).dateAssoccDouble.toStringRepresent()
+        
+        let dif = dateTools.differenceDays(start: tDate_(1, 1, 2018)!, toDate: tDate_(15, 7, 2019)!)
+        
+        let fechaPrestModified = anotherPrest?.actualDateSt
+        
+        XCTAssertTrue(fechaPrestModified == gg!)
+        
+        
+        
+    }
+    
+    func test_ActualizePrestamoHipotecario_returnsStateThaCOnvertThrprestamoInotherPrestwithcashresultdiffZero(){
+        
+        let unrecorridodelEuribor = recorridoEuribor <&> 12000
+        
+        let actualPresstamoState = actualizePrestamoHipotecario  <&> 160 <&> unrecorridodelEuribor
+        
+        
+        let anotherPrest = actualPresstamoState.exec(prestVar)
+        
+        
+        let resultado = actualPresstamoState.eval(prestVar)
+        
+        let resCash = resultado.bookTrade[resultsHipoSample.cash]
+        
+        XCTAssertTrue(resCash! != 0)
+        
+        
+        
+        
+    }
+    
+    func testex() {
+        
+        let unrecorridodelEuribor = recorridoEuribor <&> 12000
+        
+        let actualPresstamoState = actualizePrestamoHipotecario  <&> 560 <&> unrecorridodelEuribor
+        
+        
+        let anotherPrest = actualPresstamoState.exec(prestVar)
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
