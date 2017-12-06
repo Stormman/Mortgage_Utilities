@@ -298,7 +298,13 @@ func prestamoVariable (_ Capit: Double) -> (Double) -> (Date) ->(Int)-> prestamo
     
 }
 
-
+enum tipo {
+    
+    case variable
+    case fijo(Double)
+    
+    
+}
 //prestamo hipotecario por tramos
 struct prestamoHipotTramos : prestamoH {
     
@@ -311,7 +317,7 @@ struct prestamoHipotTramos : prestamoH {
     let CapitalVivoRestante : Double
     var tipoActual : Double
     let tipoFijadoDelPeriodo : Double
-    let tramos : [Int : Double]
+    let tramos : [Double : tipo]
   
     
     let dateActual:Double
@@ -322,13 +328,18 @@ struct prestamoHipotTramos : prestamoH {
     
     func euriborWithPeriod() -> Double {
         
-        switch(self.dateActual) {
-            
-            case 0...120:return 0.04
-            case 120...240 : return 0.02
-            default: return self.tipoFijadoDelPeriodo
+        let dayActual = dateActual / SEcondsPerDay
+         let fir = tramos.first(where: {dayActual > $0.key})
         
-    }}
+        let tip = fir!.value
+        
+        switch tip {
+        case let tipo.fijo(doy) : return doy
+        default: return tipoFijadoDelPeriodo
+        }
+        
+        
+       }
     
     
     func nextdate(withIndex: Double) -> prestamoH? {
@@ -354,6 +365,11 @@ struct prestamoHipotTramos : prestamoH {
         
         
     }
+    
+
+    
+    
+    
    func IsthisPeriodRevisedIndexEurib(_ d: Double) -> Bool {
         
         
@@ -372,7 +388,26 @@ struct prestamoHipotTramos : prestamoH {
 
 }
 
-
+//hipot tramos constructor
+func prestamoPorTramos(_ capital: Double) -> (Date) -> (Int)-> (Dictionary<Double,tipo>) -> prestamoHipotTramos {
+    
+    return {fechaInicio in { años in { tramoTipos in
+        
+        let componentesFInicio = fechaInicio.componetsOf()!
+        let nuevaFechaFinal = Date.dateWithDayMonthAndYear(componentesFInicio.day!, componentesFInicio.month!, componentesFInicio.year! + años)
+        
+        
+        let hi = hipotDate(fInit: fechaInicio, fEnd: nuevaFechaFinal!, dayToPay: ConstantsHipot.diaDePago_)
+        
+        let isthisPe = isFechaPxoimoPagoDouble <&> hi
+        
+        let presTram = prestamoHipotTramos(CapitalVivoRestante: capital, tipoActual:0, tipoFijadoDelPeriodo: 0, tramos: tramoTipos, dateActual: fechaInicio.numberAssoc, isThisPeriodoToPay: isthisPe, periodosPorPagar: años * 12)
+        return presTram
+        
+        }}}
+    
+    
+}
 func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
     
     return State{portf in
