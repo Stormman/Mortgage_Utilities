@@ -146,10 +146,18 @@ func value_< A,B > ( _ f: @escaping (A) -> B)-> (Result< A>) -> Result<B> {
 
 func tDate_ (_ d:Int,_ m:Int,_ y:Int)-> Date?  {
     return Date.dateWithDayMonthAndYear(d, m, y)
+}
+func tD (_ par:(Int,Int,Int)) -> Date? {
     
-    
-    
+    return tDate_(par.0, par.1, par.2)
     
     
 }
 
+
+func sinNil<A>( _ p:[Optional<A>]) -> [A] {
+    
+    return p.flatMap{$0}
+    
+    
+}
