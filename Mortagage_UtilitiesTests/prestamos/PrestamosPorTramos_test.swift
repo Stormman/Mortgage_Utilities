@@ -115,6 +115,40 @@ class PrestamosPorTramos_test: XCTestCase {
         
     }
     
+    
+    func test_ejemplosParaVer() {
+        
+        let euriborrecorrido = recorridoEuribor(10000)
+        
+        let todo = prestamoInThePeriod_all  <&> presTram <&> euriborrecorrido <&> 7291
+        
+       
+        
+        let primerCuota = todo.first!?.nextCuota()
+        
+        let todoSinnil = sinNil <&> todo
+        
+        let EsdiaDeCobro: (prestamoH) -> Bool = {$0.isThisPeriodoToPay <&> $0.dateActual  }
+        let elCapPte :(prestamoH) -> Double = {$0.CapitalVivoRestante}
+        let cuotaAmorti :(prestamoH) -> Double = {$0.cuotaDeHoy.1}
+        let diasPtesDePago :(prestamoH) -> Int = {$0.periodosPorPagar}
+        
+        let soloCuandohayqueCObrar = todoSinnil.filter(EsdiaDeCobro)
+        
+        let cpPte = soloCuandohayqueCObrar <==> elCapPte
+        let cuotaAmort = soloCuandohayqueCObrar <==> cuotaAmorti
+        let diasPtes = soloCuandohayqueCObrar <==> diasPtesDePago
+        
+         let todoCaptPte = todoSinnil <==> diasPtesDePago
+        
+        
+        let di = 900000
+        
+        
+        
+        
+    }
+    
     func test_CapitalPendienteInDays() {
         
         let euriborrecorrido = recorridoEuribor(10000)
@@ -126,7 +160,7 @@ class PrestamosPorTramos_test: XCTestCase {
         let actuA1200 = actualizePrestamoHipotecario <&> 1200 <&> euriborrecorrido
         let actuA2200 = actualizePrestamoHipotecario <&> 2200 <&> euriborrecorrido
         
-        let actu20 = actualizePrestamoHipotecario <&> 20 <&> euriborrecorrido
+        let actu20 = actualizePrestamoHipotecario <&> 2 <&> euriborrecorrido
         let capPte20 = actu20.exec(presTram)?.CapitalVivoRestante
         let eurib = (actu20.exec <&> presTram )?.euriborWithPeriod()
         let cuot = (actu20.exec <&> presTram )?.nextCuota()
@@ -166,7 +200,55 @@ class PrestamosPorTramos_test: XCTestCase {
         
         
     }
-    
+    func test_fiveFirstMonths() {
+        
+        // n Month , intereses, amortizacion , capitalPte and yield
+        let cases_ = [(0,120000,200.00,407.06),(1,119592.94,199.32,407.74),(2,119185.20,198.64,408.42),(3,118776.78,197.96,409.10)]
+        
+        let euriborrecorrido = recorridoEuribor(10000)
+        
+        let todo = prestamoInThePeriod_all  <&> presTram <&> euriborrecorrido <&> 7291
+        
+        let primerCuota = todo.first!?.nextCuota()
+        
+        let todoSinnil = sinNil <&> todo
+        
+        let EsdiaDeCobro: (prestamoH) -> Bool = {$0.isThisPeriodoToPay <&> $0.dateActual  }
+        let elCapPte :(prestamoH) -> Double = {$0.CapitalVivoRestante}
+        let cuotaAmorti :(prestamoH) -> Double = {$0.cuotaDeHoy.1}
+        
+       
+        
+        let soloCuandohayqueCObrar = todoSinnil.filter(EsdiaDeCobro)
+        
+        
+        let capV = soloCuandohayqueCObrar[0].CapitalVivoRestante
+        let cuotInt = (soloCuandohayqueCObrar[0].cuotaDeHoy.0).givemeRoundTwoplaces() == 200.00
+        let coutAmor = (soloCuandohayqueCObrar[0].cuotaDeHoy.1).givemeRoundTwoplaces()
+        
+       // print( "el rdo es :" +  String(BoolToInt(cuotInt)) + String(BoolToInt(coutAmor)))
+        
+        
+        
+        
+       
+        XCTAssertTrue((soloCuandohayqueCObrar[0].CapitalVivoRestante).givemeRoundTwoplaces() == cases_[0].1)
+        XCTAssertTrue((soloCuandohayqueCObrar[0].cuotaDeHoy.0).givemeRoundTwoplaces() == cases_[0].2)
+        XCTAssertTrue((soloCuandohayqueCObrar[0].cuotaDeHoy.1).givemeRoundTwoplaces() == cases_[0].3)
+        XCTAssertTrue((soloCuandohayqueCObrar[1].CapitalVivoRestante).givemeRoundTwoplaces() == cases_[1].1)
+        XCTAssertTrue((soloCuandohayqueCObrar[1].cuotaDeHoy.0).givemeRoundTwoplaces() == cases_[1].2)
+        XCTAssertTrue((soloCuandohayqueCObrar[1].cuotaDeHoy.1).givemeRoundTwoplaces() == cases_[1].3)
+        XCTAssertTrue((soloCuandohayqueCObrar[2].CapitalVivoRestante).givemeRoundTwoplaces() == cases_[2].1)
+        XCTAssertTrue((soloCuandohayqueCObrar[2].cuotaDeHoy.0).givemeRoundTwoplaces() == cases_[2].2)
+        XCTAssertTrue((soloCuandohayqueCObrar[2].cuotaDeHoy.1).givemeRoundTwoplaces() == cases_[2].3)
+        XCTAssertTrue((soloCuandohayqueCObrar[3].CapitalVivoRestante).givemeRoundTwoplaces() == cases_[3].1)
+        XCTAssertTrue((soloCuandohayqueCObrar[3].cuotaDeHoy.0).givemeRoundTwoplaces() == cases_[3].2)
+        XCTAssertTrue((soloCuandohayqueCObrar[3].cuotaDeHoy.1).givemeRoundTwoplaces() == cases_[3].3)
+        
+        
+        
+        
+    }
     
     
     

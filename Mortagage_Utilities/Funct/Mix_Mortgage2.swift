@@ -427,7 +427,7 @@ func prestamoPorTramos(_ capital: Double) -> (Date) -> (Int)-> (Dictionary<Doubl
         
         let isthisPe = isFechaPxoimoPagoDouble <&> hi
         
-        let presTram = prestamoHipotTramos(fechaInicio: fechaInicio, CapitalVivoRestante: capital, tipoActual:0, tipoFijadoDelPeriodo: 0, tramos: tramoTipos, dateActual: fechaInicio.numberAssoc, isThisPeriodoToPay: isthisPe, periodosPorPagar: años * 12)
+        let presTram = prestamoHipotTramos(fechaInicio: fechaInicio, CapitalVivoRestante: capital, tipoActual:0, tipoFijadoDelPeriodo: 0, tramos: tramoTipos, dateActual: fechaInicio.numberAssoc, isThisPeriodoToPay: isthisPe, periodosPorPagar: (años * 12) + 1)
         return presTram
         
         }}}
