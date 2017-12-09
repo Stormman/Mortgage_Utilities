@@ -26,8 +26,77 @@ struct product {
     let dateBuy: Double
     let garantiasPorContrato:Double
 }
-let pr1 = product(name: "euriborCFD", priceBuy: 100.1, multiplier: 100, contrats: 5, dateBuy: 1, garantiasPorContrato: 250)
-let pr2 = product(name: "Bono10AñosEsp", priceBuy: 105, multiplier: 100, contrats: 0.5, dateBuy: 1, garantiasPorContrato: 100)
+
+func addProd(_ newp:product) -> ([product]) -> [product]  {
+    
+    return { pds in
+        
+        
+        let newprds = pds <==> {(pd: product) -> product  in
+            
+            if (pd.name == newp.name) {
+                
+                let newContr = pd.contrats + newp.contrats
+                
+                let newProd = product(name: pd.name, priceBuy: pd.priceBuy, multiplier: pd.multiplier, contrats: newContr, dateBuy: pd.dateBuy, garantiasPorContrato: pd.garantiasPorContrato)
+                
+                return newProd
+                
+                
+            }else {return pd}
+            
+        }
+        
+        return newprds
+    }
+    
+    
+}
+
+func addAllProds(_ newps:[product]) -> ([product]) -> [product] {
+    return { prodsOfPortf in
+    
+        if(prodsOfPortf.isEmpty) {return newps    }
+        
+        
+        
+        let newp = newps.scanl(prodsOfPortf, { (p1: [product], p2:product ) -> [product]  in
+            
+            addProd(p2) <&> p1
+            
+        })
+        
+        return newp.last!
+        
+        
+    }
+}
+
+
+
+
+let rMult : Reader<product,Double> = Reader{$0.contrats * $0.priceBuy * $0.multiplier   }
+
+func sumProducts( _ newsPds:product) -> State<product,rHipotSample> {return  State { prod in
+    
+    if newsPds.name != prod.name  {return ( rHipotSample(bookTrade: [:]), prod )} else {
+        
+        let newContr = prod.contrats + newsPds.contrats
+        
+        let newProd = product(name: prod.name, priceBuy: prod.priceBuy, multiplier: prod.multiplier, contrats: newContr, dateBuy: prod.dateBuy, garantiasPorContrato: prod.garantiasPorContrato)
+        
+        return (rHipotSample(bookTrade: [:]),newProd)
+        
+        
+    }
+    
+    
+    
+    }
+    
+    
+    
+}
 
 struct portFolio {
     let products : [product]
@@ -38,6 +107,39 @@ struct portFolio {
     let PYGRealizadas:Double
 }
 let portf = portFolio(products: [], dateAct: 1, saldo: 1000, garantias: 0, PyGLantentes: 0, PYGRealizadas: 0)
+
+//Constructor portfoiol and products
+
+func portfolioEmptyWith( _ saldo: Double) ->(Date) ->  portFolio {
+    
+    return {dat in
+        
+                return portFolio(products: [], dateAct: dat.numberAssoc, saldo: saldo, garantias: 0, PyGLantentes: 0, PYGRealizadas: 0)}
+    
+}
+
+func productFactory_ ( _ indeName:indexesHipoSample,_ dat:Date,_ canti: Double, priceBuy: Double     )-> product {
+    
+    
+        
+        switch(indeName) {
+            
+        case .euribor1año:
+            return product(name: indeName.rawValue, priceBuy: priceBuy, multiplier: 1000, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 600 * canti)
+        case .bono10Esp:
+             return product(name: indeName.rawValue, priceBuy: priceBuy, multiplier: 10, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 100 * canti)
+        case .eurodollar:
+             return product(name: indeName.rawValue, priceBuy: priceBuy, multiplier: 10, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 500 * canti)
+            
+            
+            
+        }
+        
+}
+    
+  let productFact = curry(productFactory_)
+
+
 
 
 protocol prestamoH {
@@ -434,13 +536,22 @@ func prestamoPorTramos(_ capital: Double) -> (Date) -> (Int)-> (Dictionary<Doubl
     
     
 }
+
+
 func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
     
     return State{portf in
+        
+        
     
-    let newPro = portf.products + ps
-    let newSaldo = portf.saldo - 1000
-    let newGaran = portf.garantias + 1000
+    let saldoResult = (ps <==> rMult.reader ).reduce(0){$0+$1}
+        
+    //let newPro = portf.products + ps
+    
+     let newPro = addAllProds <&> ps <&> portf.products
+        
+    let newSaldo = portf.saldo - saldoResult
+    let newGaran = portf.garantias
     
     
     let newPort = portFolio(products: newPro, dateAct: portf.dateAct + SEcondsPerDay, saldo: newSaldo, garantias: newGaran, PyGLantentes: 0, PYGRealizadas: 0)
