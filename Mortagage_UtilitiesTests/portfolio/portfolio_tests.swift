@@ -36,15 +36,15 @@ class portfolio_tests: XCTestCase {
     }
     
     func test_productsConstru() {
-        
      
-        
         XCTAssertTrue(prod1 is product)
         XCTAssertTrue(prod2 is product)
         XCTAssertTrue(prod3 is product)
     }
     
     func test_addPortfolio_previousEmpty_addedthesame() {
+        
+       
         
         let addTo = addToPortfolio([prod1, prod2 ])
         
@@ -64,6 +64,9 @@ class portfolio_tests: XCTestCase {
     
     func test_addportfolio_addproductLongPosition_saldominusinthequantity() {
         
+      
+        
+        
         let sldominus1 = prod1.contrats * prod1.priceBuy * prod1.multiplier
         let sldominu2 = prod2.contrats * prod2.priceBuy * prod2.multiplier
         
@@ -79,6 +82,8 @@ class portfolio_tests: XCTestCase {
     func test_addportfolio_addLongToExistedLongPosition_SummOfLongpluslongold() {
         
        
+       
+        
         let addTo = addToPortfolio([prod1,prod2])
         
        let addAnother = addToPortfolio([prod1])
