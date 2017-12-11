@@ -161,3 +161,8 @@ func sinNil<A>( _ p:[Optional<A>]) -> [A] {
     
     
 }
+
+
+
+
+

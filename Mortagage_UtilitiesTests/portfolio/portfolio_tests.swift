@@ -104,7 +104,19 @@ class portfolio_tests: XCTestCase {
         
     }
     
-    
+    func test__addportfolio_addLongPositionToEmptyPortfolio_garantias() {
+        
+        let addTo = addToPortfolio([prod1, prod2 ])
+        
+        let prRes = addTo.exec(pf)
+        
+        let garantiasProd1 = prod1.garantiasPorContrato * prod1.contrats
+        let garantiasProd2 = prod2.garantiasPorContrato * prod2.contrats
+        
+        let totalGarant = garantiasProd1 + garantiasProd2
+        
+        XCTAssertTrue(prRes.garantias == totalGarant)
+     }
     
     
     

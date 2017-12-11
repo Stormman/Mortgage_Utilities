@@ -76,6 +76,7 @@ func addAllProds(_ newps:[product]) -> ([product]) -> [product] {
 
 
 let rMult : Reader<product,Double> = Reader{$0.contrats * $0.priceBuy * $0.multiplier   }
+let rGarantT : Reader<product,Double> = Reader{$0.garantiasPorContrato * $0.contrats    }
 
 func sumProducts( _ newsPds:product) -> State<product,rHipotSample> {return  State { prod in
     
@@ -550,9 +551,12 @@ func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
     
      let newPro = addAllProds <&> ps <&> portf.products
         
-    let newSaldo = portf.saldo - saldoResult
-    let newGaran = portf.garantias
-    
+   
+       
+    let oldGarantias = portf.garantias
+    let newGaran = (newPro <==> rGarantT.reader).reduce(0){$0+$1}
+     
+    let newSaldo = portf.saldo - saldoResult + (newGaran - oldGarantias)
     
     let newPort = portFolio(products: newPro, dateAct: portf.dateAct + SEcondsPerDay, saldo: newSaldo, garantias: newGaran, PyGLantentes: 0, PYGRealizadas: 0)
     let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
