@@ -21,6 +21,8 @@ class ConstantsHipot {
 struct product {
     let name:String
     let priceBuy:Double
+    let actualPrice:Double
+    
     let multiplier:Double
     let contrats:Double
     let dateBuy: Double
@@ -38,7 +40,7 @@ func addProd(_ newp:product) -> ([product]) -> [product]  {
                 
                 let newContr = pd.contrats + newp.contrats
                 
-                let newProd = product(name: pd.name, priceBuy: pd.priceBuy, multiplier: pd.multiplier, contrats: newContr, dateBuy: pd.dateBuy, garantiasPorContrato: pd.garantiasPorContrato)
+                let newProd = product(name: pd.name, priceBuy: pd.priceBuy, actualPrice: newp.priceBuy, multiplier: pd.multiplier, contrats: newContr, dateBuy: pd.dateBuy, garantiasPorContrato: pd.garantiasPorContrato)
                 
                 return newProd
                 
@@ -77,7 +79,10 @@ func addAllProds(_ newps:[product]) -> ([product]) -> [product] {
 
 let rMult : Reader<product,Double> = Reader{$0.contrats * $0.priceBuy * $0.multiplier   }
 let rGarantT : Reader<product,Double> = Reader{$0.garantiasPorContrato * $0.contrats    }
+let rPlusval : Reader<product,Double> = Reader{$0.contrats * ($0.actualPrice - $0.priceBuy) * $0.multiplier               }
 
+
+/*
 func sumProducts( _ newsPds:product) -> State<product,rHipotSample> {return  State { prod in
     
     if newsPds.name != prod.name  {return ( rHipotSample(bookTrade: [:]), prod )} else {
@@ -98,7 +103,7 @@ func sumProducts( _ newsPds:product) -> State<product,rHipotSample> {return  Sta
     
     
 }
-
+*/
 struct portFolio {
     let products : [product]
     let dateAct : Double
@@ -126,11 +131,11 @@ func productFactory_ ( _ indeName:indexesHipoSample,_ dat:Date,_ canti: Double, 
         switch(indeName) {
             
         case .euribor1año:
-            return product(name: indeName.rawValue, priceBuy: priceBuy, multiplier: 1000, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 600 * canti)
+            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 1000, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 600 * canti)
         case .bono10Esp:
-             return product(name: indeName.rawValue, priceBuy: priceBuy, multiplier: 10, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 100 * canti)
+            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 10, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 100 * canti)
         case .eurodollar:
-             return product(name: indeName.rawValue, priceBuy: priceBuy, multiplier: 10, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 500 * canti)
+            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 10, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 500 * canti)
             
             
             
@@ -545,7 +550,7 @@ func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
         
         
     
-    let saldoResult = (ps <==> rMult.reader ).reduce(0){$0+$1}
+    //let saldoResult = (ps <==> rMult.reader ).reduce(0){$0+$1}
         
     //let newPro = portf.products + ps
     
@@ -555,11 +560,13 @@ func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
        
     let oldGarantias = portf.garantias
     let newGaran = (newPro <==> rGarantT.reader).reduce(0){$0+$1}
-     
-    let newSaldo = portf.saldo - saldoResult + (newGaran - oldGarantias)
+   
+    let newSaldo = portf.saldo //  + (newGaran - oldGarantias)
+        
+        let newPlusv = (newPro <==> rPlusval.reader).reduce(0){$0 + $1}
     
-    let newPort = portFolio(products: newPro, dateAct: portf.dateAct + SEcondsPerDay, saldo: newSaldo, garantias: newGaran, PyGLantentes: 0, PYGRealizadas: 0)
-    let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
+    let newPort = portFolio(products: newPro, dateAct: portf.dateAct , saldo: newSaldo, garantias: newGaran, PyGLantentes: newPlusv, PYGRealizadas: 0)
+    let res = rHipotSample(bookTrade: [ : ])
         
         return (res,newPort   )
         

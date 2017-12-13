@@ -18,6 +18,8 @@ class portfolio_tests: XCTestCase {
     let prod2 = productFact <&> indexesHipoSample.bono10Esp <&> tDate_(1, 1, 2018)! <&> 5 <&> 100.12
     let prod3 = productFact <&> indexesHipoSample.eurodollar <&> tDate_(1,1, 2010)! <&> 6 <&> 1.2334
     
+    let prodMinus1_half = productFact <&> indexesHipoSample.euribor1año <&> tDate_(1, 1, 2018)! <&> -6 <&> 0.04
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -117,7 +119,26 @@ class portfolio_tests: XCTestCase {
         
         XCTAssertTrue(prRes.garantias == totalGarant)
      }
-    
+    func test__addportfolio_addshortPositionToLongPreexistedPositions_CantidadesExactas() {
+        
+        let addTo = addToPortfolio([prod1, prod2 ])
+        
+        let addProd1Minus = addToPortfolio([prodMinus1_half])
+        
+        let allAdd = addTo >+> addProd1Minus
+        
+        let prRes = allAdd.exec(pf)
+        
+        let prodModified = prRes.products.first(where: {$0.name == indexesHipoSample.euribor1año.rawValue})
+        
+        
+        XCTAssertTrue(prodModified!.contrats == 4)
+        
+        
+        
+        
+        
+    }
     
     
     
