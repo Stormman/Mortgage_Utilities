@@ -29,16 +29,19 @@ struct product {
     let garantiasPorContrato:Double
 }
 
-func addProd(_ newp:product) -> ([product]) -> [product]  {
+func addProd(_ newp:product) -> (([product],Double)) -> ([product],Double)  {
     
     return { pds in
         
+        var newSaldo : Double = 0
         
-        let newprds = pds <==> {(pd: product) -> product  in
+        let newprds = pds.0 <==> {(pd: product) -> product  in
             
             if (pd.name == newp.name) {
                 
                 let newContr = pd.contrats + newp.contrats
+                
+                newSaldo = Std.toSaldoAdd(nContIni: pd.contrats, priceIni: pd.priceBuy, mult: pd.multiplier, nContrToAdd: newp.contrats, newPrice: newp.actualPrice) + pds.1
                 
                 let newProd = product(name: pd.name, priceBuy: pd.priceBuy, actualPrice: newp.priceBuy, multiplier: pd.multiplier, contrats: newContr, dateBuy: pd.dateBuy, garantiasPorContrato: pd.garantiasPorContrato)
                 
@@ -49,20 +52,20 @@ func addProd(_ newp:product) -> ([product]) -> [product]  {
             
         }
         
-        return newprds
+        return (newprds, newSaldo)
     }
     
     
 }
 
-func addAllProds(_ newps:[product]) -> ([product]) -> [product] {
+func addAllProds(_ newps:[product]) -> ([product]) -> ([product],Double ) {
     return { prodsOfPortf in
     
-        if(prodsOfPortf.isEmpty) {return newps    }
+        if(prodsOfPortf.isEmpty) {return (newps,0)    }
         
         
         
-        let newp = newps.scanl(prodsOfPortf, { (p1: [product], p2:product ) -> [product]  in
+        let newp = newps.scanl((prodsOfPortf,0), { (p1: ([product],Double ), p2:product ) -> ([product],Double)  in
             
             addProd(p2) <&> p1
             
@@ -559,13 +562,13 @@ func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
    
        
     let oldGarantias = portf.garantias
-    let newGaran = (newPro <==> rGarantT.reader).reduce(0){$0+$1}
+    let newGaran = (newPro.0 <==> rGarantT.reader).reduce(0){$0+$1}
    
-    let newSaldo = portf.saldo //  + (newGaran - oldGarantias)
+    let newSaldo = portf.saldo + newPro.1//  + (newGaran - oldGarantias)
         
-        let newPlusv = (newPro <==> rPlusval.reader).reduce(0){$0 + $1}
+        let newPlusv = (newPro.0 <==> rPlusval.reader).reduce(0){$0 + $1}
     
-    let newPort = portFolio(products: newPro, dateAct: portf.dateAct , saldo: newSaldo, garantias: newGaran, PyGLantentes: newPlusv, PYGRealizadas: 0)
+    let newPort = portFolio(products: newPro.0, dateAct: portf.dateAct , saldo: newSaldo, garantias: newGaran, PyGLantentes: newPlusv, PYGRealizadas: 0)
     let res = rHipotSample(bookTrade: [ : ])
         
         return (res,newPort   )
