@@ -198,7 +198,25 @@ class simulaTest: XCTestCase {
     func test_sumrhipotests () {
         
      
+        let rh1 = rHipotSample(bookTrade: [resultsHipoSample.beneficios:90])
+        let rh2 = rHipotSample(bookTrade: [resultsHipoSample.beneficios:90])
         
+        let rhRes = rh1 + rh2
+        
+        
+        XCTAssertTrue(rhRes.bookTrade[resultsHipoSample.beneficios]!!  == 180)
+        
+        let rh11 = rHipotSample(bookTrade: [resultsHipoSample.beneficios:90])
+        let rh21 = rHipotSample(bookTrade: [resultsHipoSample.cash:1200])
+        
+        let rhRes1 = rh11 + rh21
+        
+        
+        
+        
+        
+        
+        let mmvmmvv = 9000
         
         
         

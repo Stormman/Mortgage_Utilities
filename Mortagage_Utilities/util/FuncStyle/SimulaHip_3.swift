@@ -151,7 +151,7 @@ struct rHipotSample : DictionableResultable {
 }
 func + (f:rHipotSample, sec:rHipotSample) -> rHipotSample {
     
-    
+    /*
     let newDic = f.bookTrade.mapWithKey { (r1 : resultsHipoSample, dou: Optional<Double>) -> Optional<Double>  in
         
         guard let d = dou else {return nil}
@@ -167,6 +167,35 @@ func + (f:rHipotSample, sec:rHipotSample) -> rHipotSample {
     }
     
     return rHipotSample(bookTrade: newDic)
+    */
+    
+    let keysInfirst = Set(f.bookTrade.keys)
+    let keysInSecond = Set(sec.bookTrade.keys)
+    
+    let intersec = keysInfirst.intersection(keysInSecond)
+    
+    let newSe = keysInfirst.union(keysInSecond)
+    
+    let newDic = f.bookTrade.merging(sec.bookTrade) { (r1, r2) -> Optional<Double> in
+        
+        switch (r1,r2) {
+            
+        case (nil,nil): return nil
+        
+        case ( let rr1 , nil) : return rr1
+        case ( nil, let rr2) : return rr2
+        case ( let x, let y) : return x! + y!
+        default: return nil
+            
+            
+        }
+        
+        
+    }
+    
+    return rHipotSample(bookTrade: newDic)
+   
+    
     
     
 }
