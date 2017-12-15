@@ -84,7 +84,6 @@ let rMult : Reader<product,Double> = Reader{$0.contrats * $0.priceBuy * $0.multi
 let rGarantT : Reader<product,Double> = Reader{$0.garantiasPorContrato * $0.contrats    }
 let rPlusval : Reader<product,Double> = Reader{$0.contrats * ($0.actualPrice - $0.priceBuy) * $0.multiplier               }
 
-
 /*
 func sumProducts( _ newsPds:product) -> State<product,rHipotSample> {return  State { prod in
     
@@ -148,8 +147,13 @@ func productFactory_ ( _ indeName:indexesHipoSample,_ dat:Date,_ canti: Double, 
     
   let productFact = curry(productFactory_)
 
-
-
+func plusvaliaDeLaCartera (_ port : portFolio  ) -> Double  {
+    
+    return   ((port.products) <==> rPlusval.reader).reduce(0){$0 + $1}
+    
+    
+    
+}
 
 protocol prestamoH {
     
@@ -569,7 +573,7 @@ func addToPortfolio(_ ps: [product]) -> State<portFolio,rHipotSample>  {
         let newPlusv = (newPro.0 <==> rPlusval.reader).reduce(0){$0 + $1}
     
     let newPort = portFolio(products: newPro.0, dateAct: portf.dateAct , saldo: newSaldo, garantias: newGaran, PyGLantentes: newPlusv, PYGRealizadas: 0)
-    let res = rHipotSample(bookTrade: [ : ])
+    let res = rHipotSample(bookTrade: [: ])
         
         return (res,newPort   )
         
@@ -582,14 +586,21 @@ func closeAllPositions() -> State<portFolio,rHipotSample>  {
     return State {portf in
         
        
-        let newSaldo = portf.saldo - 2000
+        let newSaldo = portf.saldo
+        
+        
+        let newProdSignoContrario = portf.products <==> {  product(name: $0.name, priceBuy: $0.priceBuy, actualPrice: $0.actualPrice, multiplier: $0.multiplier, contrats: -1 * ($0.contrats), dateBuy: $0.dateBuy, garantiasPorContrato: $0.garantiasPorContrato)   }
+        
+        
+        let addto = addToPortfolio(newProdSignoContrario)
+        
+        
+        let portfResul = addto.exec(portf)
+        let result = addto.eval(portf)
         
         
         
-        let newPort = portFolio(products: [], dateAct: portf.dateAct + SEcondsPerDay, saldo: newSaldo, garantias: 0, PyGLantentes: 0, PYGRealizadas: -1000)
-        let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
-        
-        return (res,newPort   )
+        return (result,portfResul   )
         
         
     }
@@ -601,7 +612,27 @@ func closeAllPositions() -> State<portFolio,rHipotSample>  {
 
 func actualizeProduct(_ val: indHpotecSample) -> State<product,rHipotSample> {
     
-    return State{prod in ( rHipotSample(bookTrade: [resultsHipoSample.perdidasAcumuladas : -1000     ]) ,prod   )   }
+    return State{prod in
+        
+        
+        guard let valorExisteEnEnum = indexesHipoSample(rawValue: prod.name) else{return  ( rHipotSample(bookTrade: [:]) ,prod   )}
+        
+        let valo = val.bookTrade[ valorExisteEnEnum]
+        
+        guard let va = valo else {return ( rHipotSample(bookTrade: [:]) ,prod   )}
+        
+        // va contiene el indidce del producto actualizado
+        guard let valorToActInThisProduc = va else {return ( rHipotSample(bookTrade: [:]) ,prod   )}
+        
+        
+        let newPro = product(name: prod.name, priceBuy: prod.priceBuy, actualPrice: valorToActInThisProduc, multiplier: prod.multiplier, contrats: prod.contrats, dateBuy: prod.dateBuy, garantiasPorContrato: prod.garantiasPorContrato)
+        
+        let benefNoRealizados = rPlusval.reader(newPro)
+        
+        let results = rHipotSample(bookTrade:[resultsHipoSample.beneficios       :  benefNoRealizados       ])
+        
+        
+        return ( results ,newPro   )   }
     
     
     
@@ -618,16 +649,25 @@ func actualizePortfolio( period: Double, ind: indHpotecSample) -> State<portFoli
     
     return   State{ portf in
         
-        let res = rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ])
+        //let res = rHipotSample(bookTrade: [: ])
         let newProds = portf.products <==> qappl.exec
-        let newPortf = portFolio(products: newProds, dateAct: period, saldo: 0, garantias: 0, PyGLantentes: 0, PYGRealizadas: 0)
+        let resultTotals = portf.products <==> qappl.eval
+        
+        
+        
+        let res = resultTotals.reduce(rHipotSample(bookTrade: [:])){$0 + $1}
+        
+        
+        let newPlusv = (newProds <==> rPlusval.reader).reduce(0){$0 + $1}
+        
+        let newPortf = portFolio(products: newProds, dateAct: period, saldo:portf.saldo, garantias: portf.garantias, PyGLantentes: newPlusv, PYGRealizadas: portf.PYGRealizadas)
         
         
        return  (res,newPortf  ) }
     
     
 }
-
+let actualizePortfolio_ = curry(actualizePortfolio)
 
 
 
@@ -895,4 +935,12 @@ return Array(repeatElement(pres , count: reocrridoEuri.count))
     
     
 }
+
+//+++++portfolio semanticws
+
+
+
+
+
+
 

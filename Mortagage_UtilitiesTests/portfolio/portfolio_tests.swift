@@ -141,6 +141,74 @@ class portfolio_tests: XCTestCase {
     }
     
     
+    func test__actualizeProduct__() {
+        
+        let addTo = addToPortfolio([prod1, prod2 ])
+        
+        
+        
+        let newAdd = addToPortfolio([prod1])
+        
+        let addTotal = addTo >+> newAdd
+        
+        
+        
+        let portfol = addTotal.exec(pf)
+        
+        
+        let indic = indHpotecSample(bookTrade: [indexesHipoSample.euribor1año : 0.05])
+        
+        
+        let atEuribor = actualizeProduct <&> indic
+        
+        
+        
+        let prodNuev = atEuribor.exec(prod1)
+        let res = atEuribor.eval(prod1)
+        
+        
+        XCTAssertTrue(res.bookTrade[resultsHipoSample.beneficios]!!.givemeRoundTwoplaces() == 200.00)
+        
+        let pppo = 9000
+        
+        
+        
+        
+    }
+    
+    func test_actualizePortfolio_ () {
+        
+        let addTo = addToPortfolio([prod1, prod2 ])
+        
+        
+        
+        let newAdd = addToPortfolio([prod1])
+        
+        let addTotal = addTo >+> newAdd
+        
+        
+        
+        let portfol = addTotal.exec(pf)
+        
+        
+        let indic = indHpotecSample(bookTrade: [indexesHipoSample.euribor1año : 0.05])
+        
+        
+        let actPortState = actualizePortfolio_ <&> tDate_(2, 1, 2018)!.numberAssoc <&> indic
+        
+        
+        let porResult = actPortState.exec(portfol)
+        let resul = actPortState.eval(portfol)
+        
+        
+        let fff = 9090909090090
+        
+        
+        
+        
+        
+        
+    }
     
     
 }
