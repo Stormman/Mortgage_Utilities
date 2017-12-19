@@ -25,6 +25,8 @@ struct product {
     
     let multiplier:Double
     let contrats:Double
+    let minimumContrat:Double
+    
     let dateBuy: Double
     let garantiasPorContrato:Double
 }
@@ -43,7 +45,7 @@ func addProd(_ newp:product) -> (([product],Double)) -> ([product],Double)  {
                 
                 newSaldo = Std.toSaldoAdd(nContIni: pd.contrats, priceIni: pd.priceBuy, mult: pd.multiplier, nContrToAdd: newp.contrats, newPrice: newp.actualPrice) + pds.1
                 
-                let newProd = product(name: pd.name, priceBuy: pd.priceBuy, actualPrice: newp.priceBuy, multiplier: pd.multiplier, contrats: newContr, dateBuy: pd.dateBuy, garantiasPorContrato: pd.garantiasPorContrato)
+                let newProd = product(name: pd.name, priceBuy: pd.priceBuy, actualPrice: newp.priceBuy, multiplier: pd.multiplier, contrats: newContr, minimumContrat: pd.minimumContrat, dateBuy: pd.dateBuy, garantiasPorContrato: pd.garantiasPorContrato)
                 
                 return newProd
                 
@@ -133,11 +135,11 @@ func productFactory_ ( _ indeName:indexesHipoSample,_ dat:Date,_ canti: Double, 
         switch(indeName) {
             
         case .euribor1año:
-            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 1000, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 600 * canti)
+            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 1000, contrats: canti, minimumContrat: 0.05, dateBuy:dat.numberAssoc , garantiasPorContrato: 600 * canti)
         case .bono10Esp:
-            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 10, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 100 * canti)
+            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 10, contrats: canti, minimumContrat: 0.05, dateBuy:dat.numberAssoc , garantiasPorContrato: 100 * canti)
         case .eurodollar:
-            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 10, contrats: canti, dateBuy:dat.numberAssoc , garantiasPorContrato: 500 * canti)
+            return product(name: indeName.rawValue, priceBuy: priceBuy, actualPrice: priceBuy, multiplier: 10, contrats: canti, minimumContrat: 0.01, dateBuy:dat.numberAssoc , garantiasPorContrato: 500 * canti)
             
             
             
@@ -589,7 +591,7 @@ func closeAllPositions() -> State<portFolio,rHipotSample>  {
         let newSaldo = portf.saldo
         
         
-        let newProdSignoContrario = portf.products <==> {  product(name: $0.name, priceBuy: $0.priceBuy, actualPrice: $0.actualPrice, multiplier: $0.multiplier, contrats: -1 * ($0.contrats), dateBuy: $0.dateBuy, garantiasPorContrato: $0.garantiasPorContrato)   }
+        let newProdSignoContrario = portf.products <==> {  product(name: $0.name, priceBuy: $0.priceBuy, actualPrice: $0.actualPrice, multiplier: $0.multiplier, contrats: -1 * ($0.contrats), minimumContrat: $0.minimumContrat, dateBuy: $0.dateBuy, garantiasPorContrato: $0.garantiasPorContrato)   }
         
         
         let addto = addToPortfolio(newProdSignoContrario)
@@ -609,6 +611,104 @@ func closeAllPositions() -> State<portFolio,rHipotSample>  {
     
 }
 
+enum positionsToClose {
+    
+    case quantity(Double)
+    case half
+    case all
+    case quarter
+    
+    
+}
+
+
+func closePositions(_ quatity: positionsToClose, _ prod:product ) -> State<portFolio,rHipotSample> {
+    
+    return State { portf in
+        
+        
+        let prodFounded = portf.products.first(where: {$0.name == prod.name})
+        
+        guard let prodFound = prodFounded else {return (rHipotSample(bookTrade: [:]),portf)}
+        
+        let quantOld = prodFound.contrats
+        
+        var quantToClose : Double  = 0
+        
+        switch (quatity) {
+            
+            
+        case .quantity(let q):
+            
+        if ( q >= quantOld) {return (rHipotSample(bookTrade: [:]),portf)}
+            
+        let quantityWithMinimunConcern = Std.quantityRoundedByMinimumAmountExcep(q, minimun: prodFound.minimumContrat)
+            
+            quantToClose = quantityWithMinimunConcern
+            
+            break
+            
+        case .half:
+        
+         let halfBruto = prodFound.contrats / 2
+         let quantitToR = Std.quantityRoundedByMinimumAmountExcep(halfBruto, minimun: prodFound.minimumContrat)
+            
+            quantToClose = quantitToR
+            
+            
+        break
+        
+        case .quarter:
+        
+            let qaurterBruto = prodFound.contrats / 4
+            let quantiToR = Std.quantityRoundedByMinimumAmountExcep( qaurterBruto, minimun: prodFound.minimumContrat)
+            
+            quantToClose = quantiToR
+            
+            
+        break
+        
+        case .all:
+            
+            
+            quantToClose =  (prodFound.contrats)
+            
+            break
+            
+            
+            
+            
+        }
+
+        quantToClose = quantToClose * (-1)
+        
+        
+        let newProdSignoContrario = portf.products <==> {  product(name: $0.name, priceBuy: $0.priceBuy, actualPrice: $0.actualPrice, multiplier: $0.multiplier, contrats: quantToClose, minimumContrat: $0.minimumContrat, dateBuy: $0.dateBuy, garantiasPorContrato: $0.garantiasPorContrato)   }
+        
+        
+        let addto = addToPortfolio(newProdSignoContrario)
+        
+        
+        let portfResul = addto.exec(portf)
+        let result = addto.eval(portf)
+        
+        
+        
+        return (result,portfResul   )
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+}
+
+
 
 func actualizeProduct(_ val: indHpotecSample) -> State<product,rHipotSample> {
     
@@ -625,7 +725,7 @@ func actualizeProduct(_ val: indHpotecSample) -> State<product,rHipotSample> {
         guard let valorToActInThisProduc = va else {return ( rHipotSample(bookTrade: [:]) ,prod   )}
         
         
-        let newPro = product(name: prod.name, priceBuy: prod.priceBuy, actualPrice: valorToActInThisProduc, multiplier: prod.multiplier, contrats: prod.contrats, dateBuy: prod.dateBuy, garantiasPorContrato: prod.garantiasPorContrato)
+        let newPro = product(name: prod.name, priceBuy: prod.priceBuy, actualPrice: valorToActInThisProduc, multiplier: prod.multiplier, contrats: prod.contrats, minimumContrat: prod.minimumContrat, dateBuy: prod.dateBuy, garantiasPorContrato: prod.garantiasPorContrato)
         
         let benefNoRealizados = rPlusval.reader(newPro)
         
@@ -667,6 +767,8 @@ func actualizePortfolio( period: Double, ind: indHpotecSample) -> State<portFoli
     
     
 }
+
+
 let actualizePortfolio_ = curry(actualizePortfolio)
 
 
