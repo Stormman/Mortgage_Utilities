@@ -600,9 +600,11 @@ func closeAllPositions() -> State<portFolio,rHipotSample>  {
         let portfResul = addto.exec(portf)
         let result = addto.eval(portf)
         
+        let portfCleaned = eraseAllZeroPostiions <&> portfResul
+        
+        return (result,portfCleaned   )
         
         
-        return (result,portfResul   )
         
         
     }
@@ -621,6 +623,8 @@ enum positionsToClose {
     
 }
 
+// el product debe como  minimo llevar el precio actual en actualPrice y el dia de actualize no se tiene en cuenta
+// porque ya se cambia ese dia en actualizePortfolio
 
 func closePositions(_ quatity: positionsToClose, _ prod:product ) -> State<portFolio,rHipotSample> {
     
@@ -683,18 +687,22 @@ func closePositions(_ quatity: positionsToClose, _ prod:product ) -> State<portF
         quantToClose = quantToClose * (-1)
         
         
-        let newProdSignoContrario = portf.products <==> {  product(name: $0.name, priceBuy: $0.priceBuy, actualPrice: $0.actualPrice, multiplier: $0.multiplier, contrats: quantToClose, minimumContrat: $0.minimumContrat, dateBuy: $0.dateBuy, garantiasPorContrato: $0.garantiasPorContrato)   }
+        //let newProdSignoContrario = portf.products <==> {  product(name: $0.name, priceBuy: $0.priceBuy, actualPrice: $0.actualPrice, multiplier: $0.multiplier, contrats: quantToClose, minimumContrat: $0.minimumContrat, dateBuy: $0.dateBuy, garantiasPorContrato: $0.garantiasPorContrato)   }
         
         
-        let addto = addToPortfolio(newProdSignoContrario)
+        
+        let newProd = product(name: prod.name, priceBuy: prod.priceBuy, actualPrice: prod.actualPrice, multiplier: prod.multiplier, contrats: quantToClose, minimumContrat: prod.minimumContrat, dateBuy: prod.dateBuy, garantiasPorContrato: prod.garantiasPorContrato)
+        
+        
+        let addto = addToPortfolio([newProd])
         
         
         let portfResul = addto.exec(portf)
         let result = addto.eval(portf)
         
+        let portfCleaned = eraseAllZeroPostiions <&> portfResul
         
-        
-        return (result,portfResul   )
+        return (result,portfCleaned   )
         
         
         
@@ -707,6 +715,19 @@ func closePositions(_ quatity: positionsToClose, _ prod:product ) -> State<portF
     
     
 }
+
+let closePositions_ = curry(closePositions)
+
+func eraseAllZeroPostiions( _ p: portFolio) -> portFolio {
+    
+    let prodWithoutZero = p.products.filter { $0.contrats != 0}
+    
+    return portFolio(products: prodWithoutZero, dateAct: p.dateAct, saldo: p.saldo, garantias: p.garantias, PyGLantentes: p.PyGLantentes, PYGRealizadas: p.PYGRealizadas)
+    
+    
+    
+}
+
 
 
 
@@ -775,28 +796,113 @@ let actualizePortfolio_ = curry(actualizePortfolio)
 
 enum compPortfolio {
     
-    case addPortfolio (prs: [product])
-    case closeAllPositions
+    case addPortfolio_ (prs: [product])
+    case closeAllPositions_
+    case closePositions_( quatity: positionsToClose,  prod:product )
+    
+    func StateWithThis() -> State<portFolio,rHipotSample> {
+        
+        switch(self) {
+            
+        case .addPortfolio_(let pr):
+            
+            let st =  addToPortfolio <&> pr
+            
+            return st
+            
+            break
+            
+        case .closeAllPositions_:
+            
+            let ret =  closeAllPositions()
+            return ret
+            
+            break
+            
+        case .closePositions_(let quanti, let prod):
+            
+            
+            return closePositions(quanti, prod)
+            
+            break
+            
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
 }
 enum predicResults {
     
     case resultsPred ((rHipotSample) -> Bool  )
     case indexPred ((indHpotecSample) -> Bool)
     case BothResultsAndIndexPred( (indHpotecSample)->(rHipotSample)-> Bool )
+    
+    
+    func resultWith(_ resuIndexes:(rHipotSample, indHpotecSample) ) -> Bool {
+        
+        switch(self) {
+            
+        case .resultsPred(let fg):
+            
+            return fg(resuIndexes.0)
+            
+            break
+        case .indexPred(let fg):
+            
+            return fg(resuIndexes.1)
+            break
+        case .BothResultsAndIndexPred(let fg):
+            
+            return fg <&> resuIndexes.1 <&> resuIndexes.0
+            break
+            
+            
+            
+        }
+        
+        
+        
+        
+    }
+    
 }
+
+
+
+
+
+
+
 struct commmandsPortfolio {
     
     let comm : [(predicResults,compPortfolio)]
     
-    func nextCommand( _ resultsandIndexes: (rHipotSample, indHpotecSample)) -> State<portFolio,rHipotSample>?{
+    func nextCommand( _ resultsandIndexes: (rHipotSample, indHpotecSample)) -> [State<portFolio,rHipotSample>]?{
         
         // buscar en la matriz la condicion que sea true
         //aplicar el comando con un pattenr matching de switch
         
+        let comsTrues = (comm.filter { $0.0.resultWith(resultsandIndexes)}) <==> {$0.1  }
+        
+        if (comsTrues.isEmpty){ return nil}
+        
+        let statesToRet = comsTrues <==> { $0.StateWithThis()    }
         
         
+        return statesToRet
         
-        return State {portf in (  rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ]) ,portf)     }
+        
+        //return State {portf in (  rHipotSample(bookTrade: [resultsHipoSample.cash : -1000     ]) ,portf)     }
         
     }
 }
@@ -819,6 +925,24 @@ func >+><A> ( firs : State<A,rHipotSample> , seco : State<A, rHipotSample>      
 }
 
 
+func composeStatesPortfolios <A> (_ stt: [State<A,rHipotSample>]) -> State<A,rHipotSample> {
+    
+    
+
+    
+    
+    let stateToRet = stt.scanl(stt.first!) { (B: State<A,rHipotSample> ,Nx : State<A,rHipotSample> ) -> State<A,rHipotSample> in
+        
+        return B >+> Nx
+    }
+    
+    
+    return stateToRet
+    
+    
+    
+}
+
 
 
 
@@ -840,8 +964,16 @@ extension PortfolioSIM : funcNX {
                 if let comandos_aplicar = commandsTo {// hay comandos que aplicar
                   
                     //antes de nuevos indices y nuevo dia
-                 let newP = comandos_aplicar.exec(portAnterior)
-                 let newR = comandos_aplicar.eval(portAnterior)
+                /* let newP = comandos_aplicar.exec(portAnterior)
+                 let newR = comandos_aplicar.eval(portAnterior)*/
+                    
+                    let stateOfArrayOfStates = composeStatesPortfolios <&> comandos_aplicar
+                    let newP = stateOfArrayOfStates.exec(portAnterior)
+                    let newR = stateOfArrayOfStates.eval(portAnterior)
+                    
+                    
+                    
+                    
                   //  ^^^^^^ esto es antes de aplicar el nuevo indice y el nuevo dia ^^^
                     
                   let newnewP = porAct.exec(newP)
@@ -867,8 +999,14 @@ extension PortfolioSIM : funcNX {
                 if let comandos_aplicar = commandsTo {// hay comandos que aplicar
                     
                     //antes de nuevos indices y nuevo dia
-                    let newP = comandos_aplicar.exec(self.portfol)
-                    let newR = comandos_aplicar.eval(self.portfol)
+                    /*let newP = comandos_aplicar.exec(self.portfol)
+                    let newR = comandos_aplicar.eval(self.portfol)*/
+                    
+                    let stateOfArrayOfStates = composeStatesPortfolios <&> comandos_aplicar
+                    let newP = stateOfArrayOfStates.exec(self.portfol)
+                    let newR = stateOfArrayOfStates.eval(self.portfol)
+                    
+                    
                     //  ^^^^^^ esto es antes de aplicar el nuevo indice y el nuevo dia ^^^
                     
                     let newnewP = porAct.exec(newP)
@@ -903,15 +1041,7 @@ extension PortfolioSIM : funcNX {
                
             }
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
+ 
             
             }}
     }

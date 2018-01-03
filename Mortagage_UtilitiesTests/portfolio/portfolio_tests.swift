@@ -211,4 +211,38 @@ class portfolio_tests: XCTestCase {
     }
     
     
+    func test_closePositions_() {
+        
+        let addTo = addToPortfolio([prod1, prod2 ])
+        
+        let prRes = addTo.exec(pf)
+        
+        let closeAll = closePositions_ <&> positionsToClose.all <&> prod2
+        
+        let closeHalf = closePositions_ <&> positionsToClose.half <&> prod1
+        
+        let closeQuart = closePositions_ <&> positionsToClose.quarter <&> prod1
+        
+        let closeprod1_3posit = closePositions_ <&> (positionsToClose.quantity <&> 3) <&> prod1
+        
+        
+       let  portAll = closeAll.exec(prRes)
+        let portHalf = closeHalf.exec <&> prRes
+        let portQuart = closeQuart.exec <&> prRes
+        
+        let portPord1less3 = closeprod1_3posit.exec <&> prRes
+        
+        let fg = 900000
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
