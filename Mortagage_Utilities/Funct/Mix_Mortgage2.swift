@@ -926,21 +926,15 @@ func >+><A> ( firs : State<A,rHipotSample> , seco : State<A, rHipotSample>      
 
 
 func composeStatesPortfolios <A> (_ stt: [State<A,rHipotSample>]) -> State<A,rHipotSample> {
-    
-    
-
-    
-    
+   
     let stateToRet = stt.scanl(stt.first!) { (B: State<A,rHipotSample> ,Nx : State<A,rHipotSample> ) -> State<A,rHipotSample> in
         
         return B >+> Nx
     }
     
     
-    return stateToRet
-    
-    
-    
+    return stateToRet.last!
+   
 }
 
 
