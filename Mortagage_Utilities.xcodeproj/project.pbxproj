@@ -241,6 +241,17 @@
 			path = FuncStyle;
 			sourceTree = "<group>";
 		};
+		C84A510C1FFE97FE00B7752D /* Randomize */ = {
+			isa = PBXGroup;
+			children = (
+				C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */,
+				C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */,
+				C80C47A71FBE2AD4001D0F64 /* RandomizeUt_3.swift */,
+				C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */,
+			);
+			path = Randomize;
+			sourceTree = "<group>";
+		};
 		C8667C981FC986C500519218 /* Switz */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,12 +389,9 @@
 				C8745C151F9F010D009607C1 /* DatesTools.swift */,
 				C8745C171F9F010D009607C1 /* FileTools.swift */,
 				C8745C141F9F010D009607C1 /* SimulaHipotecaFut.swift */,
-				C8B15E6E1FA9A84F005E68FA /* RandomizeUt.swift */,
-				C8FA30621FA9BCE600984466 /* RandomizeUt_2.swift */,
+				C84A510C1FFE97FE00B7752D /* Randomize */,
 				C802EA591FAF94A6007A15F7 /* FuncStyle */,
-				C80C47A71FBE2AD4001D0F64 /* RandomizeUt_3.swift */,
 				C856BC771FBEF46C0049CFCC /* MathFunctions.swift */,
-				C8EC9FA11FC4201400C412CA /* RandomizeUt_4.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
