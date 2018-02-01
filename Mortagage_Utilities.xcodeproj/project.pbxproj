@@ -15,6 +15,7 @@
 		C84972191FAE46A4002AB709 /* simulaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84972181FAE46A4002AB709 /* simulaTest.swift */; };
 		C84A510E1FFF74AF00B7752D /* RandomizeUt_5.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84A510D1FFF74AF00B7752D /* RandomizeUt_5.swift */; };
 		C84A51102004ECCA00B7752D /* Simula_Consolided_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84A510F2004ECCA00B7752D /* Simula_Consolided_Tests.swift */; };
+		C84D9B892023405900BBF06E /* cashflowTotal_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84D9B882023405900BBF06E /* cashflowTotal_Tests.swift */; };
 		C856BC781FBEF46C0049CFCC /* MathFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C856BC771FBEF46C0049CFCC /* MathFunctions.swift */; };
 		C856BC7A1FBF57420049CFCC /* MAth__Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C856BC791FBF57420049CFCC /* MAth__Tests.swift */; };
 		C856BC7C1FC2D2210049CFCC /* Mix_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = C856BC7B1FC2D2210049CFCC /* Mix_test.swift */; };
@@ -122,6 +123,7 @@
 		C84972181FAE46A4002AB709 /* simulaTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simulaTest.swift; sourceTree = "<group>"; };
 		C84A510D1FFF74AF00B7752D /* RandomizeUt_5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizeUt_5.swift; sourceTree = "<group>"; };
 		C84A510F2004ECCA00B7752D /* Simula_Consolided_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simula_Consolided_Tests.swift; sourceTree = "<group>"; };
+		C84D9B882023405900BBF06E /* cashflowTotal_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cashflowTotal_Tests.swift; sourceTree = "<group>"; };
 		C856BC771FBEF46C0049CFCC /* MathFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathFunctions.swift; sourceTree = "<group>"; };
 		C856BC791FBF57420049CFCC /* MAth__Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MAth__Tests.swift; sourceTree = "<group>"; };
 		C856BC7B1FC2D2210049CFCC /* Mix_test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mix_test.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				C8EC9FA31FC6F05B00C412CA /* Mix_MOrtgage_Test.swift */,
 				C8AAB51E1FD9695100CA67FC /* calculusHipoteca_test.swift */,
 				C84A510F2004ECCA00B7752D /* Simula_Consolided_Tests.swift */,
+				C84D9B882023405900BBF06E /* cashflowTotal_Tests.swift */,
 			);
 			path = Mortagage_UtilitiesTests;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8745BF41F9E881D009607C1 /* Mortagage_UtilitiesTests.swift in Sources */,
+				C84D9B892023405900BBF06E /* cashflowTotal_Tests.swift in Sources */,
 				C8AAB51D1FD6B92D00CA67FC /* PrestamosPorTramos_test.swift in Sources */,
 				C8FA30691FA9DA4000984466 /* functionalTests.swift in Sources */,
 				C8B92FA21FE136020034AF7D /* DateTools_test.swift in Sources */,
